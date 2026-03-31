@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MayaPreneur – Dropshipping Mastery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4Gk4zqP4R0f4Wg9C+qYlE5lg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="images/maya-logo.jpeg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/maya-logo.jpeg">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/maya-logo.jpeg">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/maya-logo.jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+    <!-- ================= CONTACT FORM MODAL ================= -->
+    <div class="contact-modal-overlay" id="contactModal">
+        <div class="contact-modal-box">
+
+            <button class="contact-modal-close" id="closeContactModal">&times;</button>
+
+            <h2>Have Questions? <span>Let’s Talk</span></h2>
+            <p class="modal-subtext">
+                Fill the form below and our team will contact you within 24 hours.
+            </p>
+
+            <form action="contact_form.php" method="post" class="modal-form">
+
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="phone" placeholder="Phone Number" maxlength="10"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                </div>
+
+                <button type="submit" class="form-btn full">
+                    Submit Enquiry
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <header class="header">
+        <div class="container header-wrap">
+
+            <div class="logo">
+                <img src="images/maya-logo.jpeg" alt="MayaPreneur">
+                <span class="brand-text">Maya<span>Preneur</span></span>
+            </div>
+            <nav class="nav" id="navMenu">
+                <button class="nav-close" id="navClose" aria-label="Close Menu">
+                    &times;
+                </button>
+                <a href="#Why-Dropshipping">Why Dropshipping</a>
+                <a href="#Process">Process</a>
+
+                <a href="#Success-Stories">Success Stories</a>
+                <a href="#FAQ">FAQ</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="#Contact-Us">Contact Us</a>
+
+                <a href="#" class="btn btn-orange mobile-cta">
+                    Join Workshop
+                </a>
+            </nav>
+            <a href="#Contact-Us" class="btn btn-orange desktop-cta">Join Workshop</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    </header>
+    <section class="hero">
+        <div class="container hero-wrap">
+            <div class="hero-content">
+                <h1>
+                    <span>ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span><br>
+                    Indian E-commerce and Drop-shipping in Kannada <u>Live</u><br>
+                    <u>Workshop</u>
+                </h1>
+                <p class="subtitle">
+                    (No Prior Knowledge or Technical Experience Required)
+                </p>
+                <div class="rating">
+                    ⭐⭐⭐⭐⭐
+                    <span>Rating: 5 | 344 Reviews</span>
+                </div>
+
+                <a href="checkout.html" class="btn btn-orange large">
+                    Register Now @ ₹49/-
+                </a>
+            </div>
+            <div class="hero-right">
+                <div class="hero-video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
+                        title="INVITE anyone to your webinar with this invitation script" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="workshop-card">
+                    <h3>Register Below To Attend Live Webinar On Sunday</h3>
+
+                    <div class="details">
+                        <div class="date"><span>15th January</span></div>
+                        <div class="time"><span>6 PM</span></div>
+                        <div class="platform"><span>Zoom</span></div>
+                        <div class="language"><span>Kannada and English</span></div>
+                    </div>
+                </div>
+                <a href="checkout.html" class="btn btn-green full">
+                    Register Now @ ₹49/-
+                </a>
+
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- About Section Start -->
+    <section class="ito-about-section" id="about">
+        <div class="ito-container">
+
+            <!-- TOP CONTENT -->
+            <div class="ito-top-grid">
+
+                <!-- LEFT IMAGE -->
+                <div class="ito-image-box">
+                    <img src="images/images/about.png" alt="Dropshipping Masterclass">
+                    <div class="ito-badge">LIVE MASTERCLASS</div>
+                </div>
+
+                <!-- RIGHT CONTENT -->
+                <div class="ito-content">
+                    <h2><span>|</span> About the Dropshipping Masterclass</h2>
+
+                    <p>
+                        In the dynamic world of e-commerce, <strong>dropshipping</strong> has emerged as a
+                        powerful business model that enables individuals to build successful online ventures
+                        without the complexities of inventory management.
+                    </p>
+
+                    <p>
+                        This comprehensive masterclass is designed to guide you step by step through the
+                        complete dropshipping journey — from identifying profitable products to setting up
+                        your online store and working with reliable suppliers.
+                    </p>
+
+                    <p>
+                        You will gain practical insights into
+                        <span class="highlight-red">product research</span>,
+                        <span class="highlight-green">store creation</span>, and
+                        <span class="highlight-blue">marketing & scaling strategies</span>
+                        that help build a sustainable and profitable business.
+                    </p>
+
+                    <p>
+                        Join this masterclass to uncover proven strategies, real-world techniques, and
+                        actionable frameworks that will help you build a
+                        <strong>profitable dropshipping business from the ground up</strong>,
+                        even if you are starting with no prior experience.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    <section class="dropshipping-benefits">
+        <div class="db-container">
+
+            <!-- Header -->
+            <div class="db-header">
+                <div class="db-count">5</div>
+                <div class="db-title">
+                    <h2>Major Benefits of <span>Dropshipping</span></h2>
+                    <p>Why thousands are choosing dropshipping as their primary online business model</p>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="db-list">
+
+                <div class="db-item">
+                    <div class="db-left">
+                        <div class="db-no">1</div>
+                        <div class="db-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    </div>
+                    <div class="db-text">
+                        <h4>High Profit Margins</h4>
+                        <p>Sell trending products with strong margins and minimal upfront investment.</p>
+                    </div>
+                </div>
+
+                <div class="db-item">
+                    <div class="db-left">
+                        <div class="db-no">2</div>
+                        <div class="db-icon"><i class="fa-solid fa-warehouse"></i></div>
+                    </div>
+                    <div class="db-text">
+                        <h4>No Inventory Costs</h4>
+                        <p>No storage, no stock risk, no warehouse expenses.</p>
+                    </div>
+                </div>
+
+                <div class="db-item">
+                    <div class="db-left">
+                        <div class="db-no">3</div>
+                        <div class="db-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    </div>
+                    <div class="db-text">
+                        <h4>Multiple Product Earnings</h4>
+                        <p>Test and sell unlimited products without additional cost.</p>
+                    </div>
+                </div>
+
+                <div class="db-item">
+                    <div class="db-left">
+                        <div class="db-no">4</div>
+                        <div class="db-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    </div>
+                    <div class="db-text">
+                        <h4>Unlimited Income Potential</h4>
+                        <p>Your growth depends only on scaling, not inventory.</p>
+                    </div>
+                </div>
+
+                <div class="db-item">
+                    <div class="db-left">
+                        <div class="db-no">5</div>
+                        <div class="db-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    </div>
+                    <div class="db-text">
+                        <h4>Passive Income Opportunity</h4>
+                        <p>Automate order fulfillment and focus on growth.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- This is an HTML comment -->
+    <section class="learning-process" id="Process">
+        <div class="container">
+            <div class="process-header">
+                <h2>
+                    Learn <span>Dropshipping</span> to Start Profitable
+                </h2>
+                <p>Indian E-commerce Store</p>
+            </div>
+            <div class="process-flow">
+                <div class="flow-item orange">
+                    🔍
+                </div>
+                <span class="flow-line"></span>
+                <div class="flow-item green">
+                    🚀
+                </div>
+                <span class="flow-line"></span>
+                <div class="flow-item orange">
+                    📈
+                </div>
+            </div>
+            <div class="process-cards">
+                <div class="process-card">
+                    <span class="card-bar orange"></span>
+                    <h3>(Identify Winning Products)</h3>
+                    <ul>
+                        <li>Find winning products using the latest and free methods</li>
+                        <li>Utilize free ad materials instead of creating them from scratch</li>
+                        <li>Create compelling, high-converting ads powered by AI</li>
+                    </ul>
+                </div>
+                <div class="process-card featured">
+                    <span class="card-bar green"></span>
+                    <h3>(Launch Your Store)</h3>
+                    <ul>
+                        <li>Launch your online store for as little as ₹20 per month</li>
+                        <li>Boost conversion rates with optimized COD form</li>
+                        <li>Maximize AOV with proven upselling tactics</li>
+                    </ul>
+                </div>
+                <div class="process-card">
+                    <span class="card-bar orange"></span>
+                    <h3>(Scale Effectively)</h3>
+                    <ul>
+                        <li>Drive instant sales with Facebook & Instagram ads</li>
+                        <li>Implement proven RTO reduction strategies</li>
+                        <li>Scale your store to six or seven figures and beyond</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="offer-section">
+        <div class="offer-card">
+
+            <div class="offer-badge">
+                ⚡ Limited Time Offer
+            </div>
+
+            <p class="offer-label">Workshop Price</p>
+
+            <div class="price-box">
+
+                <span class="new-price">₹49/-</span>
+            </div>
+
+            <p class="expiry-text">Offer Expires in</p>
+
+            <div class="countdown">
+                <div class="time-box">
+                    <h3 id="hours">23</h3>
+                    <span>Hours</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="minutes">48</h3>
+                    <span>Mins</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="seconds">29</h3>
+                    <span>Secs</span>
+                </div>
+            </div>
+
+            <a href="checkout.html" class="register-btn">
+                Register Now @ ₹49/- <span>→</span>
+            </a>
+
+            <p class="secure-text">
+                🔒 Secure Payment • 200% Money Back Guarantee
+            </p>
+
+        </div>
+
+        <div class="offer-features">
+            <div class="feature">🛡️ 100% Secure Payment</div>
+            <div class="feature">💳 All Payment Methods</div>
+
+        </div>
+    </section>
+
+    <section class="mentor-section">
+        <div class="mentor-container">
+
+            <!-- LEFT : Full Mentor Image -->
+
+            <div class="mentor-image">
+
+                <img src="images/Client image.jpeg" alt="Your Mentor">
+            </div>
+
+            <!-- RIGHT : Content -->
+            <div class="mentor-content">
+                <span class="subtitle">Meet Your Mentor</span>
+
+                <h2>Learn From Someone Who’s</h2>
+
+                <p class="description">
+                    Learn E-Commerce & Dropshipping in Kannada from a mentor who doesn’t just talk theory — but
+                    teaches what actually works.
+
+                    This session is led by a mentor with real hands-on experience in online business, who explains
+                    everything in simple Kannada with clear Indian English, so you can understand, apply, and move
+                    forward with confidence.
+
+                    If you are serious about starting an online business and want clear direction instead of
+                    confusion, this training is built for you.
+                    No shortcuts. No fake promises. Only structured learning and real guidance.
+
+                <ul class="mentor-points">
+                    <li>Real hands-on experience in Indian E-Commerce & Dropshipping
+                    </li>
+                    <li>Built and operated profitable dropshipping systems
+                    </li>
+                    <li>Deep expertise in Indian COD, suppliers & logistics</li>
+                    <li>Strong command of Meta ads for Indian market</li>
+                    <li>Teaching focused on execution, not theory</li>
+                    <li> guidance — no hype, no fake promises</li>
+                </ul>
+
+                <a href="checkout.html" class="mentor-btn">Learn From The Best @ ₹49</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="combined-section">
+
+        <div class="container">
+
+            <!-- ===== WHY JOIN WEBINAR ===== -->
+
+
+            <!-- ===== SERVICES SECTION ===== -->
+            <h2 class="section-title">We are providing</h2>
+
+            <div class="services-grid">
+
+                <div class="service-card">
+                    <div class="service-icon pink"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h3>3-Hour Expert Training</h3>
+                    <p>Complete explaination about dropshipping in simple kannada and Clear Indian English</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon green"><i class="fa-solid fa-code"></i></div>
+                    <h3>Live Q&amp;A Session</h3>
+                    <p>Ask dropshipping or Ecommerce related questions directly to experts.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon blue"><i class="fa-solid fa-tags"></i></div>
+                    <h3>Exclusive Discounts</h3>
+                    <p>Special offers & pricing available only for webinar attendees.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon blue-dark"><i class="fa-solid fa-table-cells-large"></i></div>
+                    <h3>Performance Analytics</h3>
+                    <p>Track key metrics and insights with interactive, data-driven reports.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon green"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3>Real Case Studies</h3>
+                    <p>Learn how top businesses scaled growth using our Dropshipping model</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon mint"><i class="fa-solid fa-gears"></i></div>
+                    <h3>Implementation Support</h3>
+                    <p>Step-by-step guidance for setup, activation & automation flows.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="image-review-section" id="Student-Reviews">
+        <div class="container">
+            <div class="image-review-header">
+                <h2>Student <span>Results</span></h2>
+                <p>Real conversations. Real results.</p>
+            </div>
+            <div class="image-review-slider">
+                <div class="image-review-track">
+                    <div class="image-review-card">
+                        <img src="images/student/students.jpeg" alt="">
+                    </div>
+                    <div class="image-review-card">
+                        <img src="images/student/students1.jpeg" alt="">
+                    </div>
+                    <div class="image-review-card">
+                        <img src="images/student/students2.jpeg" alt="">
+                    </div>
+                    <div class="image-review-card">
+                        <img src="images/student/students3.jpeg" alt="">
+                    </div>
+                    <div class="image-review-card">
+                        <img src="images/student/students4.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students5.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students6.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students7.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students8.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students9.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students10.jpeg" alt="">
+                    </div>
+                     <div class="image-review-card">
+                        <img src="images/student/students11.jpeg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial-section" id="Success-Stories">
+        <div class="container">
+            <div class="testimonial-header">
+                <h2>What Our <span>Students</span> Say...</h2>
+                <p>Real Results from Real People</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "Maya Preneur is an amazing platform for those who want to learn drop shipping and E- commerce
+                        course, their guidance is amazing and phenomenal. Moreover I really thank you from the bottom of
+                        my heart because,it is the first platform in kannada that has taught drop shipping and
+                        e-commerce."
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>Praveen Mj</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "I've seen a lot of other e commerce courses. but this app is different. the way mithun sir and
+                        janvi madam explain every class is easy to understand. and especially those who want to learn in
+                        kannada. this is a very good platform. thank you"
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>Charles Finny</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "I am currently undergoing Mayapreneur Dropshipping training. The sessions so far have been good
+                        and informative. I have received valuable knowledge and practical insights. Happy with the
+                        learning experience till now."
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>Kumar</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "Its very good valuable course and cheap and best. its only in maya preneur .. platform .&
+                        special thanks to mitun sir and janvee madam .and everyone very good supported .good knowledge
+                        also. so i leans lots of knowledge. heare. thank you so much mitun sir.....& team."
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>Kumar Muller</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "Really good training. you will get focus and enthusiasm to do business. trainer jahnavi doing
+                        excellent work. and maya preneur organized training session in professional manner. The felt I
+                        joined the best hands to grow myself. thank you to Maya preneur and team."
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>bharath kumara</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote">“</div>
+                    <div class="stars">★★★★★</div>
+                    <p class="review">
+                        "Teaching is very good.but when we do practical .problem not solving. mithun teaching excellent.
+                        I feel very difficulty in understanding ."
+                    </p>
+                    <div class="author">
+                        <div>
+                            <h4>Avinash kadri Bangera</h4>
+                        </div>
+                        <span class="badge"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="see-all-wrapper">
+            <a href="reviews.html" class="see-all-btn">See All Reviews</a>
+        </div>
+    </section>
+
+    <section class="guarantee-section">
+        <div class="guarantee-content">
+            <img src="images/Money-Back-Gurnatee.webp" alt="Money Back Guarantee" class="guarantee-badge">
+
+            <h2>100% Money Back Guarantee</h2>
+
+            <p>
+                If you don’t find this workshop helpful, I will return
+                <strong>200% of your money</strong>.
+                <br>No questions asked. <b>Promise!</b>
+            </p>
+
+            <a href="checkout.html" class="guarantee-btn">
+                Registration →
+            </a>
+        </div>
+    </section>
+
+    <!-- Frequenlty asked questions section  -->
+    <section class="faq-section" id="FAQ">
+        <div class="container">
+            <h2 class="faq-heading">
+                Frequently Asked <span>Questions</span>
+            </h2>
+            <div class="faq-wrapper">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Will This Workshop Be Live?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes, this is a completely live workshop where you can interact and ask questions in
+                        real-time.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Any Hidden Terms & Conditions?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        No hidden terms. Everything is transparent, and your satisfaction is guaranteed.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How Will I Get The Bonuses?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        All bonuses will be shared digitally via email and your private dashboard access.
+                    </div>
+                </div>
+                <div class="faq-item active">
+                    <button class="faq-question">
+                        How Will You Remind Me Of The Workshop?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        We will send reminders via WhatsApp, email, and SMS before the workshop starts.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do I Need To Bring Anything?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        Just a notebook and an open mind! Everything else will be provided.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How Will I Get A Refund?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        Simply email our support team within the refund period, and your money will be returned.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        I'm a Complete Beginner. Is This For Me?
+                        <span class="icon">⌄</span>
+                    </button>
+                    <div class="faq-answer">
+                        Absolutely! This workshop is designed for beginners with step-by-step guidance.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Frequenlty asked questions section ends  -->
+
+    <section class="contact-section" id="Contact-Us">
+        <div class="container contact-wrap">
+            <div class="contact-info">
+                <h2>Have Questions? <span>Let’s Talk</span></h2>
+                <p>
+                    Reach out to us for workshop details, partnership enquiries,
+                    or any questions about starting your dropshipping journey.
+                    Our team will get back to you within 24 hours.
+                </p>
+                <ul class="contact-details">
+                    <a href="mailto:mayapreneur64@gmail.com"></a>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        mayapreneur64@gmail.com
+                    </li>
+                    </a>
+                    <a href="tel:+918152877026"></a>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        +91 81528 77026
+                    </li>
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
+                        target="_blank" rel="noopener">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            Maya Solutions, Outer Ring Road, 5th Block, Phase 3, Banashankari, Bengaluru, Karnataka
+                        </li>
+                    </a>
+                </ul>
+            </div>
+            <div class="contact-form-box">
+                <form action="contact_form.php" method="post" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Full Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="phone" placeholder="Phone Number" maxlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id=""
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-orange form-btn">
+                        Submit Enquiry
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="offer-section">
+        <div class="offer-card">
+
+            <div class="offer-badge">
+                ⚡ Limited Time Offer
+            </div>
+
+            <p class="offer-label">Workshop Price</p>
+
+            <div class="price-box">
+
+                <span class="new-price">₹49/-</span>
+            </div>
+
+            <p class="expiry-text">Offer Expires in</p>
+
+            <div class="countdown">
+                <div class="time-box">
+                    <h3 id="hours">23</h3>
+                    <span>Hours</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="minutes">48</h3>
+                    <span>Mins</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="seconds">29</h3>
+                    <span>Secs</span>
+                </div>
+            </div>
+
+            <a href="checkout.html" class="register-btn">
+                Register Now @ ₹49/- <span>→</span>
+            </a>
+
+            <p class="secure-text">
+                🔒 Secure Payment • 200% Money Back Guarantee
+            </p>
+
+        </div>
+
+        <div class="offer-features">
+            <div class="feature">🛡️ 100% Secure Payment</div>
+            <div class="feature">💳 All Payment Methods</div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col brand">
+                <div class="brand-logo">
+                    <img src="images/footer-logo.png" alt="MayaPreneur">
+                    <span>Maya<span>Preneur</span></span>
+                </div>
+                <p>
+                    India's premier dropshipping education platform.
+                    Master the art of building profitable online stores
+                    with zero inventory and minimal investment.
+                </p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#Process">Process</a></li>
+                    <li><a href="#Bonuses">Bonuses</a></li>
+                    <li><a href="#Success-Stories">Testimonials</a></li>
+                    <li><a href="#FAQ">FAQ</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-list">
+                    <li>
+                        <span>✉</span>
+                        <a href="mailto:mayapreneur64@gmail.com">
+                            mayapreneur64@gmail.com
+                        </a>
+                    </li>
+
+                    <li>
+                        <span>☎</span>
+                        <a href="tel:+918152877026">
+                            +91 81528 77026
+                        </a>
+                    </li>
+
+                    <li>
+                        <span>📍</span>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
+                            target="_blank" rel="noopener">
+                            Maya Solutions, Outer Ring Road, 5th Block, Phase 3, Banashankari, Bengaluru, Karnataka
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 MayaPreneur. All rights reserved.</p>
+            <div class="policy-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-use.html">Terms of Service</a>
+                <a href="refund-policy.html">Refund Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                faqItems.forEach(i => {
+                    if (i !== item) i.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        });
+
+        let totalSeconds = 23 * 3600 + 48 * 60 + 29;
+
+        function updateCountdown() {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            if (totalSeconds > 0) totalSeconds--;
+        }
+
+        setInterval(updateCountdown, 1000);
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("navMenu");
+        const navClose = document.getElementById("navClose");
+
+        hamburger.addEventListener("click", () => {
+            navMenu.classList.add("active");
+        });
+
+        navClose.addEventListener("click", () => {
+            navMenu.classList.remove("active");
+        });
+
+        document.querySelectorAll(".nav a").forEach(link => {
+            link.addEventListener("click", () => {
+                navMenu.classList.remove("active");
+            });
+        });
+    </script>
+
+    <script>
+        const contactModal = document.getElementById("contactModal");
+        const closeContactModal = document.getElementById("closeContactModal");
+
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                contactModal.classList.add("active");
+            }, 1200);
+        });
+
+        closeContactModal.addEventListener("click", () => {
+            contactModal.classList.remove("active");
+        });
+
+        contactModal.addEventListener("click", (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.remove("active");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
