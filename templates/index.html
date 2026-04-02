@@ -8,16 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/enhancements.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4Gk4zqP4R0f4Wg9C+qYlE5lg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 </head>
@@ -96,11 +91,19 @@
         </div>
     </header>
     <section class="hero">
+
+        <!-- Kannada title — fixed above carousel -->
+        <div class="hero-kannada-header">
+            <span>ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span>
+        </div>
+
         <div class="container hero-wrap">
+
+            <!-- LEFT: static content -->
             <div class="hero-content">
-                <h1>
-                    <span>ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span><br>
-                    Indian E-commerce and Drop-shipping in Kannada <u>Live</u><br>
+                <div class="hero-batch-tag" id="heroBatchTag">🗓 Batch 1 &nbsp;·&nbsp; Every Monday 7 PM</div>
+                <h1 id="heroTitle">
+                    Dropshipping <u>Live</u><br>
                     <u>Workshop</u>
                 </h1>
                 <p class="subtitle">
@@ -111,52 +114,218 @@
                     <span>Rating: 5 | 344 Reviews</span>
                 </div>
 
-                <a href="{{ url_for('checkout') }}" class="btn btn-orange large">
-                    Register Now @ ₹49/-
-                </a>
-            </div>
-            <div class="hero-right">
-                <div class="hero-video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
-                        title="INVITE anyone to your webinar with this invitation script" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
-                </div>
-
-                <div class="workshop-card">
-                    <h3>Register Below To Attend Live Webinar On Sunday</h3>
-
-                    <div class="details">
-                        <div class="date"><span>15th January</span></div>
-                        <div class="time"><span>6 PM</span></div>
-                        <div class="platform"><span>Zoom</span></div>
-                        <div class="language"><span>Kannada and English</span></div>
+                <!-- Live countdown to next webinar -->
+                <div class="hero-timer">
+                    <p class="timer-label">⏰ Next Session Starts In</p>
+                    <div class="timer-boxes">
+                        <div class="t-box"><span id="t-days">00</span><small>Days</small></div>
+                        <span class="t-colon">:</span>
+                        <div class="t-box"><span id="t-hours">00</span><small>Hours</small></div>
+                        <span class="t-colon">:</span>
+                        <div class="t-box"><span id="t-mins">00</span><small>Mins</small></div>
+                        <span class="t-colon">:</span>
+                        <div class="t-box"><span id="t-secs">00</span><small>Secs</small></div>
                     </div>
                 </div>
-                <a href="{{ url_for('checkout') }}" class="btn btn-green full">
-                    Register Now @ ₹49/-
-                </a>
 
+                <a href="{{ url_for('checkout') }}" class="btn btn-orange large">
+                    Register Now
+                </a>
             </div>
+
+            <!-- RIGHT: carousel — 3 webinar batches -->
+            <div class="hero-right">
+                <div class="hero-carousel-wrapper">
+                    <div class="hero-carousel" id="heroCarousel">
+
+                        <!-- Slide 1: Dropshipping — Monday -->
+                        <div class="hero-slide">
+                            <div class="hero-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
+                                    title="MayaPreneur Dropshipping Workshop" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="workshop-card orange">
+                                <div class="wc-type-tag orange">🛒 Dropshipping Webinar</div>
+                                <h3>Build a Dropshipping Store From Scratch</h3>
+                                <div class="details">
+                                    <div class="date"><span>Every Monday</span></div>
+                                    <div class="time"><span>7 PM IST</span></div>
+                                    <div class="platform"><span>Zoom</span></div>
+                                    <div class="language"><span>Kannada & English</span></div>
+                                </div>
+                            </div>
+                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
+                                Register Now @ ₹49/-
+                            </a>
+                        </div>
+
+                        <!-- Slide 2: E-Commerce — Wednesday -->
+                        <div class="hero-slide">
+                            <div class="hero-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
+                                    title="MayaPreneur E-Commerce Workshop" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="workshop-card blue">
+                                <div class="wc-type-tag blue">🏪 E-Commerce Webinar</div>
+                                <h3>Launch & Scale Your E-Commerce Business</h3>
+                                <div class="details">
+                                    <div class="date"><span>Every Wednesday</span></div>
+                                    <div class="time"><span>7 PM IST</span></div>
+                                    <div class="platform"><span>Zoom</span></div>
+                                    <div class="language"><span>Kannada & English</span></div>
+                                </div>
+                            </div>
+                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
+                                Register Now @ ₹49/-
+                            </a>
+                        </div>
+
+                        <!-- Slide 3: Online Earning — Sunday -->
+                        <div class="hero-slide">
+                            <div class="hero-video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
+                                    title="MayaPreneur Online Earning Workshop" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="workshop-card green">
+                                <div class="wc-type-tag green">💰 Online Earning Webinar</div>
+                                <h3>Master Multiple Online Income Streams</h3>
+                                <div class="details">
+                                    <div class="date"><span>Every Sunday</span></div>
+                                    <div class="time"><span>6 PM IST</span></div>
+                                    <div class="platform"><span>Zoom</span></div>
+                                    <div class="language"><span>Kannada & English</span></div>
+                                </div>
+                            </div>
+                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
+                                Register Now @ ₹49/-
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <!-- Nav arrows -->
+                    <button class="carousel-prev" id="carouselPrev">&#8249;</button>
+                    <button class="carousel-next" id="carouselNext">&#8250;</button>
+
+                    <!-- Dot indicators -->
+                    <div class="carousel-dots">
+                        <button class="carousel-dot active" data-slide="0"></button>
+                        <button class="carousel-dot" data-slide="1"></button>
+                        <button class="carousel-dot" data-slide="2"></button>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </section>
+
+    <!-- Webinar Types Section -->
+    <section class="webinar-types-section" id="Why-Dropshipping">
+        <div class="ito-container">
+            <div class="wt-header">
+                <p class="wt-eyebrow">What We Teach</p>
+                <h2>Choose Your <span>Learning Path</span></h2>
+                <p class="wt-sub">3 live webinars every week — each focused on a different way to earn online in Kannada</p>
+            </div>
+
+            <!-- Carousel -->
+            <div class="wt-carousel-wrapper">
+                <div class="wt-carousel" id="wtCarousel">
+
+                    <!-- Slide 1: Dropshipping -->
+                    <div class="wt-slide">
+                        <div class="ito-top-grid">
+                            <div class="ito-image-box">
+                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.55.31_-_A_modern_dropshipping_concept_image_showing_a_mobile_phone_with_a_shopping_app_interface_featuring_a_variety_of_products_like_clothing_electronics.webp?v=1727325143&width=1500" alt="Dropshipping Webinar">
+                                <div class="ito-badge wt-badge-orange">🗓 Every Monday · 7 PM</div>
+                            </div>
+                            <div class="ito-content">
+                                <h2><span>|</span> Dropshipping Mastery</h2>
+                                <p>How to set up your store, find top products, and start making sales without holding inventory.</p>
+                                <ul class="wt-topics">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Product selection & niche research</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Setting up your online store</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Working with Indian suppliers</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Ads & marketing strategy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: E-Commerce -->
+                    <div class="wt-slide">
+                        <div class="ito-top-grid">
+                            <div class="ito-image-box">
+                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_22.00.40_-_An_e-commerce_concept_image_representing_Amazon_Flipkart_and_Meesho._The_image_features_the_logos_of_these_platforms_placed_above_a_variety_of_produ.webp?v=1769059036&width=1500" alt="E-Commerce Webinar">
+                                <div class="ito-badge wt-badge-blue">🗓 Every Wednesday · 7 PM</div>
+                            </div>
+                            <div class="ito-content">
+                                <h2><span>|</span> E-Commerce Business</h2>
+                                <p>Grow your business on Amazon, Flipkart, and Meesho with expert training — store setup, product management, and increasing sales quickly.</p>
+                                <ul class="wt-topics">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Platform selection & store setup</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Catalogue & listing optimization</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Pricing & profit margins</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Returns & RTO management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Online Earning -->
+                    <div class="wt-slide">
+                        <div class="ito-top-grid">
+                            <div class="ito-image-box">
+                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.54.19_-_A_vibrant_and_dynamic_image_representing_dropshipping._It_includes_a_globe_in_the_background_with_various_shopping_carts_boxes_and_package_icons_aro.webp?v=1727325076&width=1500" alt="Online Earning Webinar">
+                                <div class="ito-badge wt-badge-green">🗓 Every Sunday · 6 PM</div>
+                            </div>
+                            <div class="ito-content">
+                                <h2><span>|</span> Online Earning Streams</h2>
+                                <p>Promote top products, grow your audience, and earn commissions globally with ease.</p>
+                                <ul class="wt-topics">
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Freelancing & remote work</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Affiliate marketing basics</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Selling digital products</li>
+                                    <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Social media monetization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Arrows -->
+                <button class="wt-prev" id="wtPrev">&#8249;</button>
+                <button class="wt-next" id="wtNext">&#8250;</button>
+
+                <!-- Dots -->
+                <div class="wt-dots">
+                    <button class="wt-dot active" data-slide="0"></button>
+                    <button class="wt-dot" data-slide="1"></button>
+                    <button class="wt-dot" data-slide="2"></button>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <!-- About Section Start -->
     <section class="ito-about-section" id="about">
-        <div class="ito-container">
-
-            <!-- TOP CONTENT -->
+        <!-- <div class="ito-container">
             <div class="ito-top-grid">
-
-                <!-- LEFT IMAGE -->
                 <div class="ito-image-box">
                     <img src="{{ url_for('static', filename='images/images/about.png') }}" alt="Dropshipping Masterclass">
                     <div class="ito-badge">LIVE MASTERCLASS</div>
                 </div>
-
-                <!-- RIGHT CONTENT -->
                 <div class="ito-content">
                     <h2><span>|</span> About the Dropshipping Masterclass</h2>
 
@@ -190,7 +359,7 @@
 
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- About Section End -->
 
     <section class="dropshipping-benefits">
@@ -211,7 +380,7 @@
                 <div class="db-item">
                     <div class="db-left">
                         <div class="db-no">1</div>
-                        <div class="db-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.143a.75.75 0 01.507.914l-2.143 5.943a.75.75 0 01-1.4-.505l1.294-3.592-7.016 7.017a.75.75 0 01-1.06 0l-3.94-3.94-5.47 5.47a.75.75 0 01-1.06-1.06l6-6a.75.75 0 011.06 0l3.94 3.939 6.479-6.479-3.593 1.294a.75.75 0 01-.506-.968z" clip-rule="evenodd"/></svg></div>
                     </div>
                     <div class="db-text">
                         <h4>High Profit Margins</h4>
@@ -222,7 +391,7 @@
                 <div class="db-item">
                     <div class="db-left">
                         <div class="db-no">2</div>
-                        <div class="db-icon"><i class="fa-solid fa-warehouse"></i></div>
+                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z"/><path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clip-rule="evenodd"/></svg></div>
                     </div>
                     <div class="db-text">
                         <h4>No Inventory Costs</h4>
@@ -233,7 +402,7 @@
                 <div class="db-item">
                     <div class="db-left">
                         <div class="db-no">3</div>
-                        <div class="db-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z"/><path d="M3.265 10.602l7.668 4.13a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z"/><path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z"/></svg></div>
                     </div>
                     <div class="db-text">
                         <h4>Multiple Product Earnings</h4>
@@ -244,7 +413,7 @@
                 <div class="db-item">
                     <div class="db-left">
                         <div class="db-no">4</div>
-                        <div class="db-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM9 7.5A.75.75 0 009 9h1.5c0 .986.158 1.674.43 2.038C11.143 11.297 11.5 11.5 12 11.5s.857-.203 1.07-.462C13.342 10.674 13.5 9.986 13.5 9H15a.75.75 0 000-1.5H9zm-.75 5.25a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-.196A5.252 5.252 0 0112 16.5a5.252 5.252 0 01-2.804-3H9a.75.75 0 01-.75-.75z" clip-rule="evenodd"/></svg></div>
                     </div>
                     <div class="db-text">
                         <h4>Unlimited Income Potential</h4>
@@ -255,7 +424,7 @@
                 <div class="db-item">
                     <div class="db-left">
                         <div class="db-no">5</div>
-                        <div class="db-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z"/><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z" clip-rule="evenodd"/></svg></div>
                     </div>
                     <div class="db-text">
                         <h4>Passive Income Opportunity</h4>
@@ -321,7 +490,7 @@
         </div>
     </section>
 
-    <section class="offer-section">
+    <!-- <section class="offer-section">
         <div class="offer-card">
 
             <div class="offer-badge">
@@ -353,7 +522,7 @@
             </div>
 
             <a href="{{ url_for('checkout') }}" class="register-btn">
-                Register Now @ ₹49/- <span>→</span>
+                Register Now <span>→</span>
             </a>
 
             <p class="secure-text">
@@ -367,7 +536,7 @@
             <div class="feature">💳 All Payment Methods</div>
 
         </div>
-    </section>
+    </section> -->
 
     <section class="mentor-section">
         <div class="mentor-container">
@@ -408,7 +577,7 @@
                     <li> guidance — no hype, no fake promises</li>
                 </ul>
 
-                <a href="{{ url_for('checkout') }}" class="mentor-btn">Learn From The Best @ ₹49</a>
+                <a href="{{ url_for('checkout') }}" class="mentor-btn">Learn From The Best</a>
             </div>
 
         </div>
@@ -427,37 +596,37 @@
             <div class="services-grid">
 
                 <div class="service-card">
-                    <div class="service-icon pink"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="service-icon pink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z"/><path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z"/></svg></div>
                     <h3>3-Hour Expert Training</h3>
                     <p>Complete explaination about dropshipping in simple kannada and Clear Indian English</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon green"><i class="fa-solid fa-code"></i></div>
+                    <div class="service-icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clip-rule="evenodd"/></svg></div>
                     <h3>Live Q&amp;A Session</h3>
                     <p>Ask dropshipping or Ecommerce related questions directly to experts.</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon blue"><i class="fa-solid fa-tags"></i></div>
+                    <div class="service-icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.058 3.464.263a15.602 15.602 0 004.922-5.765c.722-1.396.438-3.136-.657-4.23L10.855 3.12A3 3 0 008.734 2.25H5.25zm1.5 3.75a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"/></svg></div>
                     <h3>Exclusive Discounts</h3>
                     <p>Special offers & pricing available only for webinar attendees.</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon blue-dark"><i class="fa-solid fa-table-cells-large"></i></div>
+                    <div class="service-icon blue-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h2.25a3 3 0 013 3v2.25a3 3 0 01-3 3H6a3 3 0 01-3-3V6zm9.75 0a3 3 0 013-3H18a3 3 0 013 3v2.25a3 3 0 01-3 3h-2.25a3 3 0 01-3-3V6zM3 15.75a3 3 0 013-3h2.25a3 3 0 013 3V18a3 3 0 01-3 3H6a3 3 0 01-3-3v-2.25zm9.75 0a3 3 0 013-3H18a3 3 0 013 3V18a3 3 0 01-3 3h-2.25a3 3 0 01-3-3v-2.25z" clip-rule="evenodd"/></svg></div>
                     <h3>Performance Analytics</h3>
                     <p>Track key metrics and insights with interactive, data-driven reports.</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon green"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <div class="service-icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clip-rule="evenodd"/></svg></div>
                     <h3>Real Case Studies</h3>
                     <p>Learn how top businesses scaled growth using our Dropshipping model</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon mint"><i class="fa-solid fa-gears"></i></div>
+                    <div class="service-icon mint"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 000-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 00-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" clip-rule="evenodd"/></svg></div>
                     <h3>Implementation Support</h3>
                     <p>Step-by-step guidance for setup, activation & automation flows.</p>
                 </div>
@@ -536,7 +705,7 @@
                         <div>
                             <h4>Praveen Mj</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
@@ -551,7 +720,7 @@
                         <div>
                             <h4>Charles Finny</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
@@ -566,7 +735,7 @@
                         <div>
                             <h4>Kumar</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
@@ -581,7 +750,7 @@
                         <div>
                             <h4>Kumar Muller</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
@@ -596,7 +765,7 @@
                         <div>
                             <h4>bharath kumara</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
@@ -610,7 +779,7 @@
                         <div>
                             <h4>Avinash kadri Bangera</h4>
                         </div>
-                        <span class="badge"></span>
+                        <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
             </div>
@@ -621,98 +790,138 @@
     </section>
 
     <section class="guarantee-section">
-        <div class="guarantee-content">
+        <div class="guarantee-card">
             <img src="{{ url_for('static', filename='images/Money-Back-Gurnatee.webp') }}" alt="Money Back Guarantee" class="guarantee-badge">
-
-            <h2>100% Money Back Guarantee</h2>
-
-            <p>
-                If you don’t find this workshop helpful, I will return
-                <strong>200% of your money</strong>.
-                <br>No questions asked. <b>Promise!</b>
+            <div class="guarantee-eyebrow">Risk-Free Promise</div>
+            <h2 class="guarantee-title">100% Money Back <span>Guarantee</span></h2>
+            <p class="guarantee-desc">
+                If you don’t find this workshop helpful, I will return <strong>200% of your money</strong>.<br>
+                No questions asked. <b>Promise!</b>
             </p>
-
+            <div class="guarantee-trust-row">
+                <div class="gt-badge">✓ No Questions Asked</div>
+                <div class="gt-badge">✓ 200% Refund</div>
+                <div class="gt-badge">✓ Instant Process</div>
+            </div>
             <a href="{{ url_for('checkout') }}" class="guarantee-btn">
-                Registration →
+                Register Now →
             </a>
         </div>
     </section>
 
-    <!-- Frequenlty asked questions section  -->
+    <!-- FAQ section -->
     <section class="faq-section" id="FAQ">
         <div class="container">
-            <h2 class="faq-heading">
-                Frequently Asked <span>Questions</span>
-            </h2>
-            <div class="faq-wrapper">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Will This Workshop Be Live?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        Yes, this is a completely live workshop where you can interact and ask questions in
-                        real-time.
+            <div class="faq-header">
+                <div class="faq-eyebrow">Got Questions?</div>
+                <h2 class="faq-heading">Frequently Asked <span>Questions</span></h2>
+                <p class="faq-subtext">Everything you need to know before you register.</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-col">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">01</span>
+                            Will This Workshop Be Live?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            Yes, this is a completely live workshop where you can interact and ask questions in real-time.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">02</span>
+                            Any Hidden Terms &amp; Conditions?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            No hidden terms. Everything is transparent, and your satisfaction is guaranteed.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">03</span>
+                            How Will I Get The Bonuses?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            All bonuses will be shared digitally via email and your private dashboard access.
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <button class="faq-question">
+                            <span class="faq-q-num">04</span>
+                            How Will You Remind Me?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            We will send reminders via WhatsApp, email, and SMS before the workshop starts.
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Any Hidden Terms & Conditions?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        No hidden terms. Everything is transparent, and your satisfaction is guaranteed.
+                <div class="faq-col">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">05</span>
+                            Do I Need To Bring Anything?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            Just a notebook and an open mind! Everything else will be provided.
+                        </div>
                     </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        How Will I Get The Bonuses?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        All bonuses will be shared digitally via email and your private dashboard access.
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">06</span>
+                            How Will I Get A Refund?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            Simply email our support team within the refund period, and your money will be returned.
+                        </div>
                     </div>
-                </div>
-                <div class="faq-item active">
-                    <button class="faq-question">
-                        How Will You Remind Me Of The Workshop?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        We will send reminders via WhatsApp, email, and SMS before the workshop starts.
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">07</span>
+                            I'm a Complete Beginner. Is This For Me?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            Absolutely! This workshop is designed for beginners with step-by-step guidance.
+                        </div>
                     </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Do I Need To Bring Anything?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        Just a notebook and an open mind! Everything else will be provided.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        How Will I Get A Refund?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        Simply email our support team within the refund period, and your money will be returned.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        I'm a Complete Beginner. Is This For Me?
-                        <span class="icon">⌄</span>
-                    </button>
-                    <div class="faq-answer">
-                        Absolutely! This workshop is designed for beginners with step-by-step guidance.
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span class="faq-q-num">08</span>
+                            What Language Is The Workshop In?
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </button>
+                        <div class="faq-answer">
+                            The workshop is conducted in Kannada &amp; English so everyone can follow along easily.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Frequenlty asked questions section ends  -->
+    <!-- FAQ section ends -->
 
     <section class="contact-section" id="Contact-Us">
         <div class="container contact-wrap">
@@ -726,20 +935,20 @@
                 <ul class="contact-details">
                     <a href="mailto:mayapreneur64@gmail.com"></a>
                     <li>
-                        <i class="fa-solid fa-envelope"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
                         mayapreneur64@gmail.com
                     </li>
                     </a>
                     <a href="tel:+918152877026"></a>
                     <li>
-                        <i class="fa-solid fa-phone"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd"/></svg>
                         +91 81528 77026
                     </li>
                     </a>
                     <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
                         target="_blank" rel="noopener">
                         <li>
-                            <i class="fa-solid fa-location-dot"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.083a8 8 0 10-16 0c0 3.386 1.556 6.08 3.5 8.083a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
                             Maya Solutions, Outer Ring Road, 5th Block, Phase 3, Banashankari, Bengaluru, Karnataka
                         </li>
                     </a>
@@ -771,7 +980,7 @@
         </div>
     </section>
 
-    <section class="offer-section">
+    <!-- <section class="offer-section">
         <div class="offer-card">
 
             <div class="offer-badge">
@@ -803,7 +1012,7 @@
             </div>
 
             <a href="{{ url_for('checkout') }}" class="register-btn">
-                Register Now @ ₹49/- <span>→</span>
+                Register Now <span>→</span>
             </a>
 
             <p class="secure-text">
@@ -817,7 +1026,7 @@
             <div class="feature">💳 All Payment Methods</div>
 
         </div>
-    </section>
+    </section> -->
 
     <footer class="site-footer">
         <div class="footer-container">
@@ -832,11 +1041,11 @@
                     with zero inventory and minimal investment.
                 </p>
                 <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -903,21 +1112,98 @@
             });
         });
 
-        let totalSeconds = 23 * 3600 + 48 * 60 + 29;
+        // ── HERO CAROUSEL ──────────────────────────────────────
+        const BATCH_TAGS = [
+            { text: '🗓 Batch 1 · Every Monday 7 PM',    cls: '',      title: 'Dropshipping <u>Live</u><br><u>Workshop</u>' },
+            { text: '🗓 Batch 2 · Every Wednesday 7 PM', cls: 'blue',  title: 'E-Commerce <u>Live</u><br><u>Workshop</u>' },
+            { text: '🗓 Batch 3 · Every Sunday 6 PM',    cls: 'green', title: 'Online Earning <u>Live</u><br><u>Workshop</u>' },
+        ];
+        const carousel    = document.getElementById('heroCarousel');
+        const batchTag    = document.getElementById('heroBatchTag');
+        const heroTitle   = document.getElementById('heroTitle');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        let currentSlide  = 0;
+        let carouselTimer;
 
-        function updateCountdown() {
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            document.getElementById("hours").innerText = hours;
-            document.getElementById("minutes").innerText = minutes;
-            document.getElementById("seconds").innerText = seconds;
-
-            if (totalSeconds > 0) totalSeconds--;
+        function goToSlide(n) {
+            currentSlide = (n + 3) % 3;
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            carouselDots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+            const tag = BATCH_TAGS[currentSlide];
+            batchTag.textContent  = tag.text;
+            batchTag.className    = 'hero-batch-tag' + (tag.cls ? ' ' + tag.cls : '');
+            heroTitle.innerHTML   = tag.title;
         }
 
-        setInterval(updateCountdown, 1000);
+        function restartAutoplay() {
+            clearInterval(carouselTimer);
+            carouselTimer = setInterval(() => goToSlide(currentSlide + 1), 6000);
+        }
+
+        document.getElementById('carouselPrev').addEventListener('click', () => { goToSlide(currentSlide - 1); restartAutoplay(); });
+        document.getElementById('carouselNext').addEventListener('click', () => { goToSlide(currentSlide + 1); restartAutoplay(); });
+        carouselDots.forEach(dot => dot.addEventListener('click', () => { goToSlide(+dot.dataset.slide); restartAutoplay(); }));
+        restartAutoplay();
+
+        // ── WEBINAR TYPES CAROUSEL ──────────────────────────────
+        const wtCarousel  = document.getElementById('wtCarousel');
+        const wtDots      = document.querySelectorAll('.wt-dot');
+        let wtSlide       = 0;
+        let wtTimer;
+
+        function wtGoTo(n) {
+            wtSlide = (n + 3) % 3;
+            wtCarousel.style.transform = `translateX(-${wtSlide * 100}%)`;
+            wtDots.forEach((d, i) => d.classList.toggle('active', i === wtSlide));
+        }
+
+        function wtRestart() {
+            clearInterval(wtTimer);
+            wtTimer = setInterval(() => wtGoTo(wtSlide + 1), 7000);
+        }
+
+        document.getElementById('wtPrev').addEventListener('click', () => { wtGoTo(wtSlide - 1); wtRestart(); });
+        document.getElementById('wtNext').addEventListener('click', () => { wtGoTo(wtSlide + 1); wtRestart(); });
+        wtDots.forEach(d => d.addEventListener('click', () => { wtGoTo(+d.dataset.slide); wtRestart(); }));
+        wtRestart();
+
+        // ── LIVE COUNTDOWN TO NEXT WEBINAR ─────────────────────
+        // Edit days/hours below to match your actual schedule
+        // day: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+        const WEBINAR_SCHEDULE = [
+            { day: 1, hour: 19, minute: 0 }, // Monday   7:00 PM
+            { day: 3, hour: 19, minute: 0 }, // Wednesday 7:00 PM
+            { day: 0, hour: 18, minute: 0 }, // Sunday    6:00 PM
+        ];
+
+        function getNextWebinarTarget() {
+            const now = new Date();
+            let closest = null, minMs = Infinity;
+            WEBINAR_SCHEDULE.forEach(w => {
+                const t = new Date(now);
+                t.setHours(w.hour, w.minute, 0, 0);
+                let diff = (w.day - now.getDay() + 7) % 7;
+                if (diff === 0 && t <= now) diff = 7;
+                t.setDate(t.getDate() + diff);
+                const ms = t - now;
+                if (ms < minMs) { minMs = ms; closest = t; }
+            });
+            return closest;
+        }
+
+        function updateHeroTimer() {
+            let rem = Math.max(0, Math.floor((getNextWebinarTarget() - new Date()) / 1000));
+            const d = Math.floor(rem / 86400); rem %= 86400;
+            const h = Math.floor(rem / 3600);  rem %= 3600;
+            const m = Math.floor(rem / 60);
+            const s = rem % 60;
+            document.getElementById('t-days').textContent  = String(d).padStart(2, '0');
+            document.getElementById('t-hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('t-mins').textContent  = String(m).padStart(2, '0');
+            document.getElementById('t-secs').textContent  = String(s).padStart(2, '0');
+        }
+        updateHeroTimer();
+        setInterval(updateHeroTimer, 1000);
         const hamburger = document.getElementById("hamburger");
         const navMenu = document.getElementById("navMenu");
         const navClose = document.getElementById("navClose");
@@ -937,7 +1223,7 @@
         });
     </script>
 
-    <script>
+    <!-- <script>
         const contactModal = document.getElementById("contactModal");
         const closeContactModal = document.getElementById("closeContactModal");
 
@@ -956,7 +1242,7 @@
                 contactModal.classList.remove("active");
             }
         });
-    </script>
+    </script> -->
 
 </body>
 

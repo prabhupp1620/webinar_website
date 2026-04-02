@@ -2239,11 +2239,11 @@ body {
 }
 
 .service-icon.pink {
-    background: #f9c5c5;
+    background: #e8507a;
 }
 
 .service-icon.green {
-    background: #00e5a8;
+    background: #16a34a;
 }
 
 .service-icon.blue {
@@ -2255,7 +2255,7 @@ body {
 }
 
 .service-icon.mint {
-    background: #00d9a6;
+    background: #0891b2;
 }
 
 .service-card h3 {
@@ -3111,12 +3111,13 @@ select:focus {
     width: 52px;
     height: 52px;
     background: linear-gradient(135deg, #ff8c1a, #ff6a00);
-    color: #fff;
+    color: #0b1022;
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 /* Icon */
