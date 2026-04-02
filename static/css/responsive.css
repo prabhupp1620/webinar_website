@@ -117,6 +117,41 @@
         max-width: 100%;
         height: auto;
     }
+
+    .hero-batch-tag {
+        display: inline-flex;
+    }
+
+    .hero-timer {
+        display: block;
+        text-align: center;
+    }
+
+    .timer-boxes {
+        justify-content: center;
+    }
+
+    .carousel-prev { left: 4px; }
+    .carousel-next { right: 4px; }
+
+    .hero-video-wrapper {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-video-wrapper {
+        height: 175px;
+    }
+
+    .hero-slide > .btn.btn-green.full {
+        margin: 0 14px 16px;
+        width: calc(100% - 28px);
+    }
+
+    .workshop-card {
+        padding: 14px 16px 10px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -333,25 +368,13 @@
 /* ===========================
    GUARANTEE SECTION
 =========================== */
-@media (max-width: 991px) {
-    .guarantee-box {
-        flex-direction: column;
-        text-align: center;
-        padding: 50px 30px;
-    }
-
-    .guarantee-content h2 {
-        font-size: 32px;
-    }
-}
-
 @media (max-width: 576px) {
-    .guarantee-content h2 {
-        font-size: 26px;
+    .guarantee-card {
+        padding: 36px 24px;
     }
 
-    .guarantee-content p {
-        font-size: 16px;
+    .guarantee-title {
+        font-size: 26px;
     }
 
     .guarantee-btn {
@@ -363,19 +386,29 @@
 /* ===========================
    FAQ
 =========================== */
+@media (max-width: 900px) {
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 576px) {
     .faq-heading {
-        font-size: 30px;
-        line-height: 2;
+        font-size: 28px;
     }
 
     .faq-question {
-        font-size: 15px;
-        padding: 0;
+        font-size: 14px;
+        padding: 15px 16px;
     }
 
     .faq-answer {
-        font-size: 14px;
+        font-size: 13.5px;
+        padding-left: 16px;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 0 16px 16px 16px;
     }
 }
 
