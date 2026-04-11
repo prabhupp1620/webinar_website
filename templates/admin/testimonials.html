@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Testimonials{% endblock %}
+{% block topbar_title %}Testimonials{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Student Testimonials</h1>
+    <a href="{{ url_for('admin.testimonial_add') }}" class="btn btn-primary">+ Add Testimonial</a>
+</div>
+<div class="card table-wrap">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Student</th><th>Category</th><th>Review</th><th>Rating</th><th>Order</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td style="font-weight:600;white-space:nowrap;">{{ r.student_name }}</td>
+            <td>{% set cm={0:'All',1:'Dropshipping',2:'E-Commerce',3:'Online Earning'} %}
+                {% set cc={0:'',1:'badge-orange',2:'badge-blue',3:'badge-green'} %}
+                <span class="badge {{ cc.get(r.category,'') }}">{{ cm.get(r.category, r.category) }}</span>
+            </td>
+            <td style="color:#64748b;max-width:320px;font-size:12px;">{{ r.review[:120] }}{% if r.review|length > 120 %}…{% endif %}</td>
+            <td style="color:#f59e0b;font-size:15px;">{{ '★' * r.rating }}{{ '☆' * (5 - r.rating) }}</td>
+            <td>{{ r.sort_order }}</td>
+            <td><span class="badge {% if r.status %}badge-active{% else %}badge-inactive{% endif %}">
+                {% if r.status %}Active{% else %}Inactive{% endif %}
+            </span></td>
+            <td>
+                <div class="td-actions">
+                    <a href="{{ url_for('admin.testimonial_edit', tid=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('admin.testimonial_delete', tid=r.id) }}"
+                          onsubmit="return confirm('Delete this testimonial?')">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center;color:#64748b;padding:32px;">No testimonials yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

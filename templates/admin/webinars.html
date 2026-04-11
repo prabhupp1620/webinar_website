@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Webinars{% endblock %}
+{% block topbar_title %}Webinars{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Webinars</h1>
+    <a href="{{ url_for('admin.webinar_add') }}" class="btn btn-primary">+ Add Webinar</a>
+</div>
+<div class="card table-wrap">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Webinar Name</th><th>Category</th><th>Schedule</th><th>Event Date &amp; Time</th><th>Fees</th><th>Offer</th><th>Platform</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        {% set schedule_map = {1: 'Daily', 2: 'Weekly', 3: 'Monthly'} %}
+        {% set day_map = {0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat'} %}
+        {% set category_map = {1: 'Dropshipping', 2: 'E-Commerce', 3: 'Online Earning'} %}
+        {% set category_color = {1: 'badge-orange', 2: 'badge-blue', 3: 'badge-green'} %}
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.webinar_id }}</td>
+            <td style="font-weight:600;max-width:200px;">
+                {{ r.webinar_name }}
+                {% if r.webinar_video %}<br><small style="color:#64748b;">📹 Video attached</small>{% endif %}
+            </td>
+            <td>
+                <span class="badge {{ category_color.get(r.webinar_categories, '') }}">
+                    {{ category_map.get(r.webinar_categories, r.webinar_categories) }}
+                </span>
+            </td>
+            <td>
+                {{ schedule_map.get(r.webinar_scheduletype, r.webinar_scheduletype) }}
+                {% if r.webinar_scheduletype == 2 and r.webinar_day is not none %}
+                    <br><small style="color:#64748b;">{{ day_map.get(r.webinar_day|int, '') }}</small>
+                {% endif %}
+                {% if r.webinar_time %}
+                    <br><small style="color:#64748b;">{{ r.webinar_time }}</small>
+                {% endif %}
+            </td>
+            <td style="white-space:nowrap;">
+                {% if r.webinar_scheduletype == 3 and r.webinar_datetime %}
+                    {{ r.webinar_datetime.strftime('%d %b %Y, %I:%M %p') }}
+                {% else %}
+                    <span style="color:#94a3b8;">{{ r.webinar_startingtime or '—' }}</span>
+                {% endif %}
+            </td>
+            <td>
+                <strong>₹{{ r.webinar_fees }}</strong>
+                {% if r.webinar_discount %}<br><small style="color:#22c55e;">-₹{{ r.webinar_discount }}</small>{% endif %}
+            </td>
+            <td style="max-width:160px;font-size:12px;color:#64748b;">
+                {{ r.webinar_offer_title or '—' }}
+            </td>
+            <td>{{ r.webinar_platform }}</td>
+            <td>
+                <span class="badge {% if r.webinar_status %}badge-active{% else %}badge-inactive{% endif %}">
+                    {% if r.webinar_status %}Active{% else %}Inactive{% endif %}
+                </span>
+            </td>
+            <td>
+                <div class="td-actions">
+                    <a href="{{ url_for('admin.webinar_edit', wid=r.webinar_id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('admin.webinar_delete', wid=r.webinar_id) }}"
+                          onsubmit="return confirm('Delete this webinar?')">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="11" style="text-align:center;color:#64748b;padding:32px;">No webinars yet. <a href="{{ url_for('admin.webinar_add') }}">Add one now →</a></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,447 @@
+{% extends "base_public.html" %}
+{% block title %}Student Video Reviews – MayaPreneur{% endblock %}
+
+{% block head %}
+<style>
+    /* ===== VIDEO REVIEWS PAGE ===== */
+    .vr-hero {
+        background: linear-gradient(135deg, #0b1022 0%, #1a2540 100%);
+        padding: 90px 20px 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .vr-hero::before {
+        content: '';
+        position: absolute;
+        top: -100px; left: 50%;
+        transform: translateX(-50%);
+        width: 700px; height: 480px;
+        background: radial-gradient(ellipse, rgba(255,140,26,0.16) 0%, transparent 68%);
+        pointer-events: none;
+    }
+    .vr-hero-eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #ff8c1a;
+        background: rgba(255,140,26,0.1);
+        border: 1px solid rgba(255,140,26,0.3);
+        padding: 5px 16px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+    .vr-hero h1 {
+        font-size: 52px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 14px;
+        line-height: 1.15;
+    }
+    .vr-hero h1 span { color: #ff8c1a; }
+    .vr-hero p {
+        font-size: 17px;
+        color: #94a3b8;
+        max-width: 520px;
+        margin: 0 auto 36px;
+        line-height: 1.75;
+    }
+    .vr-hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        flex-wrap: wrap;
+    }
+    .vr-hero-stat strong {
+        display: block;
+        font-size: 30px;
+        font-weight: 800;
+        color: #fff;
+    }
+    .vr-hero-stat span {
+        font-size: 13px;
+        color: #64748b;
+        letter-spacing: 0.4px;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .vr-filters {
+        background: #f8faff;
+        padding: 32px 20px 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .vrf-btn {
+        padding: 9px 22px;
+        border-radius: 50px;
+        border: 1.5px solid #e2e8f0;
+        background: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        color: #4b5563;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .vrf-btn:hover,
+    .vrf-btn.active {
+        background: #ff8c1a;
+        border-color: #ff8c1a;
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(255,140,26,0.3);
+    }
+
+    /* ===== GRID ===== */
+    .vr-section {
+        background: #f8faff;
+        padding: 32px 20px 80px;
+    }
+    .vr-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* ===== CARD (reuses vf-card styles from enhancements.css) ===== */
+    /* Override aspect-ratio for this page to allow more cards */
+    .vr-grid .vf-card {
+        max-height: 340px;
+    }
+
+    /* hidden class for filter */
+    .vf-card.hidden { display: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+        .vr-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+        .vr-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .vr-hero h1 { font-size: 36px; }
+    }
+    @media (max-width: 480px) {
+        .vr-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .vr-hero h1 { font-size: 28px; }
+        .vr-hero { padding: 70px 16px 60px; }
+        .vr-grid .vf-card { max-height: 240px; }
+        .vr-grid .vf-play-btn { width: 44px; height: 44px; }
+    }
+</style>
+{% endblock %}
+
+{% block modal %}
+    <!-- ===== VIDEO MODAL ===== -->
+    <div class="vm-overlay" id="videoModal">
+        <div class="vm-box">
+            <button class="vm-close" id="vmClose">&times;</button>
+            <div class="vm-player" id="vmPlayer"></div>
+            <div class="vm-footer">
+                <strong id="vmName"></strong>
+                <span id="vmRole"></span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!-- ===== HERO ===== -->
+    <div class="vr-hero">
+        <div class="vr-hero-eyebrow">Real Students · Real Words</div>
+        <h1>Student <span>Video Reviews</span></h1>
+        <p>Watch unfiltered feedback from students who learned dropshipping with MayaPreneur and transformed their income.</p>
+        <div class="vr-hero-stats">
+            <div class="vr-hero-stat">
+                <strong>500+</strong>
+                <span>Students Trained</span>
+            </div>
+            <div class="vr-hero-stat">
+                <strong>4.9★</strong>
+                <span>Average Rating</span>
+            </div>
+            <div class="vr-hero-stat">
+                <strong>3</strong>
+                <span>Workshop Types</span>
+            </div>
+            <div class="vr-hero-stat">
+                <strong>100%</strong>
+                <span>Money Back Guarantee</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FILTER BAR ===== -->
+    <div class="vr-filters">
+        <button class="vrf-btn active" data-filter="all">All Videos</button>
+        <button class="vrf-btn" data-filter="dropshipping">Dropshipping</button>
+        <button class="vrf-btn" data-filter="ecommerce">E-Commerce</button>
+        <button class="vrf-btn" data-filter="earning">Online Earning</button>
+    </div>
+
+    <!-- ===== VIDEO GRID ===== -->
+    <section class="vr-section">
+        <div class="vr-grid" id="vrGrid">
+
+            <div class="vf-card" data-category="dropshipping"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Praveen Mj" data-role="Dropshipping Student · Batch 1">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students.jpeg') }}" alt="Praveen Mj">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:24</span>
+                <div class="vf-card-info">
+                    <strong>Praveen Mj</strong>
+                    <span>Dropshipping · Batch 1</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="ecommerce"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Charles Finny" data-role="E-Commerce Student · Batch 2">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students1.jpeg') }}" alt="Charles Finny">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">2:08</span>
+                <div class="vf-card-info">
+                    <strong>Charles Finny</strong>
+                    <span>E-Commerce · Batch 2</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="earning"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Kumar" data-role="Online Earning Student · Batch 3">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students2.jpeg') }}" alt="Kumar">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:47</span>
+                <div class="vf-card-info">
+                    <strong>Kumar</strong>
+                    <span>Online Earning · Batch 3</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="dropshipping"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Kumar Muller" data-role="Dropshipping Student · Batch 1">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students3.jpeg') }}" alt="Kumar Muller">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">0:58</span>
+                <div class="vf-card-info">
+                    <strong>Kumar Muller</strong>
+                    <span>Dropshipping · Batch 1</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="ecommerce"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Bharath Kumara" data-role="E-Commerce Student · Batch 2">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students4.jpeg') }}" alt="Bharath Kumara">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:33</span>
+                <div class="vf-card-info">
+                    <strong>Bharath Kumara</strong>
+                    <span>E-Commerce · Batch 2</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="earning"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Avinash Bangera" data-role="Online Earning Student · Batch 3">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students5.jpeg') }}" alt="Avinash Bangera">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">2:15</span>
+                <div class="vf-card-info">
+                    <strong>Avinash Bangera</strong>
+                    <span>Online Earning · Batch 3</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="dropshipping"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Ravi Kumar" data-role="Dropshipping Student · Batch 2">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students6.jpeg') }}" alt="Ravi Kumar">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:52</span>
+                <div class="vf-card-info">
+                    <strong>Ravi Kumar</strong>
+                    <span>Dropshipping · Batch 2</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="ecommerce"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Sneha Rao" data-role="E-Commerce Student · Batch 3">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students7.jpeg') }}" alt="Sneha Rao">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:10</span>
+                <div class="vf-card-info">
+                    <strong>Sneha Rao</strong>
+                    <span>E-Commerce · Batch 3</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="earning"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Mahesh S" data-role="Online Earning Student · Batch 1">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students8.jpeg') }}" alt="Mahesh S">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">2:30</span>
+                <div class="vf-card-info">
+                    <strong>Mahesh S</strong>
+                    <span>Online Earning · Batch 1</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="dropshipping"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Divya Nair" data-role="Dropshipping Student · Batch 3">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students9.jpeg') }}" alt="Divya Nair">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:18</span>
+                <div class="vf-card-info">
+                    <strong>Divya Nair</strong>
+                    <span>Dropshipping · Batch 3</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="ecommerce"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Arjun Hegde" data-role="E-Commerce Student · Batch 1">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students10.jpeg') }}" alt="Arjun Hegde">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">0:52</span>
+                <div class="vf-card-info">
+                    <strong>Arjun Hegde</strong>
+                    <span>E-Commerce · Batch 1</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+            <div class="vf-card" data-category="earning"
+                 data-video="{{ url_for('static', filename='images/video.mp4') }}"
+                 data-type="local" data-name="Pooja Shetty" data-role="Online Earning Student · Batch 2">
+                <img class="vf-card-thumb" src="{{ url_for('static', filename='images/student/students11.jpeg') }}" alt="Pooja Shetty">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                <span class="vf-duration">1:40</span>
+                <div class="vf-card-info">
+                    <strong>Pooja Shetty</strong>
+                    <span>Online Earning · Batch 2</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Filter
+    document.querySelectorAll(".vrf-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".vrf-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const filter = btn.dataset.filter;
+            document.querySelectorAll(".vf-card").forEach(card => {
+                if (filter === "all" || card.dataset.category === filter) {
+                    card.classList.remove("hidden");
+                } else {
+                    card.classList.add("hidden");
+                }
+            });
+        });
+    });
+
+    // Video modal
+    const vmOverlay = document.getElementById("videoModal");
+    const vmClose   = document.getElementById("vmClose");
+    const vmPlayer  = document.getElementById("vmPlayer");
+    const vmName    = document.getElementById("vmName");
+    const vmRole    = document.getElementById("vmRole");
+
+    document.querySelectorAll(".vf-card").forEach(card => {
+        card.addEventListener("click", () => {
+            const src  = card.dataset.video;
+            const type = card.dataset.type;
+            vmName.textContent = card.dataset.name;
+            vmRole.textContent = card.dataset.role;
+            vmPlayer.innerHTML = "";
+
+            if (type === "youtube") {
+                const iframe = document.createElement("iframe");
+                iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0`;
+                iframe.allow = "autoplay; fullscreen";
+                iframe.allowFullscreen = true;
+                vmPlayer.appendChild(iframe);
+            } else {
+                const video = document.createElement("video");
+                video.src = src;
+                video.controls = true;
+                video.autoplay = true;
+                video.playsInline = true;
+                vmPlayer.appendChild(video);
+            }
+
+            vmOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+    });
+
+    function closeModal() {
+        vmOverlay.classList.remove("active");
+        vmPlayer.innerHTML = "";
+        document.body.style.overflow = "";
+    }
+    vmClose.addEventListener("click", closeModal);
+    vmOverlay.addEventListener("click", e => { if (e.target === vmOverlay) closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+{% endblock %}

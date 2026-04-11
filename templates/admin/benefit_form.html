@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Benefit{% else %}Add Benefit{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Benefit{% else %}Add Benefit{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Benefit{% else %}Add Benefit{% endif %}</h1>
+    <a href="{{ url_for('admin.benefits') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST">
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Benefit Title *</label>
+            <input type="text" name="title" value="{{ row.title if row else '' }}" required placeholder="e.g. High Profit Margins">
+        </div>
+        <div class="form-group full">
+            <label>Description</label>
+            <textarea name="description" placeholder="Short description of this benefit…">{{ row.description if row else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="category" required>
+                <option value="1" {% if row and row.category==1 %}selected{% endif %}>Dropshipping</option>
+                <option value="2" {% if row and row.category==2 %}selected{% endif %}>E-Commerce</option>
+                <option value="3" {% if row and row.category==3 %}selected{% endif %}>Online Earning</option>
+                <option value="0" {% if not row or row.category==0 %}selected{% endif %}>All (General)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Sort Order</label>
+            <input type="number" name="sort_order" value="{{ row.sort_order if row else 0 }}" min="0">
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="1" {% if not row or row.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% if row %}Save Changes{% else %}Add Benefit{% endif %}</button>
+        <a href="{{ url_for('admin.benefits') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Gallery{% endblock %}
+{% block topbar_title %}Gallery{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Gallery</h1>
+    <a href="{{ url_for('admin.gallery_add') }}" class="btn btn-primary">+ Add Item</a>
+</div>
+<div class="card table-wrap">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Preview</th><th>Title</th><th>Gallery Type</th><th>Media</th><th>Section</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        {% set sm = {0:'All',1:'Dropshipping',2:'E-Commerce',3:'Online Earning'} %}
+        {% set sc = {0:'',1:'badge-orange',2:'badge-blue',3:'badge-green'} %}
+        {% set gm = {1:'Success Stories',2:'Live Session',3:'Students'} %}
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td>
+                {% set thumb = r.thumbnail or r.media_path %}
+                {% if thumb and r.media_type == 'image' %}
+                    <img src="{{ url_for('static', filename=thumb) if not thumb.startswith('http') else thumb }}"
+                         class="img-preview" onerror="this.style.display='none'">
+                {% elif r.media_type == 'video' %}
+                    {% if r.thumbnail %}
+                        <img src="{{ url_for('static', filename=r.thumbnail) if not r.thumbnail.startswith('http') else r.thumbnail }}"
+                             class="img-preview" onerror="this.style.display='none'">
+                    {% else %}
+                        <span style="font-size:22px;">🎬</span>
+                    {% endif %}
+                {% else %}
+                    <span style="color:#94a3b8;">—</span>
+                {% endif %}
+            </td>
+            <td style="font-weight:600;max-width:200px;">{{ r.title or '—' }}</td>
+            <td>
+                {% if r.gallery_type==1 %}
+                <span class="badge" style="background:#dcfce7;color:#166534;">🏆 Success Stories</span>
+                {% elif r.gallery_type==2 %}
+                <span class="badge" style="background:#ede9fe;color:#6d28d9;">🎓 Live Session</span>
+                {% else %}
+                <span class="badge" style="background:#fef3c7;color:#92400e;">👥 Students</span>
+                {% endif %}
+            </td>
+            <td>
+                <span class="badge" style="background:{% if r.media_type=='video' %}#fef3c7;color:#92400e{% else %}#f0f9ff;color:#0369a1{% endif %};">
+                    {% if r.media_type == 'video' %}🎬 Video{% else %}🖼 Image{% endif %}
+                </span>
+            </td>
+            <td><span class="badge {{ sc.get(r.section,'') }}">{{ sm.get(r.section, r.section) }}</span></td>
+            <td><span class="badge {% if r.status %}badge-active{% else %}badge-inactive{% endif %}">
+                {% if r.status %}Active{% else %}Inactive{% endif %}
+            </span></td>
+            <td>
+                <div class="td-actions">
+                    <a href="{{ url_for('admin.gallery_edit', gid=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('admin.gallery_delete', gid=r.id) }}"
+                          onsubmit="return confirm('Delete this item?')">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center;color:#64748b;padding:32px;">
+            No gallery items yet. <a href="{{ url_for('admin.gallery_add') }}">Add one now →</a>
+        </td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

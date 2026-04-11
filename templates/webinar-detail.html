@@ -1,0 +1,1026 @@
+{% extends "base_public.html" %}
+{% block title %}{{ w.meta_title }}{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ w.meta_desc }}">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="MayaPreneur">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ w.meta_title }}">
+    <meta property="og:description" content="{{ w.meta_desc }}">
+    <meta property="og:image" content="{{ w.image }}">
+    <meta property="og:site_name" content="MayaPreneur">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ w.meta_title }}">
+    <meta name="twitter:description" content="{{ w.meta_desc }}">
+    <meta name="twitter:image" content="{{ w.image }}">
+{% endblock %}
+
+{% block head %}
+    <style>
+        /* ========================================================
+           WEBINAR DETAIL PAGE — PAGE-SPECIFIC STYLES
+           ======================================================== */
+
+        /* ---------- RESET / BASE ---------- */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* ---------- HERO ---------- */
+        .wd-hero {
+            background: linear-gradient(135deg, #0b1022 0%, #111827 100%);
+            padding: 90px 20px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wd-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 460px;
+            background: radial-gradient(ellipse, var(--glow-color) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .wd-type-badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            border: 1.5px solid;
+        }
+
+        .wd-hero h1 {
+            font-size: 54px;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 0 14px;
+            line-height: 1.13;
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wd-hero-subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            max-width: 580px;
+            margin: 0 auto 34px;
+            line-height: 1.7;
+        }
+
+        /* Info pills row */
+        .wd-info-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 34px;
+        }
+
+        .wd-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.13);
+            color: #e2e8f0;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 50px;
+        }
+
+        .wd-pill-icon {
+            font-size: 14px;
+        }
+
+        /* Price + rating row */
+        .wd-hero-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .wd-price-badge {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+            border: 2px solid;
+            padding: 8px 24px;
+            border-radius: 12px;
+            line-height: 1;
+        }
+
+        .wd-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fbbf24;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .wd-rating span {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        /* Hero CTAs */
+        .wd-hero-ctas {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .wd-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ff8a00, #ff6a00);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 15px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 8px 28px rgba(255,120,0,0.4);
+            transition: all 0.25s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .wd-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 36px rgba(255,120,0,0.5);
+        }
+
+        .wd-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: #e2e8f0;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1.5px solid rgba(255,255,255,0.22);
+            transition: all 0.25s;
+        }
+
+        .wd-btn-secondary:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(255,255,255,0.38);
+            color: #fff;
+        }
+
+        /* ---------- KANNADA BANNER ---------- */
+        @keyframes kannada-shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
+        }
+        @keyframes kannada-glow-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.08); }
+        }
+        @keyframes kannada-float-in {
+            from { opacity: 0; transform: translateY(-18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50%       { opacity: 1;   transform: scale(1.2); }
+        }
+
+        .wd-kannada-banner {
+            background: linear-gradient(135deg, #0d1235 0%, #11173f 50%, #0d1235 100%);
+            border-bottom: 2px solid rgba(99,102,241,0.25);
+            padding: 28px 20px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: kannada-float-in 0.7s ease both;
+        }
+
+        /* Soft radial glow behind text */
+        .wd-kannada-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 120px;
+            background: radial-gradient(ellipse, rgba(99,102,241,0.22) 0%, transparent 70%);
+            pointer-events: none;
+            animation: kannada-glow-pulse 3s ease-in-out infinite;
+        }
+
+        /* Decorative top accent line */
+        .wd-kannada-banner::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #6366f1, #a855f7, #6366f1, transparent);
+            background-size: 200% auto;
+            animation: kannada-shimmer 2.5s linear infinite;
+        }
+
+        .wd-kannada-banner-inner {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .wd-kannada-star {
+            font-size: 18px;
+            animation: star-twinkle 1.8s ease-in-out infinite;
+        }
+        .wd-kannada-star:nth-child(3) {
+            animation-delay: 0.9s;
+        }
+
+        .wd-kannada-text {
+            font-size: clamp(20px, 3.5vw, 30px);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #a5b4fc, #c4b5fd, #818cf8, #e0e7ff, #a5b4fc);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: kannada-shimmer 3s linear infinite;
+            line-height: 1.3;
+        }
+
+        .wd-kannada-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a5b4fc;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 8px;
+        }
+
+        /* ---------- QUICK STATS BAR ---------- */
+        .wd-stats-bar {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 20px;
+        }
+
+        .wd-stats-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .wd-stat-card {
+            text-align: center;
+            padding: 26px 16px;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .wd-stat-card:last-child {
+            border-right: none;
+        }
+
+        .wd-stat-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .wd-stat-value {
+            display: block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #0b1022;
+            margin-bottom: 3px;
+        }
+
+        .wd-stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* ---------- SECTION SHARED ---------- */
+        .wd-section {
+            padding: 72px 20px;
+        }
+
+        .wd-section-alt {
+            background: #f8faff;
+        }
+
+        .wd-section-dark {
+            background: #0b1022;
+        }
+
+        .wd-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .wd-section-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #ff8c1a;
+            background: rgba(255,140,26,0.10);
+            border: 1px solid rgba(255,140,26,0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .wd-section-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0b1022;
+            margin: 0 0 10px;
+            line-height: 1.2;
+        }
+
+        .wd-section-title-light {
+            color: #fff;
+        }
+
+        .wd-section-desc {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 560px;
+            line-height: 1.7;
+            margin: 0 0 44px;
+        }
+
+        .wd-section-desc-light {
+            color: #94a3b8;
+        }
+
+        /* ---------- VIDEO SECTION ---------- */
+        .wd-video-wrap {
+            background: #0b1022;
+            padding: 64px 20px;
+        }
+
+        .wd-video-inner {
+            max-width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .wd-video-card {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 24px 72px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .wd-video-card iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .wd-video-caption {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #64748b;
+            letter-spacing: 0.3px;
+        }
+
+        /* ---------- TOPICS GRID ---------- */
+        .wd-topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .wd-topic-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            border: 1.5px solid #e2e8f0;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .wd-topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(11,16,34,0.10);
+        }
+
+        .wd-topic-icon-wrap {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+            background: rgba(255,140,26,0.10);
+        }
+
+        .wd-topic-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0b1022;
+            margin-bottom: 6px;
+        }
+
+        .wd-topic-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.65;
+        }
+
+        /* ---------- CURRICULUM ---------- */
+        .wd-curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .wd-curr-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+            padding: 30px 28px;
+            transition: border-color 0.25s;
+        }
+
+        .wd-curr-card:hover {
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        .wd-curr-step {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .wd-curr-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .wd-curr-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .wd-curr-points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .wd-curr-points li::before {
+            content: '';
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2322c55e' width='18' height='18'%3E%3Cpath fill-rule='evenodd' d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        /* ---------- WHO IS THIS FOR ---------- */
+        .wd-who-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .wd-who-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 22px;
+            text-align: center;
+            border: 1.5px solid #e2e8f0;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .wd-who-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(11,16,34,0.10);
+        }
+
+        .wd-who-icon {
+            font-size: 36px;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .wd-who-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0b1022;
+            margin-bottom: 8px;
+        }
+
+        .wd-who-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* ---------- FAQ ACCORDION ---------- */
+        .wd-faq-list {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wd-faq-item {
+            background: #fff;
+            border-radius: 14px;
+            border: 1.5px solid #e2e8f0;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .wd-faq-item.open {
+            border-color: #ff8c1a;
+            box-shadow: 0 4px 20px rgba(255,140,26,0.10);
+        }
+
+        .wd-faq-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0b1022;
+            line-height: 1.5;
+        }
+
+        .wd-faq-trigger:hover {
+            color: #ff8c1a;
+        }
+
+        .wd-faq-icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 400;
+            color: #64748b;
+            transition: background 0.2s, color 0.2s, transform 0.25s;
+            line-height: 1;
+        }
+
+        .wd-faq-item.open .wd-faq-icon {
+            background: #ff8c1a;
+            color: #fff;
+            transform: rotate(45deg);
+        }
+
+        .wd-faq-body {
+            display: none;
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.75;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .wd-faq-item.open .wd-faq-body {
+            display: block;
+        }
+
+        /* ---------- CTA STRIP ---------- */
+        .wd-cta-strip {
+            background: linear-gradient(135deg, #ff8a00, #ff6a00);
+            padding: 64px 20px;
+            text-align: center;
+        }
+
+        .wd-cta-strip h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .wd-cta-strip p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 10px;
+        }
+
+        .wd-cta-price {
+            font-size: 42px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .wd-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            color: #ff6a00;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 16px 42px;
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.18);
+            transition: all 0.25s;
+        }
+
+        .wd-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 44px rgba(0,0,0,0.24);
+        }
+
+        .wd-cta-note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.70);
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 1024px) {
+            .wd-topics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .wd-who-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wd-hero h1 {
+                font-size: 34px;
+            }
+            .wd-hero-subtitle {
+                font-size: 15px;
+            }
+            .wd-stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .wd-stat-card:nth-child(2) {
+                border-right: none;
+            }
+            .wd-stat-card:nth-child(3) {
+                border-right: 1px solid #e2e8f0;
+            }
+            .wd-stat-card:nth-child(3),
+            .wd-stat-card:nth-child(4) {
+                border-top: 1px solid #e2e8f0;
+            }
+            .wd-curriculum-grid {
+                grid-template-columns: 1fr;
+            }
+            .wd-section-title {
+                font-size: 28px;
+            }
+            .wd-cta-strip h2 {
+                font-size: 26px;
+            }
+            .wd-cta-price {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .wd-hero {
+                padding: 70px 16px 56px;
+            }
+            .wd-hero h1 {
+                font-size: 28px;
+            }
+            .wd-topics-grid,
+            .wd-who-grid {
+                grid-template-columns: 1fr;
+            }
+            .wd-stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .wd-hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+            .wd-btn-primary,
+            .wd-btn-secondary {
+                width: 100%;
+                max-width: 340px;
+                justify-content: center;
+            }
+            .wd-section {
+                padding: 52px 16px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- ===== KANNADA BANNER — FIRST ===== -->
+    <div class="wd-kannada-banner">
+        <div class="wd-kannada-banner-inner">
+            <span class="wd-kannada-star">✦</span>
+            <span class="wd-kannada-text">ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span>
+            <span class="wd-kannada-star">✦</span>
+        </div>
+        <div><span class="wd-kannada-badge">India's First · Live in Kannada</span></div>
+    </div>
+
+    <!-- ===== VIDEO SECTION ===== -->
+    <div class="wd-video-wrap">
+        <div class="wd-video-inner">
+            <div class="wd-section-label" style="margin-bottom: 16px;">Watch Preview</div>
+            <h2 class="wd-section-title wd-section-title-light" style="margin-bottom: 28px; text-align: center;">
+                See What You'll Learn
+            </h2>
+            <div class="wd-video-card">
+                <iframe
+                    src="https://www.youtube.com/embed/{{ w.youtube_id }}?rel=0&modestbranding=1"
+                    title="{{ w.title }} — Workshop Preview"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+            <p class="wd-video-caption">Workshop preview — {{ w.title }} · MayaPreneur</p>
+        </div>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section class="wd-hero" style="--glow-color: {{ w.glow }};">
+        <div class="wd-type-badge" style="color: {{ w.accent }}; background: rgba(0,0,0,0.25); border-color: {{ w.accent }};">
+            {{ w.type_tag }}
+        </div>
+        <h1>{{ w.title }}</h1>
+        <p class="wd-hero-subtitle">{{ w.subtitle }}</p>
+
+        <div class="wd-info-pills">
+            <div class="wd-pill">
+                <span class="wd-pill-icon">📅</span>
+                {{ w.schedule }}
+            </div>
+            <div class="wd-pill">
+                <span class="wd-pill-icon">🕖</span>
+                {{ w.time }}
+            </div>
+            <div class="wd-pill">
+                <span class="wd-pill-icon">💻</span>
+                {{ w.platform }}
+            </div>
+            <div class="wd-pill">
+                <span class="wd-pill-icon">🗣️</span>
+                {{ w.language }}
+            </div>
+        </div>
+
+        <div class="wd-hero-meta">
+            <div class="wd-price-badge" style="border-color: {{ w.accent }};">
+                {{ w.price }}
+            </div>
+            <div class="wd-rating">
+                ★★★★★ 4.9
+                <span>(500+ students)</span>
+            </div>
+        </div>
+
+        <div class="wd-hero-ctas">
+            <a href="{{ url_for('checkout') }}" class="wd-btn-primary">
+                Register Now @ {{ w.price }} →
+            </a>
+            <a href="#curriculum" class="wd-btn-secondary wd-smooth-scroll">
+                Learn More ↓
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== QUICK STATS BAR ===== -->
+    <div class="wd-stats-bar">
+        <div class="wd-stats-inner">
+            <div class="wd-stat-card">
+                <div class="wd-stat-icon">💻</div>
+                <strong class="wd-stat-value">{{ w.platform }}</strong>
+                <span class="wd-stat-label">Platform</span>
+            </div>
+            <div class="wd-stat-card">
+                <div class="wd-stat-icon">⏱️</div>
+                <strong class="wd-stat-value">{{ w.duration }}</strong>
+                <span class="wd-stat-label">Duration</span>
+            </div>
+            <div class="wd-stat-card">
+                <div class="wd-stat-icon">🗣️</div>
+                <strong class="wd-stat-value">{{ w.language }}</strong>
+                <span class="wd-stat-label">Language</span>
+            </div>
+            <div class="wd-stat-card">
+                <div class="wd-stat-icon">🏷️</div>
+                <strong class="wd-stat-value">{{ w.price }}</strong>
+                <span class="wd-stat-label">Registration Fee</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== WHAT YOU'LL LEARN ===== -->
+    <section class="wd-section wd-section-alt">
+        <div class="wd-container">
+            <div class="wd-section-label">Curriculum Highlights</div>
+            <h2 class="wd-section-title">What You'll Learn</h2>
+            <p class="wd-section-desc">{{ w.description }}</p>
+
+            <div class="wd-topics-grid">
+                {% for t in w.topics %}
+                <div class="wd-topic-card">
+                    <div class="wd-topic-icon-wrap" style="background: color-mix(in srgb, {{ w.accent }} 12%, transparent);">
+                        {{ t.icon }}
+                    </div>
+                    <div class="wd-topic-title">{{ t.title }}</div>
+                    <div class="wd-topic-desc">{{ t.desc }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CURRICULUM ===== -->
+    <section class="wd-section wd-section-dark" id="curriculum">
+        <div class="wd-container">
+            <div class="wd-section-label">Workshop Agenda</div>
+            <h2 class="wd-section-title wd-section-title-light">Session Breakdown</h2>
+            <p class="wd-section-desc wd-section-desc-light" style="margin-bottom: 44px;">
+                A structured, hands-on journey from zero to your first results — in a single live session.
+            </p>
+
+            <div class="wd-curriculum-grid">
+                {% for step in w.curriculum %}
+                <div class="wd-curr-card">
+                    <div class="wd-curr-step" style="color: {{ w.accent }};">Step {{ step.step }}</div>
+                    <div class="wd-curr-title">{{ step.title }}</div>
+                    <ul class="wd-curr-points">
+                        {% for point in step.points %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHO IS THIS FOR ===== -->
+    <section class="wd-section wd-section-alt">
+        <div class="wd-container">
+            <div class="wd-section-label">Audience</div>
+            <h2 class="wd-section-title">Who Is This Workshop For?</h2>
+            <p class="wd-section-desc">
+                Whether you're a student, a professional, or someone looking for a fresh start — this workshop was designed with you in mind.
+            </p>
+
+            <div class="wd-who-grid">
+                {% for person in w.who_for %}
+                <div class="wd-who-card">
+                    <span class="wd-who-icon">{{ person.icon }}</span>
+                    <div class="wd-who-label">{{ person.get('label', person.get('title', '')) }}</div>
+                    <div class="wd-who-desc">{{ person.desc }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="wd-section" id="faq">
+        <div class="wd-container" style="text-align: center;">
+            <div class="wd-section-label">FAQ</div>
+            <h2 class="wd-section-title" style="margin-bottom: 10px;">Frequently Asked Questions</h2>
+            <p class="wd-section-desc" style="margin: 0 auto 40px;">
+                Still have questions? We've got answers to the most common ones below.
+            </p>
+        </div>
+
+        <div class="wd-faq-list">
+            {% for faq in w.faqs %}
+            <div class="wd-faq-item">
+                <button class="wd-faq-trigger" aria-expanded="false">
+                    <span>{{ faq.q }}</span>
+                    <span class="wd-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="wd-faq-body">{{ faq.a }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ===== CTA STRIP ===== -->
+    <div class="wd-cta-strip">
+        <h2>Ready to Join?</h2>
+        <p>Seats are limited — secure your spot before they fill up.</p>
+        <span class="wd-cta-price">{{ w.price }}</span>
+        <a href="{{ url_for('checkout') }}" class="wd-cta-btn">
+            Register Now &amp; Secure My Seat →
+        </a>
+        <p class="wd-cta-note">200% money-back guarantee · No questions asked</p>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // ---- FAQ accordion ----
+        document.querySelectorAll(".wd-faq-trigger").forEach(trigger => {
+            trigger.addEventListener("click", () => {
+                const item = trigger.closest(".wd-faq-item");
+                const isOpen = item.classList.contains("open");
+
+                // Close all
+                document.querySelectorAll(".wd-faq-item.open").forEach(el => {
+                    el.classList.remove("open");
+                    el.querySelector(".wd-faq-trigger").setAttribute("aria-expanded", "false");
+                });
+
+                // Toggle clicked
+                if (!isOpen) {
+                    item.classList.add("open");
+                    trigger.setAttribute("aria-expanded", "true");
+                }
+            });
+        });
+
+        // ---- Smooth scroll for anchor links ----
+        document.querySelectorAll('a.wd-smooth-scroll, a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                const href = this.getAttribute("href");
+                if (href && href.startsWith("#") && href.length > 1) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

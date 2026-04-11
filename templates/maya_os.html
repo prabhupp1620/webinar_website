@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAYA OS – India's Business Growth Ecosystem</title>
+<meta name="description" content="MAYA OS combines AI-powered marketing, technology, education, and strategy into one unified ecosystem that generates leads, closes sales, and scales your business.">
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060f;--bg2:#0a0a18;--bg3:#0f0f22;
+  --card:#0d0d1c;--card2:#12122a;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#f0f0ff;--muted:rgba(240,240,255,0.45);--muted2:rgba(240,240,255,0.25);
+  --blue:#6366f1;--purple:#a855f7;--pink:#ec4899;--cyan:#22d3ee;--amber:#f59e0b;--green:#10b981;
+  --grad:linear-gradient(135deg,#6366f1,#a855f7,#ec4899);
+  --grad2:linear-gradient(90deg,#6366f1,#22d3ee);
+  --glow-blue:0 0 40px rgba(99,102,241,0.35);
+  --glow-purple:0 0 40px rgba(168,85,247,0.35);
+  --r:10px;--r2:16px;--r3:24px;
+  --fh:'Cabinet Grotesk',sans-serif;
+  --fs:'Instrument Serif',serif;
+  --fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* GRAIN OVERLAY */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.4;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E")}
+
+/* ── NAV ── */
+nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;
+  display:flex;align-items:center;gap:0;padding:0 8px;height:52px;
+  background:rgba(13,13,28,0.85);backdrop-filter:blur(20px);
+  border:1px solid var(--border2);border-radius:100px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06);
+  width:min(950px,calc(100vw - 40px));transition:all 0.3s}
+.nav-logo{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text);
+  text-decoration:none;display:flex;align-items:center;gap:8px;padding:0 16px 0 8px;white-space:nowrap}
+.nav-logo-ring{width:28px;height:28px;border-radius:50%;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0}
+.nav-links{display:flex;gap:2px;list-style:none;flex:1;justify-content:center}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:6px 14px;border-radius:100px;transition:all 0.2s}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.nav-right{display:flex;gap:8px;align-items:center;padding:0 8px 0 0}
+.nav-ham{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:10px 12px;margin-right:4px}
+.nav-ham span{display:block;width:18px;height:1.5px;background:var(--text);border-radius:2px;transition:all 0.3s}
+
+/* MOBILE NAV DRAWER */
+.mobile-nav-drawer{display:none;position:fixed;inset:0;z-index:490;background:rgba(6,6,15,0.96);
+  backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.mobile-nav-drawer.open{display:flex}
+.mobile-nav-drawer a{font-family:var(--fh);font-size:28px;font-weight:700;color:var(--text);
+  text-decoration:none;padding:12px 32px;border-radius:var(--r2);transition:all 0.2s}
+.mobile-nav-drawer a:hover{background:rgba(255,255,255,0.06)}
+.mobile-nav-close{position:absolute;top:24px;right:24px;width:40px;height:40px;
+  border-radius:50%;background:rgba(255,255,255,0.07);border:none;color:var(--text);
+  font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:100px;
+  font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:var(--fb);
+  text-decoration:none;transition:all 0.25s;white-space:nowrap;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background 0.2s}
+.btn:hover::before{background:rgba(255,255,255,0.08)}
+.btn-grad{background:var(--grad);color:#fff;box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+.btn-grad:hover{box-shadow:0 8px 32px rgba(99,102,241,0.6);transform:translateY(-2px)}
+.btn-glass{background:rgba(255,255,255,0.07);color:var(--text);border:1px solid var(--border2)}
+.btn-glass:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
+.btn-white{background:#fff;color:#06060f;font-weight:700}
+.btn-white:hover{background:rgba(255,255,255,0.9);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.25)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.4)}
+.btn-lg{padding:14px 32px;font-size:16px}
+.btn-sm{padding:8px 18px;font-size:13px}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:140px 24px 80px;text-align:center;position:relative;overflow:hidden}
+
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orb-float 8s ease-in-out infinite}
+.orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(99,102,241,0.18) 0%,transparent 70%);
+  top:-200px;left:-100px;animation-delay:0s}
+.orb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(168,85,247,0.14) 0%,transparent 70%);
+  top:20%;right:-150px;animation-delay:-3s}
+.orb-3{width:400px;height:400px;background:radial-gradient(circle,rgba(34,211,238,0.1) 0%,transparent 70%);
+  bottom:10%;left:20%;animation-delay:-5s}
+@keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.04)}}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.3);
+  border-radius:100px;padding:7px 18px;font-size:12px;font-weight:600;
+  color:#a5b4fc;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:32px;
+  position:relative;z-index:2;animation:fade-up 0.7s ease both}
+.badge-pulse{width:6px;height:6px;border-radius:50%;background:#6366f1;
+  box-shadow:0 0 8px rgba(99,102,241,0.8);animation:badge-blink 2s infinite}
+@keyframes badge-blink{0%,100%{opacity:1;box-shadow:0 0 8px rgba(99,102,241,0.8)}50%{opacity:0.4;box-shadow:none}}
+
+.hero h1{font-family:var(--fh);font-size:clamp(44px,7vw,96px);font-weight:900;
+  line-height:1.02;letter-spacing:-0.04em;position:relative;z-index:2;
+  animation:fade-up 0.7s 0.1s ease both;max-width:1000px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 em{font-style:italic;font-family:var(--fs);font-weight:400;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:580px;
+  margin:24px auto 0;line-height:1.7;position:relative;z-index:2;
+  animation:fade-up 0.7s 0.2s ease both}
+.hero-ctas{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;
+  justify-content:center;position:relative;z-index:2;animation:fade-up 0.7s 0.3s ease both}
+
+.hero-stats{display:flex;gap:0;margin-top:64px;position:relative;z-index:2;
+  animation:fade-up 0.7s 0.4s ease both;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:var(--r2);overflow:hidden;backdrop-filter:blur(10px)}
+.hero-stat{padding:24px 40px;text-align:center;border-right:1px solid var(--border);flex:1}
+.hero-stat:last-child{border-right:none}
+.hs-val{font-family:var(--fh);font-size:32px;font-weight:900;letter-spacing:-0.03em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs-label{font-size:12px;color:var(--muted2);margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+
+/* DASHBOARD MOCKUP */
+.hero-dash{width:100%;max-width:900px;margin-top:72px;position:relative;z-index:2;
+  animation:fade-up 0.9s 0.5s ease both}
+.dash-wrap{background:var(--card);border:1px solid var(--border2);border-radius:var(--r3);
+  overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04),
+  var(--glow-blue);position:relative}
+.dash-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,0.5),transparent)}
+.dash-bar{display:flex;align-items:center;padding:12px 18px;gap:8px;
+  background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border)}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dash-url{margin-left:12px;flex:1;background:rgba(255,255,255,0.04);
+  border-radius:6px;padding:5px 12px;font-size:12px;color:var(--muted2);max-width:280px}
+.dash-body{display:grid;grid-template-columns:180px 1fr;min-height:260px}
+.dash-side{background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:16px}
+.dash-nav{display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:8px;font-size:12px;color:var(--muted2);margin-bottom:2px;font-weight:500;cursor:pointer}
+.dash-nav.on{background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2)}
+.dash-nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.dash-main{padding:18px}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.dash-kpi{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px}
+.kpi-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.kpi-val{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.kpi-delta{font-size:10px;margin-top:3px;font-weight:600}
+.dash-chart{display:flex;align-items:flex-end;gap:3px;height:70px;margin-bottom:10px}
+.dc-bar{flex:1;border-radius:3px 3px 0 0;min-width:0;transition:opacity 0.2s}
+.dc-bar:hover{opacity:0.8}
+.dash-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dash-widget{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:12px}
+.dw-title{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+
+/* ANIMATIONS */
+@keyframes fade-up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes slide-left{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes glow-pulse{0%,100%{box-shadow:var(--glow-blue)}50%{box-shadow:0 0 60px rgba(99,102,241,0.5)}}
+
+/* ── MARQUEE TRUST ── */
+.marquee-section{padding:0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.015)}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-item{display:flex;align-items:center;gap:10px;padding:20px 48px;
+  border-right:1px solid var(--border);white-space:nowrap}
+.mi-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.mi-name{font-family:var(--fh);font-size:14px;font-weight:600;color:var(--muted2);letter-spacing:-0.01em}
+.mi-stat{font-size:12px;color:rgba(240,240,255,0.2);margin-left:4px}
+
+/* ── SECTION BASE ── */
+section{padding:100px 24px}
+.container{max-width:1160px;margin:0 auto}
+.sec-eye{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:#818cf8;margin-bottom:14px}
+.sec-eye::before{content:'';width:24px;height:1px;background:currentColor}
+.sec-h{font-family:var(--fh);font-size:clamp(30px,4vw,52px);font-weight:800;
+  line-height:1.08;letter-spacing:-0.03em;color:var(--text)}
+.sec-h em{font-style:italic;font-family:var(--fs);font-weight:400;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{font-size:17px;color:var(--muted);max-width:540px;margin-top:14px;line-height:1.7}
+
+/* ── SERVICES BENTO GRID ── */
+.services-section{background:var(--bg2)}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;
+  gap:12px;margin-top:56px}
+.bento-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);
+  padding:28px;cursor:pointer;position:relative;overflow:hidden;
+  transition:all 0.3s;display:flex;flex-direction:column}
+.bento-card::before{content:'';position:absolute;inset:0;background:var(--grad);
+  opacity:0;transition:opacity 0.3s;z-index:0}
+.bento-card:hover{border-color:rgba(99,102,241,0.4);transform:translateY(-3px);
+  box-shadow:0 16px 48px rgba(0,0,0,0.4),var(--glow-blue)}
+.bento-card>*{position:relative;z-index:1}
+.bento-card.featured{background:linear-gradient(135deg,#1a1a3e,#0d0d1c);
+  border-color:rgba(99,102,241,0.3);grid-column:span 2}
+.bento-card.featured:hover{border-color:rgba(99,102,241,0.6)}
+.bento-card.preneur{border:1px solid rgba(245,158,11,0.25);background:linear-gradient(135deg,#1a1500,#0d0d1c)}
+.bento-card.preneur:hover{border-color:rgba(245,158,11,0.5);box-shadow:0 16px 48px rgba(0,0,0,0.4),0 0 40px rgba(245,158,11,0.2)}
+.bc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:20px;margin-bottom:18px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border)}
+.bc-title{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text);
+  margin-bottom:8px;letter-spacing:-0.01em}
+.bc-desc{font-size:13px;color:var(--muted);line-height:1.55;flex:1}
+.bc-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:6px;background:rgba(255,255,255,0.06);
+  color:var(--muted2);border:1px solid var(--border)}
+.bc-arrow{position:absolute;top:20px;right:20px;font-size:16px;color:var(--muted2);
+  opacity:0;transform:translateX(-4px);transition:all 0.25s}
+.bento-card:hover .bc-arrow{opacity:1;transform:translateX(0)}
+.bento-featured-inner{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.bf-stats{display:flex;flex-direction:column;gap:20px}
+.bf-stat-val{font-family:var(--fh);font-size:40px;font-weight:900;letter-spacing:-0.04em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bf-stat-label{font-size:12px;color:var(--muted2);margin-top:2px}
+
+/* ── MODULES ── */
+.modules-section{background:var(--bg)}
+.module-block{margin-top:16px;border-radius:var(--r3);overflow:hidden;
+  border:1px solid var(--border);background:var(--card);
+  transition:border-color 0.3s,box-shadow 0.3s}
+.module-block:hover{border-color:rgba(99,102,241,0.25);box-shadow:0 24px 60px rgba(0,0,0,0.4)}
+.module-block:first-child{margin-top:56px}
+.mb-inner{display:grid;grid-template-columns:1fr 380px}
+.mb-inner.flip{grid-template-columns:380px 1fr}
+.mb-left{padding:48px 44px;display:flex;flex-direction:column;justify-content:center}
+.mb-right{padding:48px 44px;display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;border-left:1px solid var(--border)}
+.mb-inner.flip .mb-right{border-left:none;border-right:1px solid var(--border)}
+.mb-right::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(168,85,247,0.04))}
+.mb-num{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:#818cf8;margin-bottom:10px}
+.mb-title{font-family:var(--fh);font-size:clamp(22px,2.5vw,30px);font-weight:800;
+  line-height:1.1;letter-spacing:-0.025em;color:var(--text);margin-bottom:6px}
+.mb-tagline{font-family:var(--fs);font-style:italic;font-size:17px;color:var(--muted);
+  margin-bottom:18px;line-height:1.4}
+.mb-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:22px}
+.mb-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.mb-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text)}
+.mb-list li::before{content:'→';color:#6366f1;font-weight:700;flex-shrink:0;margin-top:1px}
+.mb-outcome{background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.18);
+  border-radius:10px;padding:14px 18px;margin-top:22px}
+.mb-out-label{font-size:10px;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:#818cf8;margin-bottom:5px}
+.mb-out-text{font-size:13px;color:var(--text);font-weight:500;line-height:1.5}
+.mb-cta{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:11px 24px;
+  background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);
+  color:#a5b4fc;border-radius:100px;font-size:14px;font-weight:600;
+  text-decoration:none;cursor:pointer;font-family:var(--fb);
+  transition:all 0.25s}
+.mb-cta:hover{background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.5);
+  color:#fff;transform:translateY(-2px)}
+.mb-cta.amber{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);
+  color:#fbbf24}
+.mb-cta.amber:hover{background:rgba(245,158,11,0.2);border-color:rgba(245,158,11,0.5);color:#fff}
+.mb-right-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted2);margin-bottom:18px}
+.mb-bignum{font-family:var(--fh);font-size:52px;font-weight:900;letter-spacing:-0.04em;
+  line-height:1;margin-bottom:4px}
+.mb-bignum-label{font-size:12px;color:var(--muted2);margin-bottom:24px}
+.mb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.chip{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;
+  background:rgba(255,255,255,0.05);color:var(--muted2);border:1px solid var(--border)}
+.chip.on{background:rgba(99,102,241,0.15);color:#a5b4fc;border-color:rgba(99,102,241,0.3)}
+
+/* ── PROCESS STEPS ── */
+.process-section{background:var(--bg2)}
+.process-section .sec-h{color:var(--text)}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:64px;position:relative}
+.steps-grid::after{content:'';position:absolute;top:36px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,0.3) 20%,rgba(99,102,241,0.3) 80%,transparent);z-index:0}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px;z-index:1}
+.step-num{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:22px;
+  background:var(--card);border:1px solid rgba(99,102,241,0.35);color:#a5b4fc;
+  box-shadow:0 0 30px rgba(99,102,241,0.2);transition:all 0.3s}
+.step:hover .step-num{background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.6);
+  box-shadow:0 0 40px rgba(99,102,241,0.35)}
+.step-title{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text);
+  margin-bottom:8px;letter-spacing:-0.01em}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ── WHY US ── */
+.why-section{background:var(--bg)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);
+  padding:28px;transition:all 0.3s;position:relative;overflow:hidden}
+.why-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.why-card:hover{border-color:rgba(99,102,241,0.3);transform:translateY(-4px);
+  box-shadow:0 20px 48px rgba(0,0,0,0.4)}
+.why-card:hover::after{transform:scaleX(1)}
+.wc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;margin-bottom:18px;
+  background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)}
+.wc-title{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--text);
+  margin-bottom:10px;letter-spacing:-0.01em}
+.wc-desc{font-size:14px;color:var(--muted);line-height:1.65}
+.wc-accent{color:var(--text);font-weight:600}
+
+/* ── AI SECTION ── */
+.ai-section{background:var(--bg2)}
+.ai-inner{background:linear-gradient(135deg,#0a0a1e,#12082e,#0a1a2e);
+  border-radius:var(--r3);padding:72px 64px;position:relative;overflow:hidden;
+  border:1px solid rgba(99,102,241,0.15);max-width:1160px;margin:0 auto}
+.ai-inner::before{content:'';position:absolute;top:-100px;right:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,0.12) 0%,transparent 70%);pointer-events:none}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.ai-feats{list-style:none;margin-top:32px;display:flex;flex-direction:column;gap:20px}
+.ai-feat{display:flex;gap:14px;align-items:flex-start}
+.af-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;font-size:16px;
+  background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.2)}
+.af-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.af-desc{font-size:13px;color:var(--muted);line-height:1.55}
+
+.terminal{background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--r2);overflow:hidden;backdrop-filter:blur(10px)}
+.term-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;
+  background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06)}
+.td{width:10px;height:10px;border-radius:50%}
+.term-label{margin-left:8px;font-size:11px;color:var(--muted2);font-weight:500}
+.term-body{padding:20px}
+.term-row{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}
+.term-role{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px}
+.role-u{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.35)}
+.role-a{background:rgba(99,102,241,0.2);color:#a5b4fc}
+.term-text{font-size:12px;line-height:1.6}
+.term-text.u{color:rgba(255,255,255,0.65)}
+.term-text.a{color:rgba(255,255,255,0.45)}
+.cursor{display:inline-block;width:7px;height:12px;background:#818cf8;
+  animation:cur-blink 1s infinite;vertical-align:middle;margin-left:2px}
+@keyframes cur-blink{0%,100%{opacity:1}50%{opacity:0}}
+.term-actions{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.05)}
+.ta-title{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted2);margin-bottom:8px}
+.ta-btn{background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);
+  border-radius:7px;padding:9px 12px;font-size:11px;color:rgba(255,255,255,0.55);
+  cursor:pointer;margin-bottom:5px;transition:all 0.2s;display:block;width:100%}
+.ta-btn:hover{background:rgba(99,102,241,0.16);color:rgba(255,255,255,0.8)}
+
+/* ── LEAD FORM ── */
+.lead-section{background:var(--bg3)}
+.lead-inner{max-width:860px;margin:0 auto;text-align:center}
+.lead-form-wrap{background:var(--card);border:1px solid var(--border2);border-radius:var(--r3);
+  padding:48px;margin-top:48px;box-shadow:0 32px 80px rgba(0,0,0,0.4);
+  position:relative;overflow:hidden}
+.lead-form-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,0.5),transparent)}
+.lf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.lf-field{display:flex;flex-direction:column;gap:6px}
+.lf-field.full{grid-column:1/-1}
+.lf-field label{font-size:11px;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--muted2)}
+.lf-field input,.lf-field select{padding:13px 16px;border:1.5px solid rgba(255,255,255,0.08);
+  border-radius:var(--r);font-size:15px;font-family:var(--fb);color:var(--text);
+  background:rgba(255,255,255,0.04);outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s}
+.lf-field input:focus,.lf-field select:focus{border-color:rgba(99,102,241,0.5);
+  box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+.lf-field select option{background:#1a1a3e;color:var(--text)}
+.lf-submit{width:100%;padding:15px;background:var(--grad);color:#fff;
+  border:none;border-radius:var(--r);font-size:16px;font-weight:700;
+  cursor:pointer;font-family:var(--fh);transition:all 0.25s;margin-top:16px;
+  letter-spacing:-0.01em;box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+.lf-submit:hover{box-shadow:0 8px 32px rgba(99,102,241,0.6);transform:translateY(-2px)}
+.lf-note{font-size:12px;color:var(--muted2);margin-top:14px}
+.lf-success{display:none;text-align:center;padding:32px}
+.lf-success-icon{font-size:52px;margin-bottom:16px}
+.lf-success-title{font-family:var(--fh);font-size:24px;font-weight:800;color:var(--text);margin-bottom:8px}
+.lf-success-sub{font-size:15px;color:var(--muted)}
+
+/* ── CTA SECTION ── */
+.cta-section{padding:100px 24px;text-align:center;position:relative;overflow:hidden;
+  background:var(--bg)}
+.cta-bg{position:absolute;inset:0;
+  background:radial-gradient(ellipse 800px 500px at 50% 50%,rgba(99,102,241,0.12) 0%,transparent 70%);
+  pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.cta-title{font-family:var(--fh);font-size:clamp(36px,5.5vw,70px);font-weight:900;
+  color:var(--text);line-height:1.04;letter-spacing:-0.035em;margin-bottom:18px}
+.cta-title em{font-family:var(--fs);font-style:italic;font-weight:400;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:18px;color:var(--muted);line-height:1.6;margin-bottom:40px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-trust{margin-top:36px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
+.ct-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted2)}
+.ct-item span{color:#a5b4fc;font-weight:600}
+
+/* ── LEAD MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(6,6,15,0.85);
+  backdrop-filter:blur(12px);z-index:800;display:flex;align-items:center;
+  justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--card);border:1px solid var(--border2);border-radius:var(--r3);
+  padding:44px;max-width:500px;width:100%;position:relative;
+  transform:translateY(24px) scale(0.97);transition:transform 0.3s;
+  box-shadow:0 40px 100px rgba(0,0,0,0.6),var(--glow-blue)}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,0.5),transparent)}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1)}
+.modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;
+  border-radius:50%;border:none;background:rgba(255,255,255,0.07);cursor:pointer;
+  font-size:15px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:all 0.2s}
+.modal-close:hover{background:rgba(255,255,255,0.12);color:var(--text)}
+.modal-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);
+  border-radius:100px;padding:4px 12px;font-size:11px;font-weight:600;
+  color:#a5b4fc;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px}
+.modal-title{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--text);
+  line-height:1.1;letter-spacing:-0.025em;margin-bottom:8px}
+.modal-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+.modal-fields{display:flex;flex-direction:column;gap:12px}
+.mf-field{display:flex;flex-direction:column;gap:5px}
+.mf-field label{font-size:11px;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--muted2)}
+.mf-field input,.mf-field select{padding:12px 15px;border:1.5px solid rgba(255,255,255,0.08);
+  border-radius:var(--r);font-size:14px;font-family:var(--fb);color:var(--text);
+  background:rgba(255,255,255,0.04);outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+.mf-field input:focus,.mf-field select:focus{border-color:rgba(99,102,241,0.5);
+  box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+.mf-field select option{background:#1a1a3e;color:var(--text)}
+.modal-submit{width:100%;padding:14px;background:var(--grad);color:#fff;border:none;
+  border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;
+  font-family:var(--fh);transition:all 0.25s;margin-top:18px;
+  letter-spacing:-0.01em;box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+.modal-submit:hover{box-shadow:0 8px 32px rgba(99,102,241,0.6);transform:translateY(-1px)}
+.modal-note{font-size:11px;color:var(--muted2);margin-top:10px;text-align:center}
+.modal-success{display:none;text-align:center;padding:20px 0}
+.ms-icon{font-size:52px;margin-bottom:14px}
+.ms-title{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px}
+.ms-sub{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);padding:64px 24px 32px;border-top:1px solid var(--border)}
+.ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
+  max-width:1160px;margin:0 auto;padding-bottom:48px;
+  border-bottom:1px solid var(--border)}
+.ft-logo{font-family:var(--fh);font-size:18px;font-weight:800;color:var(--text);
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;text-decoration:none}
+.ft-logo-ring{width:26px;height:26px;border-radius:50%;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff}
+.ft-desc{font-size:13px;color:var(--muted2);line-height:1.65}
+.ft-socials{display:flex;gap:8px;margin-top:20px}
+.ft-social{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  color:var(--muted2);text-decoration:none;font-size:12px;font-weight:700;
+  transition:all 0.2s}
+.ft-social:hover{background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.3);color:#a5b4fc}
+.ft-col-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted2);margin-bottom:14px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:14px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s}
+.ft-links a:hover{color:var(--text)}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;
+  padding-top:28px;max-width:1160px;margin:0 auto;flex-wrap:wrap;gap:12px}
+.ft-copy{font-size:12px;color:var(--muted2)}
+.ft-brands{display:flex;gap:16px}
+.ft-brand{font-size:12px;color:rgba(255,255,255,0.2);font-weight:600}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{top:12px;padding:0 6px}
+  .nav-links{display:none}
+  .nav-ham{display:flex}
+  section{padding:64px 20px}
+  .hero{padding:100px 20px 60px}
+  .hero-stats{flex-direction:column;width:100%;max-width:400px}
+  .hero-stat{border-right:none;border-bottom:1px solid var(--border);padding:16px 24px}
+  .hero-stat:last-child{border-bottom:none}
+  .bento{grid-template-columns:1fr 1fr}
+  .bento-card.featured{grid-column:1/-1}
+  .bento-featured-inner{grid-template-columns:1fr}
+  .mb-inner,.mb-inner.flip{grid-template-columns:1fr}
+  .mb-right{border-left:none!important;border-right:none!important;border-top:1px solid var(--border)}
+  .mb-inner.flip .mb-right{order:1}.mb-inner.flip .mb-left{order:2}
+  .steps-grid{grid-template-columns:1fr;gap:28px}
+  .steps-grid::after{display:none}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .ai-grid{grid-template-columns:1fr;gap:40px}
+  .ai-inner{padding:40px 24px}
+  .lf-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .cta-btns{flex-direction:column;align-items:center}
+}
+@media(max-width:560px){
+  .bento{grid-template-columns:1fr}
+  .bento-card.featured{grid-column:1}
+  .why-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr}
+  .hero h1{font-size:38px}
+  .modal-box{padding:32px 20px}
+}
+
+/* ═══════════════════════════════════════════════════════
+   WHITE + ORANGE BRAND THEME OVERRIDE
+   Hero & footer stay dark. All content sections go light.
+   Indigo/purple accent → orange (#ff8a00 / #ff6a00)
+   ═══════════════════════════════════════════════════════ */
+
+/* Page body */
+body{background:#fff;color:#0b1022}
+
+/* ── NAV — stays dark ── */
+nav{background:rgba(11,16,34,0.9)!important;border-color:rgba(255,106,0,0.15)!important}
+.nav-logo{color:#f0f0ff!important}
+.nav-links a{color:rgba(240,240,255,0.6)!important}
+.nav-links a:hover{color:#f0f0ff!important;background:rgba(255,255,255,0.06)!important}
+.btn-glass{background:rgba(255,255,255,0.08)!important;color:#f0f0ff!important;border-color:rgba(255,255,255,0.15)!important}
+.nav-ham span{background:#f0f0ff!important}
+.mobile-nav-drawer{background:rgba(6,6,15,0.97)!important}
+.mobile-nav-drawer a{color:#f0f0ff!important}
+.mobile-nav-close{background:rgba(255,255,255,0.07)!important;color:#f0f0ff!important}
+
+/* ── HERO — stays dark ── */
+.hero{background:#06060f!important}
+.orb-1{background:radial-gradient(circle,rgba(255,106,0,0.14) 0%,transparent 70%)!important}
+.orb-2{background:radial-gradient(circle,rgba(255,138,0,0.1) 0%,transparent 70%)!important}
+.orb-3{background:radial-gradient(circle,rgba(255,106,0,0.08) 0%,transparent 70%)!important}
+.hero-badge{background:rgba(255,106,0,0.12)!important;border-color:rgba(255,106,0,0.3)!important;color:#ff8a00!important}
+.badge-pulse{background:#ff6a00!important;box-shadow:0 0 8px rgba(255,106,0,0.8)!important}
+@keyframes badge-blink{0%,100%{opacity:1;box-shadow:0 0 8px rgba(255,106,0,0.8)}50%{opacity:0.4;box-shadow:none}}
+.hero h1,.hero-sub,.hs-label{color:inherit}
+.hs-val{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.hero-stats{background:rgba(255,255,255,0.03)!important;border-color:rgba(255,255,255,0.07)!important}
+.hero-stat{border-color:rgba(255,255,255,0.07)!important}
+.dash-nav.on{background:rgba(255,106,0,0.15)!important;color:#ff8a00!important;border-color:rgba(255,106,0,0.2)!important}
+
+/* ── BTN-GRAD — orange everywhere ── */
+.btn-grad{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;box-shadow:0 4px 20px rgba(255,106,0,0.4)!important}
+.btn-grad:hover{box-shadow:0 8px 32px rgba(255,106,0,0.6)!important}
+
+/* ── MARQUEE ── */
+.marquee-section{background:#f8faff!important;border-color:#e8edf5!important}
+.mi-dot{background:#ff6a00!important}
+.mi-name{color:#475569!important}
+.mi-stat{color:#94a3b8!important}
+
+/* ── SECTION BASE — light ── */
+.sec-eye{color:#ff6a00!important}
+.sec-h{color:#0b1022!important}
+.sec-h em{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.sec-sub{color:#64748b!important}
+.grad-text{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+
+/* ── SERVICES ── */
+.services-section{background:#fff!important}
+.bento-card{background:#fff!important;border-color:#e2e8f0!important}
+.bento-card:hover{border-color:rgba(255,106,0,0.3)!important;box-shadow:0 16px 48px rgba(0,0,0,0.07)!important}
+.bento-card.featured{background:linear-gradient(135deg,#0b1022,#1a2040)!important;border-color:rgba(255,106,0,0.3)!important}
+.bento-card.preneur{background:linear-gradient(135deg,#fff7ed,#fffaf5)!important;border-color:rgba(255,138,0,0.25)!important}
+.bc-title{color:#0b1022!important}
+.bc-desc{color:#64748b!important}
+.bc-tag{background:rgba(0,0,0,0.04)!important;color:#64748b!important;border-color:#e2e8f0!important}
+.bc-arrow{color:#94a3b8!important;opacity:0!important}
+.bento-card:hover .bc-arrow{color:#ff6a00!important;opacity:1!important}
+.bento-card.featured .bc-title{color:#f0f0ff!important}
+.bento-card.featured .bc-desc{color:rgba(240,240,255,0.6)!important}
+.bf-stat-val{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.bf-stat-label{color:rgba(240,240,255,0.45)!important}
+.bento-card.preneur .bc-title{color:#0b1022!important}
+.bento-card.preneur .bc-desc{color:#64748b!important}
+
+/* ── MODULES ── */
+.modules-section{background:#f8faff!important}
+.module-block{background:#fff!important;border-color:#e2e8f0!important}
+.module-block:hover{border-color:rgba(255,106,0,0.25)!important;box-shadow:0 24px 60px rgba(0,0,0,0.06)!important}
+.mb-num{color:#ff6a00!important}
+.mb-title{color:#0b1022!important}
+.mb-tagline{color:#64748b!important}
+.mb-desc{color:#64748b!important}
+.mb-list li{color:#475569!important}
+.mb-list li::before{color:#ff6a00!important}
+.mb-outcome{background:rgba(255,106,0,0.06)!important;border-color:rgba(255,106,0,0.18)!important}
+.mb-out-label{color:#ff6a00!important}
+.mb-out-text{color:#0b1022!important}
+.mb-cta{background:rgba(255,106,0,0.08)!important;border-color:rgba(255,106,0,0.25)!important;color:#ff6a00!important}
+.mb-cta:hover{background:rgba(255,106,0,0.18)!important;border-color:rgba(255,106,0,0.5)!important;color:#fff!important}
+.mb-cta.amber{background:rgba(245,158,11,0.1)!important;border-color:rgba(245,158,11,0.25)!important;color:#d97706!important}
+.mb-right{background:#f8faff!important;border-color:#e2e8f0!important}
+.mb-right::before{background:none!important}
+.mb-right-label{color:#94a3b8!important}
+.mb-bignum-label{color:#94a3b8!important}
+.chip{background:#f1f5f9!important;color:#64748b!important;border-color:#e2e8f0!important}
+.chip.on{background:rgba(255,106,0,0.1)!important;color:#ff6a00!important;border-color:rgba(255,106,0,0.3)!important}
+
+/* ── PROCESS ── */
+.process-section{background:#fff!important}
+.steps-grid::after{background:linear-gradient(90deg,transparent,rgba(255,106,0,0.2) 20%,rgba(255,106,0,0.2) 80%,transparent)!important}
+.step-num{background:#fff!important;border-color:rgba(255,106,0,0.35)!important;color:#ff6a00!important;box-shadow:0 0 20px rgba(255,106,0,0.12)!important}
+.step:hover .step-num{background:rgba(255,106,0,0.06)!important;border-color:rgba(255,106,0,0.6)!important;box-shadow:0 0 30px rgba(255,106,0,0.25)!important}
+.step-title{color:#0b1022!important}
+.step-desc{color:#64748b!important}
+
+/* ── WHY US ── */
+.why-section{background:#f8faff!important}
+.why-card{background:#fff!important;border-color:#e2e8f0!important}
+.why-card::after{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important}
+.why-card:hover{border-color:rgba(255,106,0,0.3)!important;box-shadow:0 20px 48px rgba(0,0,0,0.06)!important}
+.wc-icon{background:rgba(255,106,0,0.08)!important;border-color:rgba(255,106,0,0.2)!important}
+.wc-title{color:#0b1022!important}
+.wc-desc{color:#64748b!important}
+.wc-accent{color:#ff6a00!important}
+
+/* ── AI SECTION ── */
+.ai-section{background:#fff!important}
+/* ai-inner stays dark — it's a feature showcase box */
+
+/* ── LEAD SECTION ── */
+.lead-section{background:#f8faff!important}
+.lead-form-wrap{background:#fff!important;border-color:#e2e8f0!important;box-shadow:0 16px 48px rgba(0,0,0,0.07)!important}
+.lead-form-wrap::before{background:linear-gradient(90deg,transparent,rgba(255,106,0,0.3),transparent)!important}
+.lf-field label{color:#64748b!important}
+.lf-field input,.lf-field select{background:#f8faff!important;border-color:#e2e8f0!important;color:#0b1022!important}
+.lf-field input:focus,.lf-field select:focus{border-color:rgba(255,106,0,0.5)!important;box-shadow:0 0 0 3px rgba(255,106,0,0.1)!important}
+.lf-field select option{background:#fff!important;color:#0b1022!important}
+.lf-submit{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;box-shadow:0 4px 20px rgba(255,106,0,0.4)!important}
+.lf-submit:hover{box-shadow:0 8px 32px rgba(255,106,0,0.6)!important}
+.lf-note{color:#94a3b8!important}
+.lf-success-title{color:#0b1022!important}
+.lf-success-sub{color:#64748b!important}
+
+/* ── CTA SECTION — orange strip ── */
+.cta-section{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important}
+.cta-bg{background:none!important}
+.cta-title{color:#fff!important}
+.cta-sub{color:rgba(255,255,255,0.88)!important}
+.ct-item{color:rgba(255,255,255,0.75)!important}
+.ct-item span{color:#fff!important;font-weight:700}
+.cta-section .btn-grad{background:#fff!important;color:#ff6a00!important;box-shadow:0 4px 20px rgba(0,0,0,0.15)!important}
+.cta-section .btn-grad:hover{box-shadow:0 8px 32px rgba(0,0,0,0.25)!important}
+.cta-section .btn-glass{background:rgba(255,255,255,0.15)!important;color:#fff!important;border-color:rgba(255,255,255,0.3)!important}
+.cta-section .btn-glass:hover{background:rgba(255,255,255,0.25)!important}
+
+/* ── MODAL ── */
+.modal-overlay{background:rgba(11,16,34,0.82)!important}
+.modal-box{background:#fff!important;border-color:#e2e8f0!important;box-shadow:0 40px 100px rgba(0,0,0,0.12)!important}
+.modal-box::before{background:linear-gradient(90deg,transparent,rgba(255,106,0,0.3),transparent)!important}
+.modal-close{background:#f1f5f9!important;color:#64748b!important}
+.modal-close:hover{background:#e2e8f0!important;color:#0b1022!important}
+.modal-badge{background:rgba(255,106,0,0.08)!important;border-color:rgba(255,106,0,0.25)!important;color:#ff6a00!important}
+.modal-title{color:#0b1022!important}
+.modal-sub{color:#64748b!important}
+.mf-field label{color:#64748b!important}
+.mf-field input,.mf-field select{background:#f8faff!important;border-color:#e2e8f0!important;color:#0b1022!important}
+.mf-field input:focus,.mf-field select:focus{border-color:rgba(255,106,0,0.5)!important;box-shadow:0 0 0 3px rgba(255,106,0,0.1)!important}
+.mf-field select option{background:#fff!important;color:#0b1022!important}
+.modal-submit{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;box-shadow:0 4px 20px rgba(255,106,0,0.4)!important}
+.modal-note{color:#94a3b8!important}
+.ms-title{color:#0b1022!important}
+.ms-sub{color:#64748b!important}
+
+/* ── FOOTER — stays dark ── */
+footer{background:#0b1022!important;border-color:rgba(255,255,255,0.08)!important}
+.ft-grid{border-color:rgba(255,255,255,0.08)!important}
+.ft-logo{color:#f0f0ff!important}
+.ft-logo-ring{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important}
+.ft-desc{color:rgba(255,255,255,0.45)!important}
+.ft-col-title{color:rgba(255,255,255,0.4)!important}
+.ft-links a{color:rgba(255,255,255,0.35)!important}
+.ft-links a:hover{color:#ff8a00!important}
+.ft-social{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.08)!important;color:rgba(255,255,255,0.4)!important}
+.ft-social:hover{background:rgba(255,106,0,0.15)!important;border-color:rgba(255,106,0,0.3)!important;color:#ff8a00!important}
+.ft-copy{color:rgba(255,255,255,0.25)!important}
+.ft-brand{color:rgba(255,255,255,0.2)!important}
+</style>
+</head>
+<body>
+
+<!-- ── LEAD MODAL ── -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalForm">
+      <div class="modal-badge"><span class="badge-pulse"></span>Free Strategy Session</div>
+      <div class="modal-title">Let's grow your<br>business together.</div>
+      <p class="modal-sub">Fill in your details and our team will reach out within 24 hours with a custom growth plan.</p>
+      <form class="modal-fields" id="mLeadForm" onsubmit="submitModal(event)">
+        <div class="mf-field"><label>Your Name *</label><input type="text" name="name" placeholder="e.g. Rahul Sharma" required></div>
+        <div class="mf-field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required></div>
+        <div class="mf-field"><label>Email Address</label><input type="email" name="email" placeholder="you@company.com"></div>
+        <div class="mf-field"><label>I'm interested in</label>
+          <select name="interest">
+            <option value="">Select a service...</option>
+            <option>Learning &amp; Training (Maya Preneur)</option>
+            <option>Growth Marketing (MayaVerse)</option>
+            <option>E-Commerce Scaling (Nextrends)</option>
+            <option>Branding &amp; Corporate (Digiverse)</option>
+            <option>Technology &amp; Dev</option>
+            <option>Automation &amp; CRM</option>
+            <option>Strategy &amp; Consulting</option>
+            <option>Full Ecosystem</option>
+          </select>
+        </div>
+        <button type="submit" class="modal-submit">Get My Free Strategy Call →</button>
+      </form>
+      <p class="modal-note">✓ No commitment &nbsp;·&nbsp; ✓ Free 90-day growth audit &nbsp;·&nbsp; ✓ Reply within 24 hrs</p>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="ms-icon">🎯</div>
+      <div class="ms-title">You're all set!</div>
+      <p class="ms-sub">Our team will call you within 24 hours.<br>Check your WhatsApp for a confirmation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── MOBILE NAV DRAWER ── -->
+<div class="mobile-nav-drawer" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#modules" onclick="closeMobileNav()">Solutions</a>
+  <a href="#process" onclick="closeMobileNav()">Process</a>
+  <a href="#why" onclick="closeMobileNav()">Why Us</a>
+  <a href="{{ url_for('maya_preneur') }}">Webinars ↗</a>
+  <button onclick="closeMobileNav();openModal('Strategy Call')" class="btn btn-grad" style="margin-top:16px;border-radius:100px">Book Strategy Call →</button>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="mainNav">
+  <a href="{{ url_for('index') }}" class="nav-logo">
+    <span class="nav-logo-ring">M</span>MAYA OS
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#modules">Solutions</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#ai">AI &amp; Automation</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="{{ url_for('maya_preneur') }}" class="btn btn-glass btn-sm">Webinars ↗</a>
+    <button onclick="openModal('Strategy Call')" class="btn btn-grad btn-sm">Book Strategy Call</button>
+  </div>
+  <div class="nav-ham" id="navHam" onclick="openMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-badge"><span class="badge-pulse"></span>India's #1 Business Growth Ecosystem</div>
+
+  <h1>We don't sell services.<br>We build <em>growth systems.</em></h1>
+
+  <p class="hero-sub">MAYA OS combines AI-powered marketing, technology, education, and strategy into one unified ecosystem that generates leads, closes sales, and scales your business — automatically.</p>
+
+  <div class="hero-ctas">
+    <button onclick="openModal('Start Building')" class="btn btn-grad btn-lg">Start Building Your System →</button>
+    <a href="#modules" class="btn btn-glass btn-lg">Explore Solutions</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hs-val" data-count="500" data-suffix="+">0+</div>
+      <div class="hs-label">Businesses Scaled</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-val">₹120Cr+</div>
+      <div class="hs-label">Revenue Generated</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-val">4 Brands</div>
+      <div class="hs-label">One Ecosystem</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-val" data-count="98" data-suffix="%">0%</div>
+      <div class="hs-label">Client Retention</div>
+    </div>
+  </div>
+
+  <div class="hero-dash">
+    <div class="dash-wrap">
+      <div class="dash-bar">
+        <div class="dash-dot" style="background:#ff5f57"></div>
+        <div class="dash-dot" style="background:#febc2e"></div>
+        <div class="dash-dot" style="background:#28c840"></div>
+        <div class="dash-url">app.maya-os.com/dashboard</div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-side">
+          <div class="dash-nav on"><span class="dash-nav-dot"></span>Dashboard</div>
+          <div class="dash-nav"><span class="dash-nav-dot"></span>Lead Pipeline</div>
+          <div class="dash-nav"><span class="dash-nav-dot"></span>Campaigns</div>
+          <div class="dash-nav"><span class="dash-nav-dot"></span>Ad Analytics</div>
+          <div class="dash-nav"><span class="dash-nav-dot"></span>Automations</div>
+          <div class="dash-nav"><span class="dash-nav-dot"></span>CRM</div>
+          <div style="margin-top:auto;padding-top:16px"><div class="dash-nav"><span class="dash-nav-dot"></span>AI Insights</div></div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-kpis">
+            <div class="dash-kpi"><div class="kpi-label">Revenue MTD</div><div class="kpi-val">₹24.6L</div><div class="kpi-delta" style="color:#10b981">↑ 34%</div></div>
+            <div class="dash-kpi"><div class="kpi-label">Leads / Week</div><div class="kpi-val">847</div><div class="kpi-delta" style="color:#10b981">↑ 18%</div></div>
+            <div class="dash-kpi"><div class="kpi-label">ROAS</div><div class="kpi-val">6.2×</div><div class="kpi-delta" style="color:#10b981">↑ 12%</div></div>
+            <div class="dash-kpi"><div class="kpi-label">Conversion</div><div class="kpi-val">31%</div><div class="kpi-delta" style="color:#f59e0b">→ Stable</div></div>
+          </div>
+          <div class="dash-chart">
+            <div class="dc-bar" style="height:42%;background:rgba(99,102,241,0.3)"></div>
+            <div class="dc-bar" style="height:56%;background:rgba(99,102,241,0.35)"></div>
+            <div class="dc-bar" style="height:46%;background:rgba(99,102,241,0.3)"></div>
+            <div class="dc-bar" style="height:72%;background:rgba(99,102,241,0.4)"></div>
+            <div class="dc-bar" style="height:62%;background:rgba(99,102,241,0.35)"></div>
+            <div class="dc-bar" style="height:88%;background:linear-gradient(to top,#6366f1,#a855f7)"></div>
+            <div class="dc-bar" style="height:74%;background:rgba(99,102,241,0.4)"></div>
+            <div class="dc-bar" style="height:82%;background:rgba(99,102,241,0.4)"></div>
+            <div class="dc-bar" style="height:96%;background:linear-gradient(to top,#6366f1,#ec4899)"></div>
+          </div>
+          <div class="dash-row2">
+            <div class="dash-widget"><div class="dw-title">Active Automations</div>
+              <span style="display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(16,185,129,0.15);color:#10b981">24 Running</span>
+              <span style="display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:600;background:rgba(245,158,11,0.15);color:#f59e0b;margin-left:4px">3 Paused</span>
+            </div>
+            <div class="dash-widget"><div class="dw-title">Maya AI Status</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+                <div style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 6px rgba(16,185,129,0.6)"></div>
+                <span style="font-size:11px;color:rgba(240,240,255,0.5);font-weight:500">AI Active — Optimising ads</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE TRUST ── -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <!-- duplicated for infinite scroll -->
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">HDFC Events</span><span class="mi-stat">Partner</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Reliance Corp</span><span class="mi-stat">Client</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Nykaa Brand</span><span class="mi-stat">Client</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Meesho Sellers</span><span class="mi-stat">500+ managed</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Amazon Partners</span><span class="mi-stat">Certified</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">500+ Startups</span><span class="mi-stat">Scaled</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">10,000+ Students</span><span class="mi-stat">Trained</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">₹120Cr+ Revenue</span><span class="mi-stat">Generated</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">HDFC Events</span><span class="mi-stat">Partner</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Reliance Corp</span><span class="mi-stat">Client</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Nykaa Brand</span><span class="mi-stat">Client</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Meesho Sellers</span><span class="mi-stat">500+ managed</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">Amazon Partners</span><span class="mi-stat">Certified</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">500+ Startups</span><span class="mi-stat">Scaled</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">10,000+ Students</span><span class="mi-stat">Trained</span></div>
+    <div class="marquee-item"><span class="mi-dot"></span><span class="mi-name">₹120Cr+ Revenue</span><span class="mi-stat">Generated</span></div>
+  </div>
+</div>
+
+<!-- ── SERVICES BENTO ── -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="sec-eye">What We Build</div>
+    <h2 class="sec-h">Nine systems.<br>One <em>ecosystem.</em></h2>
+    <p class="sec-sub">Every module is a complete growth system — not a one-off service. Each one is designed to work alone or together, powered by AI and automation.</p>
+
+    <div class="bento">
+
+      <!-- Featured: Full Ecosystem -->
+      <div class="bento-card featured reveal" onclick="openModal('Full Ecosystem')">
+        <div class="bc-arrow">↗</div>
+        <div class="bento-featured-inner">
+          <div>
+            <div class="bc-icon" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.2)">🚀</div>
+            <div class="bc-title" style="font-size:22px;margin-bottom:12px">Full MAYA OS Ecosystem</div>
+            <div class="bc-desc" style="font-size:15px;max-width:360px">Marketing, Tech, Branding, and Education — all connected inside one AI-powered system that generates leads, closes sales, and scales revenue.</div>
+            <button onclick="openModal('Full Ecosystem')" class="btn btn-grad" style="margin-top:20px;border-radius:100px">Explore Full System →</button>
+          </div>
+          <div class="bf-stats">
+            <div><div class="bf-stat-val">6.2×</div><div class="bf-stat-label">Average ROAS across clients</div></div>
+            <div><div class="bf-stat-val">₹120Cr</div><div class="bf-stat-label">Revenue driven in 2025</div></div>
+            <div><div class="bf-stat-val">500+</div><div class="bf-stat-label">Active businesses scaled</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Growth Marketing -->
+      <div class="bento-card reveal" onclick="openModal('Growth Marketing')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.2)">📈</div>
+        <div class="bc-title">Growth Marketing Engine</div>
+        <div class="bc-desc">Meta, Google, and beyond — fully managed performance marketing systems.</div>
+        <span class="bc-tag">MayaVerse</span>
+      </div>
+
+      <!-- E-Commerce -->
+      <div class="bento-card reveal" onclick="openModal('E-Commerce Scaling (Nextrends)')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2)">🛒</div>
+        <div class="bc-title">E-Commerce Scale System</div>
+        <div class="bc-desc">End-to-end Shopify, Amazon &amp; Flipkart management that actually sells.</div>
+        <span class="bc-tag">Nextrends</span>
+      </div>
+
+      <!-- Branding -->
+      <div class="bento-card reveal" onclick="openModal('Branding & Corporate (Digiverse)')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2)">🏆</div>
+        <div class="bc-title">Branding &amp; Corporate Suite</div>
+        <div class="bc-desc">B2B corporate identity and bulk branding solutions at scale.</div>
+        <span class="bc-tag">Digiverse</span>
+      </div>
+
+      <!-- Learning — links to webinars -->
+      <a href="{{ url_for('maya_preneur') }}" class="bento-card preneur reveal" style="text-decoration:none">
+        <div class="bc-arrow" style="color:#fbbf24">↗</div>
+        <div class="bc-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25)">🎓</div>
+        <div class="bc-title">Learning &amp; Training Platform</div>
+        <div class="bc-desc">Courses, cohorts, and certifications that build real business skills.</div>
+        <span class="bc-tag" style="background:rgba(245,158,11,0.1);color:#fbbf24;border-color:rgba(245,158,11,0.3)">Maya Preneur ↗</span>
+      </a>
+
+      <!-- Tech -->
+      <div class="bento-card reveal" onclick="openModal('Technology & Dev')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.15)">⚡</div>
+        <div class="bc-title">Technology &amp; Dev Studio</div>
+        <div class="bc-desc">Apps, websites, SaaS, and custom software built to scale.</div>
+        <span class="bc-tag">All Brands</span>
+      </div>
+
+      <!-- Automation -->
+      <div class="bento-card reveal" onclick="openModal('Automation & CRM')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.15)">🤖</div>
+        <div class="bc-title">Automation &amp; CRM Systems</div>
+        <div class="bc-desc">WhatsApp, email, and funnel automation that converts 24/7.</div>
+        <span class="bc-tag">All Brands</span>
+      </div>
+
+      <!-- Creative -->
+      <div class="bento-card reveal" onclick="openModal('Creative Studio')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.15)">🎬</div>
+        <div class="bc-title">Creative &amp; Content Studio</div>
+        <div class="bc-desc">Ad videos, creatives, and content built for conversion — not just attention.</div>
+        <span class="bc-tag">MayaVerse</span>
+      </div>
+
+      <!-- Strategy -->
+      <div class="bento-card reveal" onclick="openModal('Strategy & Consulting')">
+        <div class="bc-arrow">↗</div>
+        <div class="bc-icon" style="background:rgba(168,85,247,0.1);border-color:rgba(168,85,247,0.15)">🧭</div>
+        <div class="bc-title">Strategy &amp; Consulting</div>
+        <div class="bc-desc">Business models, go-to-market plans, and revenue strategy.</div>
+        <span class="bc-tag">All Brands</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── MODULES ── -->
+<section class="modules-section" id="modules">
+  <div class="container">
+    <div class="sec-eye">Deep Dive</div>
+    <h2 class="sec-h">Every module is a <em>complete system.</em></h2>
+    <p class="sec-sub">Not a collection of tasks. Each module is designed with inputs, processes, automation, and measurable outcomes built in.</p>
+
+    <!-- Module 01 -->
+    <div class="module-block reveal">
+      <div class="mb-inner">
+        <div class="mb-left">
+          <div class="mb-num">Module 01 · MayaVerse</div>
+          <h3 class="mb-title">Growth Marketing Engine</h3>
+          <div class="mb-tagline">"Your ads, fully managed. Your revenue, fully scaled."</div>
+          <p class="mb-desc">We don't just run ads. We build a complete revenue machine — from audience research and creative production to funnel optimisation and daily performance management across Meta and Google.</p>
+          <ul class="mb-list">
+            <li>Performance Marketing (Meta Ads, Google Ads, YouTube)</li>
+            <li>Funnel Building &amp; Landing Page Optimisation</li>
+            <li>Lead Generation Campaigns with Auto-Nurture</li>
+            <li>Creative Strategy + Ad Video Production</li>
+            <li>Weekly Reporting with AI-Driven Insights</li>
+          </ul>
+          <div class="mb-outcome">
+            <div class="mb-out-label">Expected Outcome</div>
+            <div class="mb-out-text">Businesses typically see 3–6× ROAS within 90 days. Average cost-per-lead drops by 40% after the first month of optimisation.</div>
+          </div>
+          <button onclick="openModal('Growth Marketing')" class="mb-cta">Get Started →</button>
+        </div>
+        <div class="mb-right">
+          <div class="mb-right-label">Performance at a Glance</div>
+          <div class="mb-bignum" style="color:#6366f1">6.2×</div>
+          <div class="mb-bignum-label">Average Return on Ad Spend</div>
+          <div class="mb-bignum" style="color:#a855f7;font-size:40px">₹42</div>
+          <div class="mb-bignum-label">Average Cost Per Lead (B2C)</div>
+          <div class="mb-bignum" style="color:#22d3ee;font-size:40px">34%</div>
+          <div class="mb-bignum-label">Avg. Revenue Growth in 60 Days</div>
+          <div class="mb-chips">
+            <span class="chip on">MayaVerse</span>
+            <span class="chip">Digiverse</span>
+            <span class="chip">Nextrends</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 02 -->
+    <div class="module-block reveal">
+      <div class="mb-inner flip">
+        <div class="mb-right" style="background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(0,0,0,0))">
+          <div class="mb-right-label">Marketplace Coverage</div>
+          <div class="mb-bignum" style="color:#10b981">₹1Cr+</div>
+          <div class="mb-bignum-label">Highest monthly GMV achieved</div>
+          <div class="mb-bignum" style="color:#10b981;font-size:40px">5</div>
+          <div class="mb-bignum-label">Platforms managed simultaneously</div>
+          <div class="mb-chips">
+            <span class="chip on" style="background:rgba(16,185,129,0.15);color:#10b981;border-color:rgba(16,185,129,0.3)">Nextrends</span>
+            <span class="chip">Shopify</span><span class="chip">Amazon</span><span class="chip">Flipkart</span>
+          </div>
+        </div>
+        <div class="mb-left">
+          <div class="mb-num">Module 02 · Nextrends</div>
+          <h3 class="mb-title">E-Commerce Scale System</h3>
+          <div class="mb-tagline">"Your store, running like a machine — 24 hours a day."</div>
+          <p class="mb-desc">From setting up your Shopify store to managing listings on Amazon, Flipkart, and Meesho — we handle the full e-commerce operation so you can focus on your product, not the platform.</p>
+          <ul class="mb-list">
+            <li>Shopify Store Setup, Design &amp; Optimisation</li>
+            <li>Amazon, Flipkart &amp; Meesho Marketplace Management</li>
+            <li>Product Listing, SEO &amp; Catalogue Management</li>
+            <li>Inventory, Logistics &amp; Returns Coordination</li>
+            <li>D2C Scaling with Performance Marketing Integration</li>
+          </ul>
+          <div class="mb-outcome">
+            <div class="mb-out-label">Expected Outcome</div>
+            <div class="mb-out-text">Our managed stores average ₹15L–₹1Cr in monthly GMV within 6 months. Marketplace ranking improves within 30 days of optimisation.</div>
+          </div>
+          <button onclick="openModal('E-Commerce Scaling (Nextrends)')" class="mb-cta">Get Started →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 03 -->
+    <div class="module-block reveal">
+      <div class="mb-inner">
+        <div class="mb-left">
+          <div class="mb-num">Module 03 · Digiverse</div>
+          <h3 class="mb-title">Branding &amp; Corporate Suite</h3>
+          <div class="mb-tagline">"Your brand is your first impression. Make it unforgettable."</div>
+          <p class="mb-desc">We help B2B companies, corporates, and enterprises build brand identity systems and procure bulk branded merchandise — from concept to delivery, all under one roof.</p>
+          <ul class="mb-list">
+            <li>Corporate Identity Design (Logo, Colours, Typography)</li>
+            <li>Bulk Branded Merchandise &amp; Corporate Gifting</li>
+            <li>Company Profile, Pitch Deck &amp; Brochure Design</li>
+            <li>Event Branding &amp; Exhibition Materials</li>
+            <li>Pan-India Delivery for Bulk Orders</li>
+          </ul>
+          <div class="mb-outcome">
+            <div class="mb-out-label">Expected Outcome</div>
+            <div class="mb-out-text">A complete brand identity system delivered in 15 business days. Bulk orders dispatched to 300+ cities across India.</div>
+          </div>
+          <button onclick="openModal('Branding & Corporate (Digiverse)')" class="mb-cta">Get Started →</button>
+        </div>
+        <div class="mb-right" style="background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(0,0,0,0))">
+          <div class="mb-right-label">Digiverse Numbers</div>
+          <div class="mb-bignum" style="color:#f59e0b">300+</div>
+          <div class="mb-bignum-label">Cities covered for bulk delivery</div>
+          <div class="mb-bignum" style="color:#f59e0b;font-size:40px">150+</div>
+          <div class="mb-bignum-label">Corporate clients served</div>
+          <div class="mb-chips">
+            <span class="chip on" style="background:rgba(245,158,11,0.15);color:#f59e0b;border-color:rgba(245,158,11,0.3)">Digiverse</span>
+            <span class="chip">B2B</span><span class="chip">Enterprise</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 04 — Maya Preneur -->
+    <div class="module-block reveal" style="border-color:rgba(245,158,11,0.2)">
+      <div class="mb-inner flip">
+        <div class="mb-right" style="background:linear-gradient(135deg,rgba(167,139,250,0.07),rgba(0,0,0,0))">
+          <div class="mb-right-label">Maya Preneur Stats</div>
+          <div class="mb-bignum" style="color:#a78bfa">10,000+</div>
+          <div class="mb-bignum-label">Students enrolled across programmes</div>
+          <div class="mb-bignum" style="color:#a78bfa;font-size:40px">91%</div>
+          <div class="mb-bignum-label">Students report income increase in 90 days</div>
+          <div class="mb-chips">
+            <span class="chip on" style="background:rgba(167,139,250,0.15);color:#a78bfa;border-color:rgba(167,139,250,0.3)">Maya Preneur</span>
+            <span class="chip">Cohorts</span><span class="chip">Certifications</span>
+          </div>
+        </div>
+        <div class="mb-left">
+          <div class="mb-num">Module 04 · Maya Preneur</div>
+          <h3 class="mb-title">Learning &amp; Training Platform</h3>
+          <div class="mb-tagline">"Learn the skills that actually build businesses."</div>
+          <p class="mb-desc">Maya Preneur teaches affiliate marketing, digital marketing, and e-commerce through live cohorts, recorded courses, and mentorship — giving students real systems they can implement on day one.</p>
+          <ul class="mb-list">
+            <li>Affiliate Marketing Mastery (Live + Recorded)</li>
+            <li>Digital Marketing Certification Programme</li>
+            <li>E-Commerce Seller &amp; Brand Builder Course</li>
+            <li>Business Strategy &amp; Entrepreneurship Bootcamp</li>
+            <li>1-on-1 Mentorship &amp; Community Access</li>
+          </ul>
+          <div class="mb-outcome">
+            <div class="mb-out-label">Expected Outcome</div>
+            <div class="mb-out-text">Students go from zero to their first ₹1L in income within 90 days of completing our programmes. 10,000+ trained so far.</div>
+          </div>
+          <a href="{{ url_for('maya_preneur') }}" class="mb-cta amber">Explore Webinars &amp; Workshops →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 05 -->
+    <div class="module-block reveal">
+      <div class="mb-inner">
+        <div class="mb-left">
+          <div class="mb-num">Module 05 · All Brands</div>
+          <h3 class="mb-title">Technology &amp; Dev Studio</h3>
+          <div class="mb-tagline">"Your tech stack, built for speed, scale, and sales."</div>
+          <p class="mb-desc">From a landing page to a full SaaS product — we build technology that works. Every project is delivered with documentation, handoff support, and optional managed maintenance.</p>
+          <ul class="mb-list">
+            <li>Android &amp; iOS App Development (React Native / Flutter)</li>
+            <li>Website Development — Static, Dynamic &amp; E-Commerce</li>
+            <li>SaaS &amp; CRM Product Development</li>
+            <li>WhatsApp Business API Integration</li>
+            <li>Custom Funnel &amp; Automation Tech</li>
+          </ul>
+          <div class="mb-outcome">
+            <div class="mb-out-label">Expected Outcome</div>
+            <div class="mb-out-text">MVP delivered in 30–45 days. All products built with conversion-first architecture. Full IP ownership transferred to client on completion.</div>
+          </div>
+          <button onclick="openModal('Technology & Dev')" class="mb-cta">Get Started →</button>
+        </div>
+        <div class="mb-right">
+          <div class="mb-right-label">Tech Stack</div>
+          <div class="mb-bignum" style="color:#22d3ee">45 Days</div>
+          <div class="mb-bignum-label">Average MVP delivery time</div>
+          <div class="mb-bignum" style="color:#22d3ee;font-size:40px">200+</div>
+          <div class="mb-bignum-label">Projects delivered</div>
+          <div class="mb-chips">
+            <span class="chip">React</span><span class="chip">Flutter</span>
+            <span class="chip">Node.js</span><span class="chip">Shopify</span><span class="chip">Webflow</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="process-section" id="process">
+  <div class="container">
+    <div class="sec-eye">Our Process</div>
+    <h2 class="sec-h">From first call to <em>first results</em> — in 30 days.</h2>
+    <p class="sec-sub">We follow a proven five-step process that gets every client's system live, optimised, and generating results — without the back-and-forth.</p>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Strategy Session</div>
+        <div class="step-desc">We audit your business, understand your goals, and design a custom growth system blueprint.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">System Design</div>
+        <div class="step-desc">Your dedicated team maps out every component — funnels, automations, ad strategy, tech stack.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Build &amp; Launch</div>
+        <div class="step-desc">We build, test, and go live in 30 days. Ads running, automation active, CRM configured.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">Optimise &amp; Scale</div>
+        <div class="step-desc">AI monitors performance daily. Our team makes weekly improvements based on real data.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">05</div>
+        <div class="step-title">Report &amp; Expand</div>
+        <div class="step-desc">Monthly strategy reviews, transparent dashboards, and a clear roadmap to compound growth.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section class="why-section" id="why">
+  <div class="container">
+    <div class="sec-eye">Why MAYA OS</div>
+    <h2 class="sec-h">We are not an <em>agency.</em></h2>
+    <p class="sec-sub">Agencies deliver work. We build systems. That's why our clients grow — and keep growing — long after the initial engagement.</p>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="wc-icon">🔗</div>
+        <div class="wc-title">Ecosystem, Not Silos</div>
+        <div class="wc-desc">Marketing, tech, branding, and education — all <span class="wc-accent">connected inside one system</span>. Your CRM talks to your ads. Nothing works in isolation.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon">📊</div>
+        <div class="wc-title">Results Are Non-Negotiable</div>
+        <div class="wc-desc">We set clear KPIs before every engagement — <span class="wc-accent">cost per lead, ROAS, GMV targets</span> — and track them live. No vanity metrics.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon">🤖</div>
+        <div class="wc-title">AI-First, Always</div>
+        <div class="wc-desc">AI for ad optimisation, lead scoring, content generation, and forecasting. <span class="wc-accent">You get the power of AI without the learning curve.</span></div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon">🇮🇳</div>
+        <div class="wc-title">Built for Indian Business</div>
+        <div class="wc-desc">GST-friendly funnels, WhatsApp-first automation, regional language creatives. <span class="wc-accent">We understand the Indian market deeply.</span></div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon">⚡</div>
+        <div class="wc-title">One Partner. Everything Done.</div>
+        <div class="wc-desc">Instead of managing 6 different vendors — <span class="wc-accent">one MAYA OS partnership covers everything.</span> Faster decisions, faster results.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon">📈</div>
+        <div class="wc-title">Transparent by Default</div>
+        <div class="wc-desc">Real-time dashboards, weekly calls, monthly strategy reviews. <span class="wc-accent">No black-box reporting. Ever.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI SECTION ── -->
+<section class="ai-section" id="ai">
+  <div class="ai-inner">
+    <div class="ai-grid">
+      <div>
+        <div class="sec-eye" style="color:#818cf8">AI &amp; Automation</div>
+        <h2 class="sec-h" style="color:var(--text)">Your business, running <em>while you sleep.</em></h2>
+        <p class="sec-sub" style="color:rgba(240,240,255,0.45)">MAYA OS isn't just powered by AI — it's built around it. Every system we build includes automation that works around the clock.</p>
+        <ul class="ai-feats">
+          <li class="ai-feat"><div class="af-icon">🎯</div><div><div class="af-title">AI Lead Scoring</div><div class="af-desc">Every incoming lead is scored automatically — high-intent leads are routed to sales instantly, others go into nurture sequences.</div></div></li>
+          <li class="ai-feat"><div class="af-icon">📣</div><div><div class="af-title">Ad Creative Intelligence</div><div class="af-desc">Our AI analyses which creatives are winning and auto-generates copy and visual suggestions — cutting creative testing time by 60%.</div></div></li>
+          <li class="ai-feat"><div class="af-icon">💬</div><div><div class="af-title">WhatsApp Automation Engine</div><div class="af-desc">Automated follow-ups, appointment booking, order updates, and re-engagement via WhatsApp API with personalisation at scale.</div></div></li>
+          <li class="ai-feat"><div class="af-icon">📊</div><div><div class="af-title">Predictive Revenue Forecasting</div><div class="af-desc">Know next month's revenue before it happens. Our AI models your pipeline and gives you a 30-day forecast every Monday morning.</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <div class="terminal">
+          <div class="term-bar">
+            <div class="td" style="background:#ff5f57"></div>
+            <div class="td" style="background:#febc2e"></div>
+            <div class="td" style="background:#28c840"></div>
+            <span class="term-label">Maya AI — Live Intelligence</span>
+          </div>
+          <div class="term-body">
+            <div class="term-row"><span class="term-role role-u">You</span><span class="term-text u">Which campaigns should I scale this week?</span></div>
+            <div class="term-row"><span class="term-role role-a">Maya</span><span class="term-text a">Based on the last 7 days: Campaign 'Nykaa B2B' has a 6.8× ROAS and CPL of ₹38. I recommend increasing the daily budget by 40%. Campaign 'Mumbai Local' has dropped below 2× — suggest pausing and refreshing the creative.<span class="cursor"></span></span></div>
+            <div class="term-actions">
+              <div class="ta-title">Suggested Actions</div>
+              <button class="ta-btn">↑ Scale 'Nykaa B2B' by ₹2,000/day</button>
+              <button class="ta-btn" style="background:rgba(236,72,153,0.08);border-color:rgba(236,72,153,0.15)">⏸ Pause 'Mumbai Local' &amp; flag for review</button>
+              <button class="ta-btn" style="background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.06)">📋 Generate creative brief for new ad set</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEAD FORM ── -->
+<section class="lead-section" id="contact">
+  <div class="container lead-inner">
+    <div class="sec-eye" style="justify-content:center">Get Started</div>
+    <h2 class="sec-h" style="margin:0 auto;text-align:center">Tell us about your business.<br>We'll take it from there.</h2>
+    <p class="sec-sub" style="margin:0 auto;text-align:center">Fill in the form below and our growth strategist will reach out within 24 hours with a custom plan — completely free.</p>
+    <div class="lead-form-wrap reveal">
+      <div id="sectionFormWrap">
+        <form id="sLeadForm" onsubmit="submitSection(event)">
+          <div class="lf-grid">
+            <div class="lf-field"><label>Your Name *</label><input type="text" name="name" placeholder="e.g. Rahul Sharma" required></div>
+            <div class="lf-field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required></div>
+            <div class="lf-field"><label>Email Address</label><input type="email" name="email" placeholder="you@company.com"></div>
+            <div class="lf-field"><label>I'm interested in</label>
+              <select name="interest">
+                <option value="">Select a service...</option>
+                <option>Learning &amp; Training (Maya Preneur)</option>
+                <option>Growth Marketing (MayaVerse)</option>
+                <option>E-Commerce Scaling (Nextrends)</option>
+                <option>Branding &amp; Corporate (Digiverse)</option>
+                <option>Technology &amp; Dev</option>
+                <option>Automation &amp; CRM</option>
+                <option>Full Ecosystem</option>
+              </select>
+            </div>
+            <div class="lf-field full"><label>Tell us about your business (optional)</label><input type="text" name="message" placeholder="e.g. I run a clothing brand and want to scale on Amazon..."></div>
+          </div>
+          <button type="submit" class="lf-submit">Book My Free Strategy Call →</button>
+          <p class="lf-note">✓ No commitment &nbsp;·&nbsp; ✓ Free 90-day growth audit &nbsp;·&nbsp; ✓ Response within 24 hours</p>
+        </form>
+      </div>
+      <div class="lf-success" id="sectionSuccess">
+        <div class="lf-success-icon">🎯</div>
+        <div class="lf-success-title">You're all set!</div>
+        <p class="lf-success-sub">Our growth strategist will call you within 24 hours.<br>Check your WhatsApp — we'll send a confirmation shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title">Your growth system<br>starts <em>today.</em></h2>
+    <p class="cta-sub">Stop buying services. Start building systems. Book a free 30-minute strategy call and we'll show you exactly what your business needs to grow in the next 90 days.</p>
+    <div class="cta-btns">
+      <button onclick="openModal('Final CTA')" class="btn btn-grad btn-lg">Book Free Strategy Call →</button>
+      <a href="{{ url_for('maya_preneur') }}" class="btn btn-glass btn-lg">Explore Maya Preneur</a>
+    </div>
+    <div class="cta-trust">
+      <div class="ct-item"><span>✓</span> No commitment required</div>
+      <div class="ct-item"><span>✓</span> Free 90-day growth audit</div>
+      <div class="ct-item"><span>✓</span> Dedicated account manager from day one</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <a href="{{ url_for('index') }}" class="ft-logo"><span class="ft-logo-ring">M</span>MAYA OS</a>
+      <p class="ft-desc">India's complete business growth ecosystem — combining marketing, technology, education, and strategy into systems that scale.</p>
+      <div class="ft-socials">
+        <a href="#" class="ft-social">in</a>
+        <a href="#" class="ft-social">tw</a>
+        <a href="#" class="ft-social">ig</a>
+        <a href="#" class="ft-social">yt</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-title">Services</div>
+      <ul class="ft-links">
+        <li><a href="#services" onclick="openModal('Growth Marketing')">Growth Marketing</a></li>
+        <li><a href="#services" onclick="openModal('E-Commerce Scaling (Nextrends)')">E-Commerce Scaling</a></li>
+        <li><a href="#services" onclick="openModal('Technology & Dev')">Technology &amp; Dev</a></li>
+        <li><a href="#services" onclick="openModal('Automation & CRM')">WhatsApp Automation</a></li>
+        <li><a href="#services" onclick="openModal('Branding & Corporate (Digiverse)')">Branding &amp; Corporate</a></li>
+        <li><a href="#services" onclick="openModal('Strategy & Consulting')">Strategy &amp; Consulting</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Brands</div>
+      <ul class="ft-links">
+        <li><a href="#services" onclick="openModal('Branding & Corporate (Digiverse)')">Digiverse — B2B Branding</a></li>
+        <li><a href="{{ url_for('maya_preneur') }}">Maya Preneur — Education</a></li>
+        <li><a href="#services" onclick="openModal('Growth Marketing (MayaVerse)')">MayaVerse — Agency</a></li>
+        <li><a href="#services" onclick="openModal('E-Commerce Scaling (Nextrends)')">Nextrends — E-Commerce</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-title">Company</div>
+      <ul class="ft-links">
+        <li><a href="#why">About MAYA OS</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="{{ url_for('contact_page') }}">Contact</a></li>
+        <li><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+        <li><a href="{{ url_for('terms_of_use') }}">Terms of Service</a></li>
+        <li><a href="{{ url_for('refund_policy') }}">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2026 MAYA OS. All rights reserved. Built in India 🇮🇳</div>
+    <div class="ft-brands">
+      <span class="ft-brand">Digiverse</span>
+      <span class="ft-brand">·</span>
+      <span class="ft-brand">Maya Preneur</span>
+      <span class="ft-brand">·</span>
+      <span class="ft-brand">MayaVerse</span>
+      <span class="ft-brand">·</span>
+      <span class="ft-brand">Nextrends</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── MODAL ──────────────────────────────────────────────────────
+function openModal(interest) {
+  const overlay = document.getElementById('leadModal');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (interest) {
+    const sel = overlay.querySelector('select[name="interest"]');
+    if (sel) for (let o of sel.options) if (o.value.toLowerCase().includes(interest.toLowerCase())) { sel.value = o.value; break; }
+  }
+}
+function closeModal() {
+  document.getElementById('leadModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('leadModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+async function submitModal(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try { await fetch('/lead', { method: 'POST', body: new FormData(e.target) }); } catch(err) {}
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(closeModal, 4000);
+}
+
+async function submitSection(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try { await fetch('/lead', { method: 'POST', body: new FormData(e.target) }); } catch(err) {}
+  document.getElementById('sectionFormWrap').style.display = 'none';
+  document.getElementById('sectionSuccess').style.display = 'block';
+}
+
+// Auto popup once per session
+if (!sessionStorage.getItem('leadShown')) {
+  setTimeout(() => {
+    if (!document.getElementById('leadModal').classList.contains('open')) {
+      openModal(''); sessionStorage.setItem('leadShown', '1');
+    }
+  }, 12000);
+}
+
+// ── MOBILE NAV ─────────────────────────────────────────────────
+function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); document.body.style.overflow = ''; }
+
+// ── SCROLL REVEAL ──────────────────────────────────────────────
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
+      setTimeout(() => entry.target.classList.add('visible'), +delay);
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.07 });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.dataset.delay = (i % 4) * 80;
+  revealObs.observe(el);
+});
+
+// ── COUNTER ANIMATION ──────────────────────────────────────────
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+// ── NAV SCROLL SHADOW ──────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  nav.style.boxShadow = window.scrollY > 40 ? '0 12px 48px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06)' : '0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06)';
+}, { passive: true });
+</script>
+</body>
+</html>

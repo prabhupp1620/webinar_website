@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Video Review{% else %}Add Video Review{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Video Review{% else %}Add Video Review{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Video Review{% else %}Add Video Review{% endif %}</h1>
+    <a href="{{ url_for('admin.video_reviews') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Student Name *</label>
+            <input type="text" name="student_name" value="{{ row.student_name if row else '' }}" required placeholder="e.g. Praveen Mj">
+        </div>
+        <div class="form-group">
+            <label>Student Role</label>
+            <input type="text" name="student_role" value="{{ row.student_role if row else '' }}" placeholder="Dropshipping Student · Batch 1">
+        </div>
+        <div class="form-group">
+            <label>Video Type</label>
+            <select name="video_type" id="videoType">
+                <option value="local"   {% if not row or row.video_type=='local'   %}selected{% endif %}>Local File / Upload</option>
+                <option value="youtube" {% if row and row.video_type=='youtube' %}selected{% endif %}>YouTube</option>
+            </select>
+        </div>
+        <div class="form-group" id="videoUploadRow">
+            <label>Upload Video File (mp4 / mov / webm)</label>
+            <input type="file" name="video_file" accept="video/*">
+            {% if row and row.video_type == 'local' and row.video_src %}
+            <video src="{{ url_for('static', filename=row.video_src) if not row.video_src.startswith('http') else row.video_src }}"
+                   style="display:block;margin-top:8px;max-width:260px;border-radius:6px;" controls></video>
+            {% endif %}
+            <small style="color:#64748b;font-size:11px;">Upload a new file to replace. Leave empty to keep existing.</small>
+        </div>
+        <div class="form-group" id="videoSrcRow">
+            <label>Or paste Path / YouTube ID</label>
+            <input type="text" name="video_src" value="{{ row.video_src if row else '' }}"
+                   placeholder="uploads/video.mp4  or  YouTube Video ID (e.g. dQw4w9WgXcQ)">
+            <small style="color:#64748b;font-size:11px;">For YouTube type, paste only the video ID.</small>
+        </div>
+        <div class="form-group">
+            <label>Thumbnail — Upload File</label>
+            <input type="file" name="thumb_file" accept="image/*">
+            {% if row and row.thumbnail %}
+            <img src="{{ url_for('static', filename=row.thumbnail) if not row.thumbnail.startswith('http') else row.thumbnail }}"
+                 class="img-preview" style="margin-top:8px;" onerror="this.style.display='none'">
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label>Or Thumbnail URL / Path</label>
+            <input type="text" name="thumbnail" value="{{ row.thumbnail if row else '' }}" placeholder="images/student/students.jpeg">
+        </div>
+        <div class="form-group">
+            <label>Duration</label>
+            <input type="text" name="duration" value="{{ row.duration if row else '' }}" placeholder="1:24">
+        </div>
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="category" required>
+                <option value="1" {% if row and row.category==1 %}selected{% endif %}>Dropshipping</option>
+                <option value="2" {% if row and row.category==2 %}selected{% endif %}>E-Commerce</option>
+                <option value="3" {% if row and row.category==3 %}selected{% endif %}>Online Earning</option>
+                <option value="0" {% if not row or row.category==0 %}selected{% endif %}>All (General)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="1" {% if not row or row.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% if row %}Save Changes{% else %}Add Video Review{% endif %}</button>
+        <a href="{{ url_for('admin.video_reviews') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+<script>
+(function(){
+    var sel = document.getElementById('videoType');
+    var up  = document.getElementById('videoUploadRow');
+    function toggle(){ up.style.display = sel.value === 'local' ? '' : 'none'; }
+    sel.addEventListener('change', toggle);
+    toggle();
+})();
+</script>
+{% endblock %}

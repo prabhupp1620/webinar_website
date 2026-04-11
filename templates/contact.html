@@ -1,0 +1,663 @@
+{% extends "base_public.html" %}
+{% block title %}Contact Us – MayaPreneur{% endblock %}
+
+{% block head %}
+<style>
+    /* ===== CONTACT PAGE ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* --- Hero --- */
+    .contact-page-hero {
+        background: linear-gradient(135deg, #0b1022 0%, #111827 60%, #1a2540 100%);
+        padding: 90px 20px 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .contact-page-hero::before {
+        content: '';
+        position: absolute;
+        top: -80px; left: 50%;
+        transform: translateX(-50%);
+        width: 700px; height: 500px;
+        background: radial-gradient(ellipse, rgba(255,140,26,0.15) 0%, transparent 65%);
+        pointer-events: none;
+    }
+    .contact-page-hero::after {
+        content: '';
+        position: absolute;
+        bottom: -60px; right: -80px;
+        width: 400px; height: 400px;
+        background: radial-gradient(ellipse, rgba(99,102,241,0.1) 0%, transparent 65%);
+        pointer-events: none;
+    }
+    .contact-hero-eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: #ff8c1a;
+        background: rgba(255,140,26,0.1);
+        border: 1px solid rgba(255,140,26,0.3);
+        padding: 6px 18px;
+        border-radius: 20px;
+        margin-bottom: 22px;
+    }
+    .contact-page-hero h1 {
+        font-size: 54px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 16px;
+        line-height: 1.15;
+    }
+    .contact-page-hero h1 span { color: #ff8c1a; }
+    .contact-page-hero p {
+        font-size: 17px;
+        color: #94a3b8;
+        max-width: 540px;
+        margin: 0 auto 36px;
+        line-height: 1.75;
+    }
+    .contact-hero-pills {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .contact-hero-pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #cbd5e1;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 8px 18px;
+        border-radius: 50px;
+    }
+    .contact-hero-pill svg { color: #ff8c1a; }
+
+    /* --- Alert banner --- */
+    .contact-alert {
+        padding: 14px 24px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 0;
+    }
+    .contact-alert.success {
+        background: #d1fae5;
+        color: #065f46;
+        border-bottom: 2px solid #6ee7b7;
+    }
+    .contact-alert.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border-bottom: 2px solid #fca5a5;
+    }
+
+    /* --- Main content grid --- */
+    .contact-page-body {
+        background: #f8faff;
+        padding: 72px 20px 80px;
+    }
+    .contact-page-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.45fr;
+        gap: 40px;
+        max-width: 1080px;
+        margin: 0 auto;
+        align-items: start;
+    }
+
+    /* --- Info column --- */
+    .contact-info-col h2 {
+        font-size: 28px;
+        font-weight: 800;
+        color: #0b1022;
+        margin-bottom: 10px;
+    }
+    .contact-info-col h2 span { color: #ff8c1a; }
+    .contact-info-col > p {
+        font-size: 15px;
+        color: #64748b;
+        line-height: 1.75;
+        margin-bottom: 28px;
+    }
+    .contact-detail-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+    .cdc-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 18px 20px;
+        text-decoration: none;
+        transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    }
+    .cdc-card:hover {
+        box-shadow: 0 8px 28px rgba(255,140,26,0.12);
+        border-color: rgba(255,140,26,0.35);
+        transform: translateY(-2px);
+    }
+    .cdc-icon {
+        width: 44px; height: 44px;
+        background: linear-gradient(135deg, #fff4e6, #ffe0b2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .cdc-icon svg { color: #ff8c1a; }
+    .cdc-text strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #94a3b8;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+    }
+    .cdc-text span {
+        font-size: 15px;
+        color: #1e293b;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    /* Response time badge */
+    .response-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #0b1022, #1e2a45);
+        color: #fff;
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .response-badge-dot {
+        width: 10px; height: 10px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse-green 1.8s infinite;
+    }
+    @keyframes pulse-green {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+        50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+
+    /* --- Form column --- */
+    .contact-form-col {
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 4px 40px rgba(11,16,34,0.08);
+        padding: 40px 40px 36px;
+        border: 1px solid #e8edf5;
+    }
+    .contact-form-col h3 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0b1022;
+        margin-bottom: 6px;
+    }
+    .contact-form-col > p {
+        font-size: 14px;
+        color: #64748b;
+        margin-bottom: 28px;
+        line-height: 1.65;
+    }
+
+    .cf-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .cf-grid .full { grid-column: 1 / -1; }
+
+    .cf-field {
+        position: relative;
+    }
+    .cf-field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #64748b;
+        margin-bottom: 7px;
+    }
+    .cf-field input,
+    .cf-field textarea,
+    .cf-field select {
+        width: 100%;
+        background: #f8faff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 15px;
+        color: #1e293b;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        font-family: inherit;
+    }
+    .cf-field input::placeholder,
+    .cf-field textarea::placeholder { color: #94a3b8; }
+    .cf-field input:focus,
+    .cf-field textarea:focus,
+    .cf-field select:focus {
+        border-color: #ff8c1a;
+        box-shadow: 0 0 0 3px rgba(255,140,26,0.12);
+        background: #fff;
+    }
+    .cf-field textarea { resize: vertical; min-height: 110px; }
+
+    .cf-submit {
+        margin-top: 22px;
+        width: 100%;
+        background: linear-gradient(135deg, #ff8a00, #ff6a00);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 6px 20px rgba(255,140,26,0.3);
+    }
+    .cf-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(255,140,26,0.4);
+    }
+    .cf-disclaimer {
+        font-size: 12px;
+        color: #94a3b8;
+        text-align: center;
+        margin-top: 14px;
+        line-height: 1.6;
+    }
+
+    /* --- Map strip --- */
+    .contact-map-strip {
+        background: #0b1022;
+        padding: 64px 20px;
+    }
+    .contact-map-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 40px;
+        align-items: center;
+    }
+    .contact-map-text h2 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 12px;
+        line-height: 1.25;
+    }
+    .contact-map-text h2 span { color: #ff8c1a; }
+    .contact-map-text p {
+        font-size: 15px;
+        color: #64748b;
+        line-height: 1.75;
+        margin-bottom: 24px;
+    }
+    .contact-map-text a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ff8c1a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 12px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background 0.2s, transform 0.2s;
+    }
+    .contact-map-text a:hover {
+        background: #e07b0a;
+        transform: translateY(-2px);
+    }
+    .contact-map-frame {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+        border: 3px solid rgba(255,140,26,0.25);
+        height: 280px;
+    }
+    .contact-map-frame iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+
+    /* --- FAQ strip --- */
+    .contact-faq-strip {
+        background: #f8faff;
+        padding: 64px 20px;
+    }
+    .contact-faq-inner {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .contact-faq-inner h2 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #0b1022;
+        margin-bottom: 8px;
+    }
+    .contact-faq-inner h2 span { color: #ff8c1a; }
+    .contact-faq-inner > p {
+        font-size: 15px;
+        color: #64748b;
+        margin-bottom: 36px;
+    }
+    .cfaq-list { text-align: left; }
+    .cfaq-item {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+    }
+    .cfaq-item.open { box-shadow: 0 4px 20px rgba(255,140,26,0.1); border-color: rgba(255,140,26,0.3); }
+    .cfaq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 22px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        color: #1e293b;
+        gap: 12px;
+    }
+    .cfaq-question svg {
+        flex-shrink: 0;
+        transition: transform 0.25s;
+        color: #ff8c1a;
+    }
+    .cfaq-item.open .cfaq-question svg { transform: rotate(45deg); }
+    .cfaq-answer {
+        display: none;
+        padding: 0 22px 18px;
+        font-size: 14px;
+        color: #475569;
+        line-height: 1.75;
+    }
+    .cfaq-item.open .cfaq-answer { display: block; }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+        .contact-page-grid { grid-template-columns: 1fr; }
+        .contact-map-inner { grid-template-columns: 1fr; }
+        .contact-page-hero h1 { font-size: 38px; }
+        .contact-form-col { padding: 28px 24px; }
+        .cf-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 576px) {
+        .contact-page-hero h1 { font-size: 30px; }
+        .contact-page-hero { padding: 70px 16px 60px; }
+        .contact-page-body { padding: 48px 16px 60px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- ===== FLASH ALERTS ===== -->
+    {% if request.args.get('status') == 'success' %}
+    <div class="contact-alert success">
+        ✅ Your message was sent successfully! We'll get back to you within 24 hours.
+    </div>
+    {% elif request.args.get('error') %}
+    <div class="contact-alert error">
+        ⚠️ Something went wrong. Please try again or reach us at mayapreneur64@gmail.com.
+    </div>
+    {% endif %}
+
+    <!-- ===== HERO ===== -->
+    <div class="contact-page-hero">
+        <div class="contact-hero-eyebrow">We're here to help</div>
+        <h1>Get in <span>Touch</span> with Us</h1>
+        <p>
+            Have a question about our workshops, or need help getting started?
+            Drop us a message — our team is always ready to help you succeed.
+        </p>
+        <div class="contact-hero-pills">
+            <div class="contact-hero-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+                +91 81528 77026
+            </div>
+            <div class="contact-hero-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                mayapreneur64@gmail.com
+            </div>
+            <div class="contact-hero-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                Reply within 24 hrs
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <section class="contact-page-body">
+        <div class="contact-page-grid">
+
+            <!-- Info column -->
+            <div class="contact-info-col">
+                <h2>Let's <span>Connect</span></h2>
+                <p>
+                    Whether you're curious about the workshop curriculum, want to discuss
+                    a partnership, or just need guidance to start your dropshipping journey —
+                    we're just a message away.
+                </p>
+
+                <div class="contact-detail-cards">
+                    <a href="mailto:mayapreneur64@gmail.com" class="cdc-card">
+                        <div class="cdc-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+                        </div>
+                        <div class="cdc-text">
+                            <strong>Email Us</strong>
+                            <span>mayapreneur64@gmail.com</span>
+                        </div>
+                    </a>
+
+                    <a href="tel:+918152877026" class="cdc-card">
+                        <div class="cdc-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <div class="cdc-text">
+                            <strong>Call Us</strong>
+                            <span>+91 81528 77026</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
+                       target="_blank" rel="noopener" class="cdc-card">
+                        <div class="cdc-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.083a8 8 0 10-16 0c0 3.386 1.556 6.08 3.5 8.083a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <div class="cdc-text">
+                            <strong>Visit Us</strong>
+                            <span>Maya Solutions, Outer Ring Road,<br>5th Block, Banashankari, Bengaluru</span>
+                        </div>
+                    </a>
+
+                    <div class="cdc-card" style="cursor:default;">
+                        <div class="cdc-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <div class="cdc-text">
+                            <strong>Business Hours</strong>
+                            <span>Mon – Sat: 9 AM – 7 PM IST</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="response-badge">
+                    <div class="response-badge-dot"></div>
+                    We typically reply within <strong style="color:#ff8c1a; margin: 0 4px;">24 hours</strong> — often sooner!
+                </div>
+            </div>
+
+            <!-- Form column -->
+            <div class="contact-form-col">
+                <h3>Send Us a Message</h3>
+                <p>Fill in the form below and we'll get back to you as soon as possible.</p>
+
+                <form action="{{ url_for('contact') }}" method="post">
+                    <div class="cf-grid">
+                        <div class="cf-field">
+                            <label for="cf-name">Full Name <span style="color:#ff8c1a">*</span></label>
+                            <input type="text" id="cf-name" name="name" placeholder="Your full name" required>
+                        </div>
+                        <div class="cf-field">
+                            <label for="cf-phone">Phone Number <span style="color:#ff8c1a">*</span></label>
+                            <input type="text" id="cf-phone" name="phone" placeholder="10-digit number"
+                                maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                        </div>
+                        <div class="cf-field full">
+                            <label for="cf-email">Email Address <span style="color:#ff8c1a">*</span></label>
+                            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="cf-field full">
+                            <label for="cf-subject">I'm interested in</label>
+                            <select id="cf-subject" name="subject">
+                                <option value="">Select a topic…</option>
+                                <option value="Workshop Registration">Workshop Registration</option>
+                                <option value="Workshop Curriculum">Workshop Curriculum</option>
+                                <option value="Partnership / Collaboration">Partnership / Collaboration</option>
+                                <option value="Refund / Payment Issue">Refund / Payment Issue</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="cf-field full">
+                            <label for="cf-message">Your Message</label>
+                            <textarea id="cf-message" name="message" placeholder="Tell us how we can help you…"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="cf-submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"/></svg>
+                        Send Message
+                    </button>
+                    <p class="cf-disclaimer">
+                        By submitting this form you agree to our
+                        <a href="{{ url_for('privacy_policy') }}" style="color:#ff8c1a;text-decoration:none;">Privacy Policy</a>.
+                        We'll never share your information.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAP STRIP ===== -->
+    <div class="contact-map-strip">
+        <div class="contact-map-inner">
+            <div class="contact-map-text">
+                <h2>Find Us <span>Here</span></h2>
+                <p>
+                    We're located in Banashankari, one of Bengaluru's most accessible
+                    neighbourhoods. Drop by during business hours — we'd love to meet you!
+                </p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
+                   target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+                    Open in Google Maps
+                </a>
+            </div>
+            <div class="contact-map-frame">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8765!2d77.5485!3d12.9254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f1b9f000001%3A0x1!2sBanashankari%2C+Bengaluru%2C+Karnataka!5e0!3m2!1sen!2sin!4v1700000000000"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="MayaPreneur Office Location">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FAQ STRIP ===== -->
+    <section class="contact-faq-strip">
+        <div class="contact-faq-inner">
+            <h2>Common <span>Questions</span></h2>
+            <p>Quick answers before you reach out.</p>
+            <div class="cfaq-list">
+                <div class="cfaq-item">
+                    <div class="cfaq-question">
+                        How soon will I get a reply after submitting the form?
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="cfaq-answer">
+                        We usually respond within 24 hours on business days. For urgent matters, calling us directly is the fastest way to get help.
+                    </div>
+                </div>
+                <div class="cfaq-item">
+                    <div class="cfaq-question">
+                        Can I ask about workshop schedules via this form?
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="cfaq-answer">
+                        Absolutely! Select "Workshop Curriculum" or "Workshop Registration" from the topic dropdown and we'll send you all details about upcoming batches.
+                    </div>
+                </div>
+                <div class="cfaq-item">
+                    <div class="cfaq-question">
+                        How do I request a refund?
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="cfaq-answer">
+                        Choose "Refund / Payment Issue" in the topic dropdown and describe your issue. You can also check our
+                        <a href="{{ url_for('refund_policy') }}" style="color:#ff8c1a;text-decoration:none;">Refund Policy</a> for details.
+                    </div>
+                </div>
+                <div class="cfaq-item">
+                    <div class="cfaq-question">
+                        Are you open on weekends?
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd"/></svg>
+                    </div>
+                    <div class="cfaq-answer">
+                        Our support team is available Monday through Saturday, 9 AM – 7 PM IST. On Sundays we have live workshop sessions but may have limited chat availability.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // FAQ accordion
+        document.querySelectorAll(".cfaq-question").forEach(q => {
+            q.addEventListener("click", () => {
+                const item = q.parentElement;
+                const isOpen = item.classList.contains("open");
+                document.querySelectorAll(".cfaq-item").forEach(i => i.classList.remove("open"));
+                if (!isOpen) item.classList.add("open");
+            });
+        });
+    </script>
+{% endblock %}
