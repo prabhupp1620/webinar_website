@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Slide{% else %}Add Slide{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Hero Slide{% else %}Add Hero Slide{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Hero Slide{% else %}Add Hero Slide{% endif %}</h1>
+    <a href="{{ url_for('admin.hero_slides') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST">
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Slide Title *</label>
+            <input type="text" name="title" value="{{ row.title if row else '' }}" placeholder="e.g. Build a Dropshipping Store From Scratch" required>
+        </div>
+        <div class="form-group">
+            <label>Webinar Slug *</label>
+            <select name="webinar_slug" required>
+                <option value="">— Select —</option>
+                {% for slug, label in [('dropshipping-mastery','Dropshipping Mastery'),('ecommerce-business','E-Commerce Business'),('online-earning','Online Earning')] %}
+                <option value="{{ slug }}" {% if row and row.webinar_slug==slug %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>YouTube Video ID *</label>
+            <input type="text" name="youtube_id" value="{{ row.youtube_id if row else '' }}" placeholder="e.g. OCDUN0Oudtk" required>
+        </div>
+        <div class="form-group">
+            <label>Badge Text</label>
+            <input type="text" name="badge_text" value="{{ row.badge_text if row else '' }}" placeholder="🗓 Batch 1 · Every Monday 7 PM">
+        </div>
+        <div class="form-group">
+            <label>Badge Color</label>
+            <select name="badge_color">
+                {% for c in ['orange','blue','green'] %}
+                <option value="{{ c }}" {% if row and row.badge_color==c %}selected{% endif %}>{{ c|capitalize }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Schedule</label>
+            <input type="text" name="schedule" value="{{ row.schedule if row else '' }}" placeholder="Every Monday">
+        </div>
+        <div class="form-group">
+            <label>Time (IST)</label>
+            <input type="text" name="time_ist" value="{{ row.time_ist if row else '' }}" placeholder="7 PM IST">
+        </div>
+        <div class="form-group">
+            <label>Platform</label>
+            <input type="text" name="platform" value="{{ row.platform if row else 'Zoom' }}">
+        </div>
+        <div class="form-group">
+            <label>Language</label>
+            <input type="text" name="language" value="{{ row.language if row else 'Kannada & English' }}">
+        </div>
+        <div class="form-group">
+            <label>Sort Order</label>
+            <input type="number" name="sort_order" value="{{ row.sort_order if row else 0 }}" min="0">
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="1" {% if not row or row.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% if row %}Save Changes{% else %}Add Slide{% endif %}</button>
+        <a href="{{ url_for('admin.hero_slides') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+{% endblock %}

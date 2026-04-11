@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Webinar{% else %}Add Webinar{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Webinar{% else %}Add Webinar{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Webinar{% else %}Add Webinar{% endif %}</h1>
+    <a href="{{ url_for('admin.webinars') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST" enctype="multipart/form-data" id="webinarForm">
+
+    <!-- ── Basic Info ─────────────────────────────────────── -->
+    <div class="form-section-label">Basic Info</div>
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Webinar Name *</label>
+            <input type="text" name="webinar_name" id="webinarName"
+                   value="{{ row.webinar_name if row else '' }}" required
+                   placeholder="e.g. Dropshipping Mastery Workshop">
+        </div>
+        <div class="form-group full">
+            <label>URL Slug <small style="color:#64748b;font-weight:400;">(used in page URL for SEO)</small></label>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <span style="color:#94a3b8;font-size:13px;white-space:nowrap;">/webinar/</span>
+                <input type="text" name="webinar_slug" id="webinarSlug"
+                       value="{{ row.webinar_slug if row and row.webinar_slug else '' }}"
+                       placeholder="dropshipping-mastery-workshop"
+                       pattern="[a-z0-9\-]+"
+                       title="Only lowercase letters, numbers and hyphens allowed"
+                       style="flex:1;">
+                <button type="button" onclick="autoSlug()" class="btn btn-secondary" style="white-space:nowrap;font-size:13px;">Auto Generate</button>
+            </div>
+            <small style="color:#64748b;font-size:11px;">Only lowercase letters, numbers and hyphens. Example: <code>dropshipping-mastery-workshop</code>. Leave blank to skip.</small>
+        </div>
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="webinar_categories" required>
+                <option value="">— Select —</option>
+                <option value="1" {% if row and row.webinar_categories==1 %}selected{% endif %}>Dropshipping</option>
+                <option value="2" {% if row and row.webinar_categories==2 %}selected{% endif %}>E-Commerce</option>
+                <option value="3" {% if row and row.webinar_categories==3 %}selected{% endif %}>Online Earning</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="webinar_status">
+                <option value="1" {% if not row or row.webinar_status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.webinar_status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Platform *</label>
+            <input type="text" name="webinar_platform"
+                   value="{{ row.webinar_platform if row else 'Zoom' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Language *</label>
+            <input type="text" name="webinar_lanuage"
+                   value="{{ row.webinar_lanuage if row else 'Kannada & English' }}" required>
+        </div>
+        <div class="form-group full">
+            <label>Description</label>
+            <textarea name="webinar_discription" rows="3"
+                      placeholder="Short description of the webinar…">{{ row.webinar_discription if row else '' }}</textarea>
+        </div>
+    </div>
+
+    <!-- ── Schedule ───────────────────────────────────────── -->
+    <div class="form-section-label" style="margin-top:24px;">Schedule</div>
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Schedule Type *</label>
+            <select name="webinar_scheduletype" id="scheduleType" required>
+                <option value="">— Select —</option>
+                <option value="1" {% if row and row.webinar_scheduletype==1 %}selected{% endif %}>Daily</option>
+                <option value="2" {% if row and row.webinar_scheduletype==2 %}selected{% endif %}>Weekly</option>
+                <option value="3" {% if row and row.webinar_scheduletype==3 %}selected{% endif %}>Monthly</option>
+            </select>
+        </div>
+
+        <!-- Weekly: day selector -->
+        <div class="form-group sched-weekly">
+            <label>Day of Week *</label>
+            <select name="webinar_day" id="webinarDay">
+                <option value="">— Select Day —</option>
+                {% for val, lbl in [(0,'Sunday'),(1,'Monday'),(2,'Tuesday'),(3,'Wednesday'),(4,'Thursday'),(5,'Friday'),(6,'Saturday')] %}
+                <option value="{{ val }}"
+                    {% if row and row.webinar_day is not none and row.webinar_day|int == val %}selected{% endif %}>
+                    {{ lbl }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Daily + Weekly: time picker (HH:MM + AM/PM) -->
+        <div class="form-group sched-time">
+            <label>Session Time *</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <input type="time" name="webinar_time" id="webinarTime"
+                       value="{{ row.webinar_time if row and row.webinar_time else '' }}"
+                       style="flex:1;">
+            </div>
+            <small style="color:#64748b;font-size:11px;">Select the session time (24-hr clock — browser shows AM/PM).</small>
+        </div>
+
+        <!-- Monthly: full date + time picker -->
+        <div class="form-group sched-monthly">
+            <label>Event Date &amp; Time *</label>
+            <input type="datetime-local" name="webinar_datetime" id="webinarDatetime"
+                   value="{{ row.webinar_datetime.strftime('%Y-%m-%dT%H:%M') if row and row.webinar_datetime else '' }}">
+            <small style="color:#64748b;font-size:11px;">Pick the exact date &amp; time of the session.</small>
+        </div>
+
+        <!-- Always shown: display text -->
+        <div class="form-group full">
+            <label>Starting Time — Display Text</label>
+            <input type="text" name="webinar_startingtime"
+                   value="{{ row.webinar_startingtime if row else '' }}"
+                   placeholder="e.g. Every Monday 7 PM IST  (shown on website as-is)">
+        </div>
+    </div>
+
+    <!-- ── Pricing & Offer ────────────────────────────────── -->
+    <div class="form-section-label" style="margin-top:24px;">Pricing &amp; Offer</div>
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Fees (₹)</label>
+            <input type="number" name="webinar_fees"
+                   value="{{ row.webinar_fees if row is not none else 49 }}" min="0">
+            <small style="color:#64748b;font-size:11px;">Enter 0 for a free webinar.</small>
+        </div>
+        <div class="form-group">
+            <label>Discount / Offer Amount (₹)</label>
+            <input type="number" name="webinar_discount"
+                   value="{{ row.webinar_discount if row else 0 }}" min="0">
+            <small style="color:#64748b;font-size:11px;">0 = no discount.</small>
+        </div>
+        <div class="form-group full">
+            <label>Offer Title / Promo Label</label>
+            <input type="text" name="webinar_offer_title"
+                   value="{{ row.webinar_offer_title if row else '' }}"
+                   placeholder="e.g. Early Bird — 50% OFF  |  Limited Seats">
+        </div>
+    </div>
+
+    <!-- ── Promo Video ────────────────────────────────────── -->
+    <div class="form-section-label" style="margin-top:24px;">Promo Video</div>
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Upload Video File (mp4 / mov / webm)</label>
+            <input type="file" name="webinar_video_file" accept="video/*">
+            {% if row and row.webinar_video %}
+            <div style="margin-top:8px;">
+                <small style="color:#64748b;">Current:</small>
+                <video src="{{ url_for('static', filename=row.webinar_video) }}"
+                       style="display:block;margin-top:6px;max-width:320px;border-radius:6px;"
+                       controls></video>
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group full">
+            <label>Or paste existing Video Path</label>
+            <input type="text" name="webinar_video"
+                   value="{{ row.webinar_video if row else '' }}"
+                   placeholder="uploads/my-video.mp4  (leave blank if uploading above)">
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            {% if row %}Save Changes{% else %}Add Webinar{% endif %}
+        </button>
+        <a href="{{ url_for('admin.webinars') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+
+<style>
+.form-section-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #64748b;
+    border-bottom: 1px solid #e2e8f0; padding-bottom: 6px;
+    margin-bottom: 14px;
+}
+</style>
+
+<script>
+(function () {
+    var sel      = document.getElementById('scheduleType');
+    var dayEl    = document.getElementById('webinarDay');
+    var timeEl   = document.getElementById('webinarTime');
+    var dtEl     = document.getElementById('webinarDatetime');
+
+    var weeklyEls  = document.querySelectorAll('.sched-weekly');
+    var timeEls    = document.querySelectorAll('.sched-time');
+    var monthlyEls = document.querySelectorAll('.sched-monthly');
+
+    function show(els, visible) {
+        els.forEach(function(el) { el.style.display = visible ? '' : 'none'; });
+    }
+
+    function toggle() {
+        var v = sel.value;
+        var isDaily   = v === '1';
+        var isWeekly  = v === '2';
+        var isMonthly = v === '3';
+
+        show(weeklyEls,  isWeekly);
+        show(timeEls,    isDaily || isWeekly);
+        show(monthlyEls, isMonthly);
+
+        dayEl.required  = isWeekly;
+        timeEl.required = isDaily || isWeekly;
+        dtEl.required   = isMonthly;
+    }
+
+    sel.addEventListener('change', toggle);
+    toggle(); // run on load (edit mode)
+})();
+
+// ── Slug auto-generate ────────────────────────────────────────────────────────
+function autoSlug() {
+    var name = document.getElementById('webinarName').value || '';
+    var slug = name
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+    document.getElementById('webinarSlug').value = slug;
+}
+// Auto-fill slug when name changes (only if slug is empty)
+document.getElementById('webinarName').addEventListener('input', function() {
+    var slugEl = document.getElementById('webinarSlug');
+    if (!slugEl.value) autoSlug();
+});
+</script>
+{% endblock %}

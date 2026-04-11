@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block topbar_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <span style="font-size:13px;color:#64748b;">Manage all website content from here</span>
+</div>
+
+<div class="stats-grid">
+    <a href="{{ url_for('admin.hero_slides') }}" class="stat-card">
+        <div class="stat-icon" style="background:#fff4e6;">🎠</div>
+        <div class="stat-num">{{ stats.hero_slides }}</div>
+        <div class="stat-label">Hero Slides</div>
+    </a>
+    <a href="{{ url_for('admin.student_results') }}" class="stat-card">
+        <div class="stat-icon" style="background:#f0fdf4;">📸</div>
+        <div class="stat-num">{{ stats.student_results }}</div>
+        <div class="stat-label">Student Results</div>
+    </a>
+    <a href="{{ url_for('admin.video_reviews') }}" class="stat-card">
+        <div class="stat-icon" style="background:#eff6ff;">🎬</div>
+        <div class="stat-num">{{ stats.video_reviews }}</div>
+        <div class="stat-label">Video Reviews</div>
+    </a>
+    <a href="{{ url_for('admin.benefits') }}" class="stat-card">
+        <div class="stat-icon" style="background:#fdf4ff;">⭐</div>
+        <div class="stat-num">{{ stats.benefits }}</div>
+        <div class="stat-label">Benefits</div>
+    </a>
+    <a href="{{ url_for('admin.testimonials') }}" class="stat-card">
+        <div class="stat-icon" style="background:#fff1f2;">💬</div>
+        <div class="stat-num">{{ stats.testimonials }}</div>
+        <div class="stat-label">Testimonials</div>
+    </a>
+    <a href="{{ url_for('admin.faqs') }}" class="stat-card">
+        <div class="stat-icon" style="background:#f0fdfa;">❓</div>
+        <div class="stat-num">{{ stats.faqs }}</div>
+        <div class="stat-label">FAQs</div>
+    </a>
+    <a href="{{ url_for('admin.webinars') }}" class="stat-card">
+        <div class="stat-icon" style="background:#f8faff;">🖥️</div>
+        <div class="stat-num">{{ stats.webinars }}</div>
+        <div class="stat-label">Webinars</div>
+    </a>
+</div>
+
+<!-- Quick Actions -->
+<div class="card">
+    <div class="card-body">
+        <h3 style="font-size:15px;font-weight:700;color:#0b1022;margin-bottom:16px;">Quick Actions</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <a href="{{ url_for('admin.hero_slide_add') }}"    class="btn btn-primary btn-sm">+ Add Hero Slide</a>
+            <a href="{{ url_for('admin.student_result_add') }}" class="btn btn-primary btn-sm">+ Add Student Result</a>
+            <a href="{{ url_for('admin.video_review_add') }}"  class="btn btn-primary btn-sm">+ Add Video Review</a>
+            <a href="{{ url_for('admin.benefit_add') }}"       class="btn btn-primary btn-sm">+ Add Benefit</a>
+            <a href="{{ url_for('admin.testimonial_add') }}"   class="btn btn-primary btn-sm">+ Add Testimonial</a>
+            <a href="{{ url_for('admin.faq_add') }}"           class="btn btn-primary btn-sm">+ Add FAQ</a>
+            <a href="{{ url_for('admin.webinar_add') }}"       class="btn btn-primary btn-sm">+ Add Webinar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

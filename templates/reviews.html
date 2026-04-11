@@ -1,60 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base_public.html" %}
+{% block title %}All Student Reviews – MayaPreneur{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>All Student Reviews – MayaPreneur</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- MAIN CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/enhancements.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-
-<body>
-
-    <!-- ================= HEADER (SAME AS HOME) ================= -->
-    <header class="header">
-        <div class="container header-wrap">
-
-            <div class="logo">
-                <img src="{{ url_for('static', filename='images/maya-logo.jpeg') }}" alt="MayaPreneur">
-                <span class="brand-text">Maya<span>Preneur</span></span>
-            </div>
-
-            <nav class="nav" id="navMenu">
-                <button class="nav-close" id="navClose">&times;</button>
-
-                <a href="{{ url_for('index') }}#Why-Dropshipping">Why Dropshipping</a>
-                <a href="{{ url_for('index') }}#Process">Process</a>
-                <a href="{{ url_for('index') }}#Success-Stories">Success Stories</a>
-                <a href="{{ url_for('index') }}#FAQ">FAQ</a>
-                <a href="{{ url_for('gallery') }}">Gallery</a>
-                <a href="{{ url_for('index') }}#Contact-Us">Contact Us</a>
-
-                <a href="{{ url_for('index') }}#Contact-Us" class="btn btn-orange mobile-cta">
-                    Join Workshop
-                </a>
-            </nav>
-
-            <a href="{{ url_for('index') }}#Contact-Us" class="btn btn-orange desktop-cta">
-                Join Workshop
-            </a>
-
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </div>
-
-        </div>
-    </header>
+{% block content %}
     <section class="testimonial-section">
         <div class="container">
 
@@ -65,7 +12,7 @@
 
             <div class="testimonial-grid">
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "I had an excellent experience with this online class! The lessons were well-structured, easy to
@@ -80,7 +27,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "I had a really good experience with the Dropshipping course by Maya Prenuer. The sessions were
@@ -95,14 +42,14 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
-                        "Muthan sir, in our life we can truly call this ‘good,’ because everything is available in
+                        "Muthan sir, in our life we can truly call this 'good,' because everything is available in
                         Kannada through this e-commerce course. Apart from that, I had enrolled in many online courses
                         before and lost thousands of rupees—until the payment was made, they would keep calling, but
                         once the payment was done, they would neither pick calls nor give any response. In this way, I
-                        lost a lot of money. But after joining Mithun sir’s class, I received very good coaching, and I
+                        lost a lot of money. But after joining Mithun sir's class, I received very good coaching, and I
                         too gained the confidence that"
                     </p>
                     <div class="author">
@@ -112,14 +59,14 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
-                        "Muthan sir, in our life we can truly call this ‘good,’ because everything is available in
+                        "Muthan sir, in our life we can truly call this 'good,' because everything is available in
                         Kannada through this e-commerce course. Apart from that, I had enrolled in many online courses
                         before and lost thousands of rupees—until the payment was made, they would keep calling, but
                         once the payment was done, they would neither pick calls nor give any response. In this way, I
-                        lost a lot of money. But after joining Mithun sir’s class, I received very good coaching, and I
+                        lost a lot of money. But after joining Mithun sir's class, I received very good coaching, and I
                         too gained the confidence that"
                     </p>
                     <div class="author">
@@ -129,10 +76,10 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
-                        "⭐ ⭐ ⭐ ⭐ ⭐ I’m really impressed with Mithun sir and Team. They explained everything clearly,
+                        "⭐ ⭐ ⭐ ⭐ ⭐ I'm really impressed with Mithun sir and Team. They explained everything clearly,
                         from basics to advanced strategies, and always took the time to answer questions. Their support
                         made the class very effective and motivating. The dropshipping team is fantastic professional,
                         approachable, and highly experienced. They not only taught us the theory but also shared
@@ -145,13 +92,13 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "I bought the dropshipping and e-commerce course through this app and they teach everything from
                         zero through live classes and recordings. Every penny I paid was completely worth it. The
                         mentors are extremely patient, supportive and genuinely care about your growth and success.
-                        Their constant encouragement and guidance truly motivates you. I’m confident that this learning
+                        Their constant encouragement and guidance truly motivates you. I'm confident that this learning
                         will help me grow and succeed."
                     </p>
                     <div class="author">
@@ -161,7 +108,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "I really enjoyed learning with Maya Preneur. The course explained dropshipping in a very simple
@@ -176,7 +123,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "The online class on Dropshipping & E-Commerce was incredibly insightful and practical. The
@@ -192,7 +139,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "A great course for anyone starting in dropshipping. Clear, practical, and straight to the
@@ -207,7 +154,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "Highly recommended, very user friendly . I never ever seen an app courses started in kannada
@@ -223,7 +170,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "Maya Preneur App is very helpful and easy to use. Mithun Sir and jaanvi Madam explain
@@ -238,7 +185,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         "I would like to say special thanks to Mithun sir & Janvi madam, teaching is excellent and very
@@ -255,7 +202,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         The Mithun sir and Janvi mam teach the concepts in a clear and crystal manner. Mithun sir is
@@ -271,10 +218,10 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
-                        I'm a student of this course, and it's one of the best educational apps I’ve used. It teaches
+                        I'm a student of this course, and it's one of the best educational apps I've used. It teaches
                         everything about dropshipping and building your own e-commerce website. The content is very
                         clear and beginner-friendly. The teaching methods are simple, practical, and easy to understand.
                         Thank you Maya Preneur team.
@@ -286,7 +233,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         I had a really good experience with this dropshipping course. It provided clear, step-by-step
@@ -301,7 +248,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         The mentor Mithun explains concepts very clearly and in an understandable way. Anyone can learn
@@ -315,13 +262,13 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         This dropshipping training course is well-structured and practical. It covers product research,
                         supplier selection, store setup, and marketing strategies. The real-life examples make learning
-                        effective. Mithun and Janvi didn’t just teach lessons, they taught confidence and discipline.
-                        I’m truly thankful.
+                        effective. Mithun and Janvi didn't just teach lessons, they taught confidence and discipline.
+                        I'm truly thankful.
                     </p>
                     <div class="author">
                         <div>
@@ -330,11 +277,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
-                        It’s a great and exceptional platform. The app is designed very well and easy to use. Mithun sir
-                        explains the concepts in a very simple way. I had a great experience attending the classes. It’s
+                        It's a great and exceptional platform. The app is designed very well and easy to use. Mithun sir
+                        explains the concepts in a very simple way. I had a great experience attending the classes. It's
                         the first platform in Kannada that helps everyone understand easily.
                     </p>
                     <div class="author">
@@ -344,7 +291,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         Exceptional experience! The teaching exceeded my expectations. Every detail was explained
@@ -358,7 +305,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         I had a great experience with this dropshipping course. The step-by-step guidance makes it easy
@@ -372,11 +319,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         I am impressed with their professionalism and training format. Janvi madam is patient and calm,
-                        and Mithun sir’s teaching is next level. Even as a housewife, I can work from home easily after
+                        and Mithun sir's teaching is next level. Even as a housewife, I can work from home easily after
                         this training. Thank you for this wonderful opportunity.
                     </p>
                     <div class="author">
@@ -386,11 +333,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         Good learning app. I suggest people who want to learn and earn should join here. Mithun sir
-                        explains every part clearly in Kannada and solves all doubts easily. Don’t miss this
+                        explains every part clearly in Kannada and solves all doubts easily. Don't miss this
                         opportunity.
                     </p>
                     <div class="author">
@@ -400,7 +347,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         This course exceeded my expectations. The content was clear, engaging, and easy to understand.
@@ -415,7 +362,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         I enrolled in the dropshipping course and the mentors Janavi mam and Mithun sir are very
@@ -430,7 +377,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         Mayapreneur is a genuine platform providing valuable e-commerce courses. Mithun sir explains
@@ -444,7 +391,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         With a small budget, anyone can become an entrepreneur. I am very grateful for this guidance and
@@ -458,7 +405,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         Best app for learning dropshipping in Kannada. Simple, clear, and very helpful for beginners.
@@ -471,7 +418,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         The teaching quality is top-notch. Every lesson ensures understanding and retention. The
@@ -485,7 +432,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         Great content for beginners in digital marketing and affiliate business. Live sessions and
@@ -499,7 +446,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         This course was a game changer. Well-structured, engaging, and flexible. It made learning
@@ -513,7 +460,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         The strategies and insights shared in this course are invaluable. The support from the community
@@ -527,7 +474,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         A very good platform to learn dropshipping. The team is supportive and kind. You can confidently
@@ -540,7 +487,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
+                    <div class="quote">"</div>
                     <div class="stars">★★★★★</div>
                     <p class="review">
                         I had a very good experience with the Maya Preneur Dropshipping course. The learning method is
@@ -556,85 +503,4 @@
             </div>
         </div>
     </section>
-    <footer class="site-footer">
-        <div class="footer-container">
-
-            <div class="footer-col brand">
-                <div class="brand-logo">
-                    <img src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="MayaPreneur">
-                    <span>Maya<span>Preneur</span></span>
-                </div>
-                <p>
-                    India's premier dropshipping education platform.
-                    Master the art of building profitable online stores
-                    with zero inventory and minimal investment.
-                </p>
-                <div class="social-icons">
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                </div>
-            </div>
-
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="{{ url_for('index') }}#Process">Process</a></li>
-                    <li><a href="{{ url_for('index') }}#Success-Stories">Testimonials</a></li>
-                    <li><a href="{{ url_for('index') }}#FAQ">FAQ</a></li>
-                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <ul class="contact-list">
-                    <li>
-                        <span>✉</span>
-                        <a href="mailto:mayapreneur64@gmail.com">mayapreneur64@gmail.com</a>
-                    </li>
-                    <li>
-                        <span>☎</span>
-                        <a href="tel:+918152877026">+91 81528 77026</a>
-                    </li>
-                    <li>
-                        <span>📍</span>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Banashankari+Bengaluru"
-                            target="_blank">
-                            Bengaluru, Karnataka
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2026 MayaPreneur. All rights reserved.</p>
-            <div class="policy-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Refund Policy</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ================= NAV SCRIPT ================= -->
-    <script>
-        const hamburger = document.getElementById("hamburger");
-        const navMenu = document.getElementById("navMenu");
-        const navClose = document.getElementById("navClose");
-
-        hamburger.addEventListener("click", () => navMenu.classList.add("active"));
-        navClose.addEventListener("click", () => navMenu.classList.remove("active"));
-
-        document.querySelectorAll(".nav a").forEach(link => {
-            link.addEventListener("click", () => navMenu.classList.remove("active"));
-        });
-    </script>
-
-</body>
-
-</html>
+{% endblock %}

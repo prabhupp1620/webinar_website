@@ -1,30 +1,567 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base_public.html" %}
+{% block title %}MayaPreneur – Dropshipping Mastery{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>MayaPreneur – Dropshipping Mastery</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/enhancements.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/maya-logo.jpeg') }}">
+{% block head %}
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── GLOBAL OVERRIDES ─────────────────────────────────── */
 
+/* ─── HERO SECTION — dark with orange accents ──────────── */
+.hero {
+  background: linear-gradient(160deg, #0b1022 0%, #111827 55%, #0b1022 100%) !important;
+  padding: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 600px;
+  background: radial-gradient(ellipse, rgba(255,106,0,0.12) 0%, rgba(255,138,0,0.06) 40%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
 
-</head>
+/* ─── KANNADA BANNER ───────────────────────────────────── */
+@keyframes kannada-shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+@keyframes kannada-glow-pulse { 0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.06); } }
+@keyframes kannada-float-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes star-twinkle { 0%, 100% { opacity: 0.35; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
 
-<body>
+.hero-kannada-header {
+  background: linear-gradient(135deg, #0b1022 0%, #140d00 50%, #0b1022 100%) !important;
+  border-bottom: 2px solid rgba(255,106,0,0.2) !important;
+  padding: 22px 20px 18px !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  animation: kannada-float-in 0.7s ease both !important;
+}
+/* Glow behind text */
+.hero-kannada-header::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 100px;
+  background: radial-gradient(ellipse, rgba(255,106,0,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  animation: kannada-glow-pulse 3s ease-in-out infinite;
+}
+/* Top accent shimmer line */
+.hero-kannada-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, #ff8a00, #fbbf24, #ff8a00, transparent);
+  background-size: 200% auto;
+  animation: kannada-shimmer 2.5s linear infinite;
+}
+.hero-kannada-header-inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hk-star {
+  font-size: 18px;
+  animation: star-twinkle 1.8s ease-in-out infinite;
+  color: #ff8a00;
+}
+.hk-star:last-child { animation-delay: 0.9s; }
+.hk-text {
+  font-size: clamp(18px, 3vw, 28px) !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  background: linear-gradient(90deg, #fbbf24, #ff8a00, #ff6a00, #ff8a00, #fbbf24) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: kannada-shimmer 3s linear infinite !important;
+  line-height: 1.3 !important;
+}
+.hk-badge {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #ff8a00;
+  background: rgba(255,106,0,0.12);
+  border: 1px solid rgba(255,106,0,0.3);
+  padding: 3px 12px; border-radius: 20px;
+  margin-top: 8px;
+}
+
+/* ─── CAROUSEL OUTER ───────────────────────────────────── */
+.hero-carousel-outer { position: relative; overflow: hidden; }
+.hero-carousel { display: flex; transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); will-change: transform; }
+
+.hero-slide {
+  min-width: 100%; flex-shrink: 0;
+  padding: 56px 0 36px;
+  position: relative;
+}
+
+/* ─── SLIDE INNER GRID ─────────────────────────────────── */
+.hero-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+  width: 90%; max-width: 1200px; margin: 0 auto;
+}
+
+/* ─── LEFT: CONTENT ────────────────────────────────────── */
+.hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+
+.hero-batch-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 18px; border: 1px solid;
+}
+.hero-batch-tag.orange {
+  background: rgba(255,138,0,0.12); color: #ff8a00;
+  border-color: rgba(255,138,0,0.3);
+  box-shadow: 0 0 20px rgba(255,138,0,0.12);
+}
+.hero-batch-tag.blue {
+  background: rgba(59,130,246,0.12); color: #60a5fa;
+  border-color: rgba(59,130,246,0.25);
+  box-shadow: 0 0 20px rgba(59,130,246,0.12);
+}
+.hero-batch-tag.green {
+  background: rgba(16,185,129,0.1); color: #34d399;
+  border-color: rgba(16,185,129,0.25);
+  box-shadow: 0 0 20px rgba(16,185,129,0.12);
+}
+
+.hero-content h1 {
+  font-family: 'Cabinet Grotesk', sans-serif !important;
+  font-size: clamp(28px, 3.5vw, 48px) !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.03em !important;
+  color: #f0f0ff !important;
+  margin-bottom: 10px !important;
+}
+
+.subtitle {
+  font-size: 15px !important; color: rgba(240,240,255,0.55) !important;
+  line-height: 1.6 !important; margin-bottom: 20px !important;
+}
+
+/* ─── INFO LIST ────────────────────────────────────────── */
+.hero-info-list {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px;
+  margin-bottom: 20px;
+}
+.hero-info-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px !important; color: rgba(240,240,255,0.7) !important;
+}
+.hi-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255,138,0,0.1);
+  border: 1px solid rgba(255,138,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+
+/* ─── RATING ───────────────────────────────────────────── */
+.rating { font-size: 13px !important; color: rgba(240,240,255,0.5) !important; }
+
+/* ─── COUNTDOWN TIMER ──────────────────────────────────── */
+.hero-timer {
+  margin: 18px 0 0 !important;
+  padding: 16px 18px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+  display: inline-block !important;
+}
+.timer-label {
+  font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.1em !important;
+  text-transform: uppercase !important; color: rgba(240,240,255,0.4) !important;
+  margin-bottom: 12px !important;
+}
+.timer-boxes { display: flex; align-items: center; gap: 6px; }
+.t-box {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(255,106,0,0.12) !important;
+  border: 1px solid rgba(255,106,0,0.25) !important;
+  border-radius: 10px !important; padding: 10px 14px !important;
+  min-width: 56px !important;
+}
+.t-box span {
+  font-family: 'Cabinet Grotesk', sans-serif !important;
+  font-size: 26px !important; font-weight: 900 !important; color: #f0f0ff !important;
+  line-height: 1 !important; font-variant-numeric: tabular-nums !important;
+}
+.t-box small {
+  font-size: 9px !important; color: rgba(240,240,255,0.35) !important;
+  text-transform: uppercase !important; letter-spacing: 0.6px !important; margin-top: 3px !important;
+}
+.t-colon { font-size: 20px !important; font-weight: 800 !important; color: #ff8a00 !important; margin-bottom: 14px !important; }
+
+/* ─── RIGHT: VIDEO ─────────────────────────────────────── */
+.hero-right { position: relative; z-index: 1; display: flex; align-items: center; }
+.hero-video-box {
+  position: relative;
+  aspect-ratio: 16/9;
+  width: 100%;
+  border-radius: 18px !important;
+  overflow: hidden;
+  background: rgba(255,138,0,0.06) !important;
+  border: 1px solid rgba(255,138,0,0.3) !important;
+  box-shadow: 0 0 60px rgba(255,106,0,0.18), 0 24px 60px rgba(0,0,0,0.5) !important;
+}
+.hero-video-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg,rgba(255,106,0,0.04),rgba(255,138,0,0.02));
+  z-index: 0;
+}
+.hero-video-box iframe,
+.hero-video-box video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+.hero-video-placeholder {
+  position: absolute; inset: 0; display: flex;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px;
+}
+.hero-video-placeholder span { font-size: 40px; }
+.hero-video-placeholder p { font-size: 14px; color: rgba(240,240,255,0.35); }
+
+/* ─── CTA ROW ──────────────────────────────────────────── */
+.hero-cta-row {
+  display: flex; gap: 14px; margin-top: 32px;
+  flex-wrap: wrap; align-items: center;
+}
+.btn-orange {
+  background: linear-gradient(135deg, #ff8a00, #ff6a00) !important;
+  color: #fff !important; border: none !important; border-radius: 100px !important;
+  padding: 14px 28px !important; font-size: 15px !important; font-weight: 700 !important;
+  font-family: 'DM Sans', sans-serif !important;
+  box-shadow: 0 4px 20px rgba(255,106,0,0.4) !important;
+  transition: all 0.25s; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn-orange:hover { box-shadow: 0 8px 32px rgba(255,106,0,0.55) !important; transform: translateY(-2px); }
+.btn-outline-details {
+  background: rgba(255,255,255,0.08);
+  color: #f0f0ff; border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px; padding: 14px 28px;
+  font-size: 15px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.25s; text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn-outline-details:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.35); }
+
+/* ─── CAROUSEL ARROWS ──────────────────────────────────── */
+.carousel-prev, .carousel-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,106,0,0.15); border: 1px solid rgba(255,106,0,0.3);
+  color: #ff8a00; font-size: 22px; font-weight: 700;
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+}
+.carousel-prev:hover, .carousel-next:hover {
+  background: rgba(255,106,0,0.3); color: #fff;
+  box-shadow: 0 0 20px rgba(255,106,0,0.4);
+}
+.carousel-prev { left: 16px; }
+.carousel-next { right: 16px; }
+
+/* ─── CAROUSEL DOTS ────────────────────────────────────── */
+.carousel-dots {
+  display: flex; justify-content: center; gap: 8px; margin-top: 28px; padding-bottom: 8px;
+}
+.carousel-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); border: none; cursor: pointer; padding: 0;
+  transition: all 0.3s;
+}
+.carousel-dot.active {
+  background: linear-gradient(135deg,#ff8a00,#ff6a00);
+  width: 28px; border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255,106,0,0.5);
+}
+
+/* ─── WEBINAR TYPES SECTION — white/light ──────────────── */
+.webinar-types-section {
+  background: #fff !important;
+  border-top: 1px solid #e8edf5 !important;
+}
+.wt-eyebrow { color: #ff6a00 !important; }
+.wt-header h2 { color: #0b1022 !important; }
+.wt-header h2 span { color: #ff6a00 !important; }
+.wt-sub { color: #64748b !important; }
+.ito-top-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: start;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px; padding: 32px; max-width: 1160px; margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.ito-image-box {
+  border-radius: 14px; overflow: hidden;
+  position: relative; height: 320px;
+}
+.ito-image-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+.ito-badge {
+  position: absolute; bottom: 14px; left: 14px;
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 700; color: #fff;
+  backdrop-filter: blur(8px);
+}
+.ito-content h2 {
+  font-family: 'Cabinet Grotesk', sans-serif !important;
+  font-size: 26px !important; font-weight: 800 !important; color: #0b1022 !important;
+  margin-bottom: 12px !important; line-height: 1.2 !important;
+}
+.ito-content h2 span { color: #ff6a00 !important; margin-right: 8px !important; }
+.ito-content > p { font-size: 14px !important; color: #64748b !important; line-height: 1.7 !important; margin-bottom: 20px !important; }
+.wt-topics { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.wt-topics li {
+  font-size: 14px !important; color: #475569 !important;
+  display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+}
+.wt-topics li svg { color: #ff6a00; flex-shrink: 0; margin-top: 2px; }
+.wt-prev, .wt-next {
+  background: rgba(255,106,0,0.08) !important;
+  border: 1px solid rgba(255,106,0,0.25) !important;
+  color: #ff6a00 !important;
+}
+.wt-prev:hover, .wt-next:hover {
+  background: rgba(255,106,0,0.18) !important;
+  color: #ff6a00 !important;
+}
+.wt-dot { background: #e2e8f0 !important; }
+.wt-dot.active { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; box-shadow: 0 0 10px rgba(255,106,0,0.4); }
+
+/* ─── BENEFITS SECTION — light gray ───────────────────── */
+.dropshipping-benefits {
+  background: #f8faff !important;
+  border-top: 1px solid #e8edf5 !important;
+}
+.db-container { max-width: 1200px; margin: 0 auto; }
+.db-header { display: flex; align-items: center; gap: 24px; margin-bottom: 48px; }
+.db-count {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 64px; font-weight: 900; letter-spacing: -0.04em;
+  background: linear-gradient(135deg,#ff8a00,#ff6a00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  flex-shrink: 0;
+}
+.db-title h2 {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 28px; font-weight: 800; color: #0b1022;
+}
+.db-title h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.db-title p { font-size: 14px; color: #64748b; margin-top: 4px; }
+.db-list { display: flex; flex-direction: column; gap: 2px; }
+.db-item {
+  display: flex; align-items: flex-start; gap: 20px; padding: 20px 24px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 14px; transition: all 0.25s; cursor: default;
+}
+.db-item:hover { background: #fff7f0; border-color: rgba(255,106,0,0.25); transform: translateX(4px); box-shadow: 0 4px 16px rgba(255,106,0,0.08); }
+.db-left { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+.db-no { font-family: 'Cabinet Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #cbd5e1; min-width: 24px; }
+.db-icon svg { color: #ff6a00; }
+.db-text h4 { font-size: 15px; font-weight: 700; color: #0b1022; margin-bottom: 4px; }
+.db-text p { font-size: 13px; color: #64748b; line-height: 1.55; }
+
+/* ─── LEARNING PROCESS — dark section ─────────────────── */
+.learning-process {
+  background: linear-gradient(160deg, #0b1022 0%, #111827 100%) !important;
+  border-top: none !important;
+}
+.process-header h2 {
+  font-family: 'Cabinet Grotesk', sans-serif !important;
+  font-size: 32px !important; font-weight: 800 !important; color: #f0f0ff !important; text-align: center !important; margin-bottom: 6px !important;
+}
+.process-header h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; }
+.process-header p { text-align: center !important; font-size: 15px !important; color: rgba(240,240,255,0.5) !important; margin-bottom: 40px !important; }
+.flow-item { background: rgba(255,106,0,0.1) !important; border: 1px solid rgba(255,106,0,0.25) !important; color: #f0f0ff !important; }
+.process-card { background: rgba(255,255,255,0.04) !important; border: 1px solid rgba(255,255,255,0.08) !important; }
+.process-card h3 { color: #f0f0ff !important; }
+.process-card ul li { color: rgba(240,240,255,0.65) !important; }
+.process-card li::before { color: #ff8a00 !important; }
+.process-card.featured { background: rgba(255,106,0,0.08) !important; border-color: rgba(255,106,0,0.25) !important; }
+.process-card.featured li::before { color: #ff8a00 !important; }
+
+/* ─── MENTOR SECTION — white ───────────────────────────── */
+.mentor-section { background: #fff !important; border-top: 1px solid #e8edf5 !important; }
+.mentor-content .subtitle { color: #ff6a00 !important; }
+.mentor-content h2 { color: #0b1022 !important; }
+.mentor-content h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.mentor-content .description { color: #64748b !important; }
+.description { color: #64748b !important; }
+.mentor-points li { color: #475569 !important; }
+.mentor-points li::before { color: #ff6a00 !important; }
+.mentor-btn { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; border-color: transparent !important; }
+.mentor-image img { border-radius: 20px; }
+
+/* ─── SERVICES / COMBINED — light gray ────────────────── */
+.combined-section { background: #f8faff !important; border-top: 1px solid #e8edf5 !important; }
+.section-title { color: #0b1022 !important; }
+.service-card { background: #fff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 2px 12px rgba(0,0,0,0.04) !important; }
+.service-card:hover { background: #fff7f0 !important; border-color: rgba(255,106,0,0.25) !important; transform: translateY(-4px) !important; box-shadow: 0 8px 28px rgba(255,106,0,0.12) !important; }
+.service-card h3 { color: #0b1022 !important; }
+.service-card p { color: #64748b !important; }
+.services-grid .service-card { color: #0b1022 !important; }
+.service-icon.pink, .service-icon.green, .service-icon.blue, .service-icon.blue-dark, .service-icon.mint {
+  background: rgba(255,106,0,0.08) !important;
+}
+.service-icon svg { color: #ff6a00 !important; }
+
+/* ─── STUDENT RESULTS — dark section ──────────────────── */
+.image-review-section { background: linear-gradient(180deg, #0b1022 0%, #111827 100%) !important; border-top: none !important; }
+.image-review-header h2 { color: #f0f0ff !important; }
+.image-review-header h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.image-review-header p { color: rgba(240,240,255,0.45) !important; }
+.image-review-card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08) !important; background: rgba(255,255,255,0.02) !important; }
+
+/* ─── VIDEO FEEDBACK — white ───────────────────────────── */
+.video-feedback-section { background: #fff !important; border-top: 1px solid #e8edf5 !important; }
+.vf-eyebrow { color: #ff6a00 !important; }
+.vf-header h2 { color: #0b1022 !important; }
+.vf-header h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.vf-header p { color: #64748b !important; }
+.vf-card { background: #fff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 2px 12px rgba(0,0,0,0.05) !important; }
+.vf-card-info strong { color: #0b1022 !important; }
+.vf-card-info span { color: #64748b !important; }
+.vf-cta a { border-color: rgba(255,106,0,0.3) !important; color: #ff6a00 !important; }
+.vf-cta a:hover { background: rgba(255,106,0,0.06) !important; }
+
+/* ─── TESTIMONIALS — light gray ────────────────────────── */
+.testimonial-section { background: #f8faff !important; border-top: 1px solid #e8edf5 !important; }
+.testimonial-header h2 { color: #0b1022 !important; }
+.testimonial-header h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.testimonial-header p { color: #64748b !important; }
+.testimonial-card { background: #fff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 2px 12px rgba(0,0,0,0.05) !important; }
+.testimonial-card .quote { color: #ff8a00 !important; }
+.testimonial-card .stars { color: #f59e0b !important; }
+.testimonial-card .review { color: #475569 !important; }
+.testimonial-card h4 { color: #0b1022 !important; }
+.author span { color: #94a3b8 !important; }
+.testimonial-card .badge { background: rgba(16,185,129,0.1) !important; color: #059669 !important; }
+.see-all-btn { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; border: none !important; color: #fff !important; }
+
+/* ─── GUARANTEE — dark section ─────────────────────────── */
+.guarantee-section { background: linear-gradient(135deg, #0b1022 0%, #111827 100%) !important; border-top: none !important; }
+.guarantee-card { background: rgba(255,255,255,0.04) !important; border: 1px solid rgba(255,255,255,0.08) !important; }
+.guarantee-eyebrow {
+  color: #ff8a00 !important;
+  background: rgba(255,106,0,0.1) !important;
+  border-color: rgba(255,106,0,0.25) !important;
+}
+.guarantee-title { color: #f0f0ff !important; }
+.guarantee-card .guarantee-title { color: #f0f0ff !important; }
+.guarantee-title span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.guarantee-desc { color: rgba(240,240,255,0.55) !important; }
+.guarantee-desc strong, .guarantee-desc b { color: #f0f0ff !important; }
+.gt-badge { background: rgba(255,106,0,0.1) !important; color: #ff8a00 !important; border-color: rgba(255,106,0,0.25) !important; }
+.guarantee-btn { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; border: none !important; }
+
+/* ─── FAQ — white ──────────────────────────────────────── */
+.faq-section { background: #fff !important; border-top: 1px solid #e8edf5 !important; }
+.faq-eyebrow {
+  color: #ff6a00 !important;
+  background: rgba(255,106,0,0.08) !important;
+  border-color: rgba(255,106,0,0.2) !important;
+}
+.faq-heading { color: #0b1022 !important; }
+.faq-heading span { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; }
+.faq-subtext { color: #64748b !important; }
+.faq-item { background: #fff !important; border: 1px solid #e2e8f0 !important; border-radius: 16px !important; }
+.faq-item:hover { border-color: rgba(255,106,0,0.3) !important; box-shadow: 0 4px 16px rgba(255,106,0,0.08) !important; background: #fff7f0 !important; }
+.faq-item.active { background: #fff7f0 !important; border-color: rgba(255,106,0,0.4) !important; box-shadow: 0 8px 24px rgba(255,106,0,0.1) !important; }
+.faq-question { color: #0b1022 !important; background: transparent !important; }
+.faq-question:hover { background: transparent !important; }
+.faq-item.active .faq-question { color: #ff6a00 !important; background: transparent !important; }
+.faq-q-num {
+  background: rgba(255,106,0,0.08) !important;
+  color: #ff6a00 !important;
+}
+.faq-item.active .faq-q-num { background: rgba(255,106,0,0.18) !important; color: #ff6a00 !important; }
+.faq-answer { color: #64748b !important; background: transparent !important; }
+.faq-item .icon { color: #ff6a00 !important; }
+.faq-item.active .icon { color: #ff6a00 !important; }
+
+/* ─── CONTACT — dark section ────────────────────────────── */
+.contact-section { background: linear-gradient(135deg, #0b1022 0%, #111827 100%) !important; border-top: none !important; }
+.contact-info h2 { color: #f0f0ff !important; }
+.contact-info h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.contact-info { color: rgba(240,240,255,0.55) !important; }
+.contact-info p { color: rgba(240,240,255,0.5) !important; }
+.contact-details li { color: rgba(240,240,255,0.6) !important; }
+.contact-details svg { color: #ff8a00 !important; }
+.contact-form-box { background: rgba(255,255,255,0.04) !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 20px; padding: 32px; }
+.contact-form .form-group input,
+.contact-form .form-group textarea { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; color: #f0f0ff !important; }
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus { border-color: rgba(255,106,0,0.5) !important; box-shadow: 0 0 0 3px rgba(255,106,0,0.1) !important; }
+.contact-form .form-group input::placeholder,
+.contact-form .form-group textarea::placeholder { color: rgba(240,240,255,0.25) !important; }
+.contact-form .btn-orange { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; color: #fff !important; border-radius: 100px !important; }
+.contact-modal-box { background: #fff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 24px 60px rgba(0,0,0,0.15) !important; }
+.contact-modal-box h2 { color: #0b1022 !important; }
+.contact-modal-box h2 span { color: #ff6a00 !important; }
+.modal-subtext { color: #64748b !important; }
+.modal-form .form-group input,
+.modal-form .form-group textarea { background: #f8faff !important; border-color: #e2e8f0 !important; color: #0b1022 !important; }
+.modal-form .form-btn { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; border-radius: 100px !important; }
+
+/* ─── CTA CONTAINER ALIGNMENT ──────────────────────────── */
+.hero-cta-row.container { padding-top: 0; }
+
+/* ─── VIEW ALL CTA ─────────────────────────────────────── */
+.section-view-all {
+  display: flex; justify-content: center; margin-top: 36px;
+}
+.view-all-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px; border-radius: 100px;
+  font-size: 14px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  color: #ff6a00 !important; text-decoration: none !important;
+  background: rgba(255,106,0,0.06) !important;
+  border: 1px solid rgba(255,106,0,0.3) !important;
+  transition: all 0.25s;
+}
+.view-all-btn:hover {
+  background: linear-gradient(135deg,#ff8a00,#ff6a00) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,106,0,0.3) !important;
+}
+.view-all-btn svg { transition: transform 0.25s; }
+.view-all-btn:hover svg { transform: translateX(4px); }
+
+/* ─── MOBILE OVERRIDES ─────────────────────────────────── */
+@media(max-width:900px){
+  .hero-wrap { grid-template-columns: 1fr; gap: 28px; }
+  .hero-content h1 { font-size: 26px !important; }
+  .ito-top-grid { grid-template-columns: 1fr; }
+  .ito-image-box { height: 220px; }
+}
+</style>
+{% endblock %}
+
+{% block modal %}
     <!-- ================= CONTACT FORM MODAL ================= -->
     <div class="contact-modal-overlay" id="contactModal">
         <div class="contact-modal-box">
 
             <button class="contact-modal-close" id="closeContactModal">&times;</button>
 
-            <h2>Have Questions? <span>Let’s Talk</span></h2>
+            <h2>Have Questions? <span>Let's Talk</span></h2>
             <p class="modal-subtext">
                 Fill the form below and our team will contact you within 24 hours.
             </p>
@@ -56,177 +593,159 @@
 
         </div>
     </div>
+{% endblock %}
 
-
-    <header class="header">
-        <div class="container header-wrap">
-
-            <div class="logo">
-                <img src="{{ url_for('static', filename='images/maya-logo.jpeg') }}" alt="MayaPreneur">
-                <span class="brand-text">Maya<span>Preneur</span></span>
-            </div>
-            <nav class="nav" id="navMenu">
-                <button class="nav-close" id="navClose" aria-label="Close Menu">
-                    &times;
-                </button>
-                <a href="#Why-Dropshipping">Why Dropshipping</a>
-                <a href="#Process">Process</a>
-
-                <a href="#Success-Stories">Success Stories</a>
-                <a href="#FAQ">FAQ</a>
-                <a href="{{ url_for('gallery') }}">Gallery</a>
-                <a href="#Contact-Us">Contact Us</a>
-
-                <a href="#" class="btn btn-orange mobile-cta">
-                    Join Workshop
-                </a>
-            </nav>
-            <a href="#Contact-Us" class="btn btn-orange desktop-cta">Join Workshop</a>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-        </div>
-    </header>
+{% block content %}
+    {% if hero_slides %}
     <section class="hero">
 
-        <!-- Kannada title — fixed above carousel -->
+        <!-- Kannada banner — animated, above carousel -->
         <div class="hero-kannada-header">
-            <span>ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span>
+            <div class="hero-kannada-header-inner">
+                <span class="hk-star">✦</span>
+                <span class="hk-text">ಕನ್ನಡದಲ್ಲಿ ಮೊಟ್ಟ ಮೊದಲ ಬಾರಿಗೆ ಕಲಿಯಿರಿ</span>
+                <span class="hk-star">✦</span>
+            </div>
+            <div><span class="hk-badge">India's First · Live in Kannada</span></div>
         </div>
 
-        <div class="container hero-wrap">
+        <div class="hero-carousel-outer">
+            <div class="hero-carousel" id="heroCarousel">
 
-            <!-- LEFT: static content -->
-            <div class="hero-content">
-                <div class="hero-batch-tag" id="heroBatchTag">🗓 Batch 1 &nbsp;·&nbsp; Every Monday 7 PM</div>
-                <h1 id="heroTitle">
-                    Dropshipping <u>Live</u><br>
-                    <u>Workshop</u>
-                </h1>
-                <p class="subtitle">
-                    (No Prior Knowledge or Technical Experience Required)
-                </p>
-                <div class="rating">
-                    ⭐⭐⭐⭐⭐
-                    <span>Rating: 5 | 344 Reviews</span>
-                </div>
+                {% for slide in hero_slides %}
+                {% if slide.webinar_categories == 1 %}
+                    {% set cat_color = 'orange' %}
+                    {% set cat_icon  = '🛒 Dropshipping Webinar' %}
+                    {% set cat_slug  = 'dropshipping-mastery' %}
+                    {% set cat_label = 'Dropshipping' %}
+                {% elif slide.webinar_categories == 2 %}
+                    {% set cat_color = 'blue' %}
+                    {% set cat_icon  = '🏪 E-Commerce Webinar' %}
+                    {% set cat_slug  = 'ecommerce-business' %}
+                    {% set cat_label = 'E-Commerce' %}
+                {% else %}
+                    {% set cat_color = 'green' %}
+                    {% set cat_icon  = '💰 Online Earning Webinar' %}
+                    {% set cat_slug  = 'online-earning' %}
+                    {% set cat_label = 'Online Earning' %}
+                {% endif %}
 
-                <!-- Live countdown to next webinar -->
-                <div class="hero-timer">
-                    <p class="timer-label">⏰ Next Session Starts In</p>
-                    <div class="timer-boxes">
-                        <div class="t-box"><span id="t-days">00</span><small>Days</small></div>
-                        <span class="t-colon">:</span>
-                        <div class="t-box"><span id="t-hours">00</span><small>Hours</small></div>
-                        <span class="t-colon">:</span>
-                        <div class="t-box"><span id="t-mins">00</span><small>Mins</small></div>
-                        <span class="t-colon">:</span>
-                        <div class="t-box"><span id="t-secs">00</span><small>Secs</small></div>
+                <div class="hero-slide">
+                    <div class="container hero-wrap">
+
+                        <!-- LEFT: webinar details -->
+                        <div class="hero-content">
+                            <div class="hero-batch-tag {{ cat_color }}">{{ cat_icon }}</div>
+                            <h1>{{ slide.webinar_name }}</h1>
+                            {% if slide.webinar_discription %}
+                            <p class="subtitle">{{ slide.webinar_discription }}</p>
+                            {% endif %}
+
+                            <div class="hero-info-list">
+                                {% if slide.webinar_startingtime %}
+                                <div class="hero-info-item">
+                                    <span class="hi-icon">🗓</span>
+                                    <span>{{ slide.webinar_startingtime }}</span>
+                                </div>
+                                {% endif %}
+                                {% if slide.webinar_platform %}
+                                <div class="hero-info-item">
+                                    <span class="hi-icon">📡</span>
+                                    <span>{{ slide.webinar_platform }}</span>
+                                </div>
+                                {% endif %}
+                                {% if slide.webinar_lanuage %}
+                                <div class="hero-info-item">
+                                    <span class="hi-icon">🗣</span>
+                                    <span>{{ slide.webinar_lanuage }}</span>
+                                </div>
+                                {% endif %}
+                                <div class="hero-info-item">
+                                    <span class="hi-icon">💰</span>
+                                    <span>₹{{ slide.webinar_fees }}/-</span>
+                                </div>
+                            </div>
+
+                            <div class="rating" style="margin-bottom:16px;">
+                                ⭐⭐⭐⭐⭐
+                                <span>Rating: 5 | 344 Reviews</span>
+                            </div>
+
+                            <!-- Live countdown -->
+                            <div class="hero-timer">
+                                <p class="timer-label">⏰ Next Session Starts In</p>
+                                <div class="timer-boxes">
+                                    <div class="t-box"><span class="t-days">00</span><small>Days</small></div>
+                                    <span class="t-colon">:</span>
+                                    <div class="t-box"><span class="t-hours">00</span><small>Hours</small></div>
+                                    <span class="t-colon">:</span>
+                                    <div class="t-box"><span class="t-mins">00</span><small>Mins</small></div>
+                                    <span class="t-colon">:</span>
+                                    <div class="t-box"><span class="t-secs">00</span><small>Secs</small></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: video only -->
+                        <div class="hero-right">
+                            <div class="hero-video-box">
+                                {% if slide.webinar_video %}
+                                    {% set vid = slide.webinar_video %}
+                                    {% if 'youtube.com' in vid or 'youtu.be' in vid %}
+                                        {% if 'youtu.be/' in vid %}
+                                            {% set yt_id = vid.split('youtu.be/')[1].split('?')[0] %}
+                                        {% elif 'v=' in vid %}
+                                            {% set yt_id = vid.split('v=')[1].split('&')[0] %}
+                                        {% else %}
+                                            {% set yt_id = vid %}
+                                        {% endif %}
+                                        <iframe src="https://www.youtube.com/embed/{{ yt_id }}"
+                                                frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                    {% else %}
+                                        <video src="{{ url_for('static', filename=vid) if not vid.startswith('http') else vid }}"
+                                               controls playsinline></video>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="hero-video-placeholder">
+                                        <span>🎬</span>
+                                        <p>Video coming soon</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CTA below both columns -->
+                    <div class="container hero-cta-row">
+                        <a href="{{ url_for('checkout') }}" class="btn btn-orange large">
+                            Register Now @ ₹{{ slide.webinar_fees }}/-
+                        </a>
+                        <a href="{{ url_for('webinar_detail', slug=slide.webinar_slug or cat_slug) }}" class="btn btn-outline-details large">
+                            View Details
+                        </a>
                     </div>
                 </div>
+                {% endfor %}
 
-                <a href="{{ url_for('checkout') }}" class="btn btn-orange large">
-                    Register Now
-                </a>
             </div>
 
-            <!-- RIGHT: carousel — 3 webinar batches -->
-            <div class="hero-right">
-                <div class="hero-carousel-wrapper">
-                    <div class="hero-carousel" id="heroCarousel">
+            <!-- Nav arrows -->
+            <button class="carousel-prev" id="carouselPrev">&#8249;</button>
+            <button class="carousel-next" id="carouselNext">&#8250;</button>
 
-                        <!-- Slide 1: Dropshipping — Monday -->
-                        <div class="hero-slide">
-                            <div class="hero-video-wrapper">
-                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
-                                    title="MayaPreneur Dropshipping Workshop" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="workshop-card orange">
-                                <div class="wc-type-tag orange">🛒 Dropshipping Webinar</div>
-                                <h3>Build a Dropshipping Store From Scratch</h3>
-                                <div class="details">
-                                    <div class="date"><span>Every Monday</span></div>
-                                    <div class="time"><span>7 PM IST</span></div>
-                                    <div class="platform"><span>Zoom</span></div>
-                                    <div class="language"><span>Kannada & English</span></div>
-                                </div>
-                            </div>
-                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
-                                Register Now @ ₹49/-
-                            </a>
-                        </div>
-
-                        <!-- Slide 2: E-Commerce — Wednesday -->
-                        <div class="hero-slide">
-                            <div class="hero-video-wrapper">
-                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
-                                    title="MayaPreneur E-Commerce Workshop" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="workshop-card blue">
-                                <div class="wc-type-tag blue">🏪 E-Commerce Webinar</div>
-                                <h3>Launch & Scale Your E-Commerce Business</h3>
-                                <div class="details">
-                                    <div class="date"><span>Every Wednesday</span></div>
-                                    <div class="time"><span>7 PM IST</span></div>
-                                    <div class="platform"><span>Zoom</span></div>
-                                    <div class="language"><span>Kannada & English</span></div>
-                                </div>
-                            </div>
-                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
-                                Register Now @ ₹49/-
-                            </a>
-                        </div>
-
-                        <!-- Slide 3: Online Earning — Sunday -->
-                        <div class="hero-slide">
-                            <div class="hero-video-wrapper">
-                                <iframe src="https://www.youtube.com/embed/OCDUN0Oudtk"
-                                    title="MayaPreneur Online Earning Workshop" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="workshop-card green">
-                                <div class="wc-type-tag green">💰 Online Earning Webinar</div>
-                                <h3>Master Multiple Online Income Streams</h3>
-                                <div class="details">
-                                    <div class="date"><span>Every Sunday</span></div>
-                                    <div class="time"><span>6 PM IST</span></div>
-                                    <div class="platform"><span>Zoom</span></div>
-                                    <div class="language"><span>Kannada & English</span></div>
-                                </div>
-                            </div>
-                            <a href="{{ url_for('checkout') }}" class="btn btn-green full">
-                                Register Now @ ₹49/-
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <!-- Nav arrows -->
-                    <button class="carousel-prev" id="carouselPrev">&#8249;</button>
-                    <button class="carousel-next" id="carouselNext">&#8250;</button>
-
-                    <!-- Dot indicators -->
-                    <div class="carousel-dots">
-                        <button class="carousel-dot active" data-slide="0"></button>
-                        <button class="carousel-dot" data-slide="1"></button>
-                        <button class="carousel-dot" data-slide="2"></button>
-                    </div>
-                </div>
+            <!-- Dot indicators -->
+            <div class="carousel-dots">
+                {% for slide in hero_slides %}
+                <button class="carousel-dot {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}"></button>
+                {% endfor %}
             </div>
-
         </div>
+
     </section>
+    {% endif %}
 
     <!-- Webinar Types Section -->
     <section class="webinar-types-section" id="Why-Dropshipping">
@@ -245,11 +764,13 @@
                     <div class="wt-slide">
                         <div class="ito-top-grid">
                             <div class="ito-image-box">
-                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.55.31_-_A_modern_dropshipping_concept_image_showing_a_mobile_phone_with_a_shopping_app_interface_featuring_a_variety_of_products_like_clothing_electronics.webp?v=1727325143&width=1500" alt="Dropshipping Webinar">
+                                <a href="{{ url_for('webinar_detail', slug='dropshipping-mastery') }}">
+                                    <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.55.31_-_A_modern_dropshipping_concept_image_showing_a_mobile_phone_with_a_shopping_app_interface_featuring_a_variety_of_products_like_clothing_electronics.webp?v=1727325143&width=1500" alt="Dropshipping Webinar">
+                                </a>
                                 <div class="ito-badge wt-badge-orange">🗓 Every Monday · 7 PM</div>
                             </div>
                             <div class="ito-content">
-                                <h2><span>|</span> Dropshipping Mastery</h2>
+                                <h2><a href="{{ url_for('webinar_detail', slug='dropshipping-mastery') }}" style="color:inherit;text-decoration:none;"><span>|</span> Dropshipping Mastery</a></h2>
                                 <p>How to set up your store, find top products, and start making sales without holding inventory.</p>
                                 <ul class="wt-topics">
                                     <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Product selection & niche research</li>
@@ -265,11 +786,13 @@
                     <div class="wt-slide">
                         <div class="ito-top-grid">
                             <div class="ito-image-box">
-                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_22.00.40_-_An_e-commerce_concept_image_representing_Amazon_Flipkart_and_Meesho._The_image_features_the_logos_of_these_platforms_placed_above_a_variety_of_produ.webp?v=1769059036&width=1500" alt="E-Commerce Webinar">
+                                <a href="{{ url_for('webinar_detail', slug='ecommerce-business') }}">
+                                    <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_22.00.40_-_An_e-commerce_concept_image_representing_Amazon_Flipkart_and_Meesho._The_image_features_the_logos_of_these_platforms_placed_above_a_variety_of_produ.webp?v=1769059036&width=1500" alt="E-Commerce Webinar">
+                                </a>
                                 <div class="ito-badge wt-badge-blue">🗓 Every Wednesday · 7 PM</div>
                             </div>
                             <div class="ito-content">
-                                <h2><span>|</span> E-Commerce Business</h2>
+                                <h2><a href="{{ url_for('webinar_detail', slug='ecommerce-business') }}" style="color:inherit;text-decoration:none;"><span>|</span> E-Commerce Business</a></h2>
                                 <p>Grow your business on Amazon, Flipkart, and Meesho with expert training — store setup, product management, and increasing sales quickly.</p>
                                 <ul class="wt-topics">
                                     <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Platform selection & store setup</li>
@@ -285,11 +808,13 @@
                     <div class="wt-slide">
                         <div class="ito-top-grid">
                             <div class="ito-image-box">
-                                <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.54.19_-_A_vibrant_and_dynamic_image_representing_dropshipping._It_includes_a_globe_in_the_background_with_various_shopping_carts_boxes_and_package_icons_aro.webp?v=1727325076&width=1500" alt="Online Earning Webinar">
+                                <a href="{{ url_for('webinar_detail', slug='online-earning') }}">
+                                    <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E_2024-09-19_08.54.19_-_A_vibrant_and_dynamic_image_representing_dropshipping._It_includes_a_globe_in_the_background_with_various_shopping_carts_boxes_and_package_icons_aro.webp?v=1727325076&width=1500" alt="Online Earning Webinar">
+                                </a>
                                 <div class="ito-badge wt-badge-green">🗓 Every Sunday · 6 PM</div>
                             </div>
                             <div class="ito-content">
-                                <h2><span>|</span> Online Earning Streams</h2>
+                                <h2><a href="{{ url_for('webinar_detail', slug='online-earning') }}" style="color:inherit;text-decoration:none;"><span>|</span> Online Earning Streams</a></h2>
                                 <p>Promote top products, grow your audience, and earn commissions globally with ease.</p>
                                 <ul class="wt-topics">
                                     <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/></svg> Freelancing & remote work</li>
@@ -367,7 +892,7 @@
 
             <!-- Header -->
             <div class="db-header">
-                <div class="db-count">5</div>
+                <div class="db-count">{{ benefits|length }}</div>
                 <div class="db-title">
                     <h2>Major Benefits of <span>Dropshipping</span></h2>
                     <p>Why thousands are choosing dropshipping as their primary online business model</p>
@@ -377,60 +902,18 @@
             <!-- Benefits -->
             <div class="db-list">
 
+                {% for b in benefits %}
                 <div class="db-item">
                     <div class="db-left">
-                        <div class="db-no">1</div>
-                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.143a.75.75 0 01.507.914l-2.143 5.943a.75.75 0 01-1.4-.505l1.294-3.592-7.016 7.017a.75.75 0 01-1.06 0l-3.94-3.94-5.47 5.47a.75.75 0 01-1.06-1.06l6-6a.75.75 0 011.06 0l3.94 3.939 6.479-6.479-3.593 1.294a.75.75 0 01-.506-.968z" clip-rule="evenodd"/></svg></div>
+                        <div class="db-no">{{ loop.index }}</div>
+                        {% if b.icon_svg %}<div class="db-icon">{{ b.icon_svg | safe }}</div>{% endif %}
                     </div>
                     <div class="db-text">
-                        <h4>High Profit Margins</h4>
-                        <p>Sell trending products with strong margins and minimal upfront investment.</p>
+                        <h4>{{ b.title }}</h4>
+                        <p>{{ b.description }}</p>
                     </div>
                 </div>
-
-                <div class="db-item">
-                    <div class="db-left">
-                        <div class="db-no">2</div>
-                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z"/><path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clip-rule="evenodd"/></svg></div>
-                    </div>
-                    <div class="db-text">
-                        <h4>No Inventory Costs</h4>
-                        <p>No storage, no stock risk, no warehouse expenses.</p>
-                    </div>
-                </div>
-
-                <div class="db-item">
-                    <div class="db-left">
-                        <div class="db-no">3</div>
-                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.644 1.59a.75.75 0 01.712 0l9.75 5.25a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.712 0l-9.75-5.25a.75.75 0 010-1.32l9.75-5.25z"/><path d="M3.265 10.602l7.668 4.13a2.25 2.25 0 002.134 0l7.668-4.13 1.37.739a.75.75 0 010 1.32l-9.75 5.25a.75.75 0 01-.71 0l-9.75-5.25a.75.75 0 010-1.32l1.37-.738z"/><path d="M10.933 19.231l-7.668-4.13-1.37.739a.75.75 0 000 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 000-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 01-2.134-.001z"/></svg></div>
-                    </div>
-                    <div class="db-text">
-                        <h4>Multiple Product Earnings</h4>
-                        <p>Test and sell unlimited products without additional cost.</p>
-                    </div>
-                </div>
-
-                <div class="db-item">
-                    <div class="db-left">
-                        <div class="db-no">4</div>
-                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM9 7.5A.75.75 0 009 9h1.5c0 .986.158 1.674.43 2.038C11.143 11.297 11.5 11.5 12 11.5s.857-.203 1.07-.462C13.342 10.674 13.5 9.986 13.5 9H15a.75.75 0 000-1.5H9zm-.75 5.25a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-.196A5.252 5.252 0 0112 16.5a5.252 5.252 0 01-2.804-3H9a.75.75 0 01-.75-.75z" clip-rule="evenodd"/></svg></div>
-                    </div>
-                    <div class="db-text">
-                        <h4>Unlimited Income Potential</h4>
-                        <p>Your growth depends only on scaling, not inventory.</p>
-                    </div>
-                </div>
-
-                <div class="db-item">
-                    <div class="db-left">
-                        <div class="db-no">5</div>
-                        <div class="db-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z"/><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z" clip-rule="evenodd"/></svg></div>
-                    </div>
-                    <div class="db-text">
-                        <h4>Passive Income Opportunity</h4>
-                        <p>Automate order fulfillment and focus on growth.</p>
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
         </div>
@@ -552,10 +1035,10 @@
             <div class="mentor-content">
                 <span class="subtitle">Meet Your Mentor</span>
 
-                <h2>Learn From Someone Who’s</h2>
+                <h2>Learn From Someone Who's</h2>
 
                 <p class="description">
-                    Learn E-Commerce & Dropshipping in Kannada from a mentor who doesn’t just talk theory — but
+                    Learn E-Commerce & Dropshipping in Kannada from a mentor who doesn't just talk theory — but
                     teaches what actually works.
 
                     This session is led by a mentor with real hands-on experience in online business, who explains
@@ -644,46 +1127,77 @@
             </div>
             <div class="image-review-slider">
                 <div class="image-review-track">
+                    {% for img in student_results[:4] %}
                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students.jpeg') }}" alt="">
+                        <img src="{{ url_for('static', filename=img.image_path) if not img.image_path.startswith('http') else img.image_path }}" alt="{{ img.alt_text or '' }}">
                     </div>
-                    <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students1.jpeg') }}" alt="">
-                    </div>
-                    <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students2.jpeg') }}" alt="">
-                    </div>
-                    <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students3.jpeg') }}" alt="">
-                    </div>
-                    <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students4.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students5.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students6.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students7.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students8.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students9.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students10.jpeg') }}" alt="">
-                    </div>
-                     <div class="image-review-card">
-                        <img src="{{ url_for('static', filename='images/student/students11.jpeg') }}" alt="">
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+            {% if student_results|length > 4 %}
+            <div class="section-view-all">
+                <a href="{{ url_for('gallery') }}" class="view-all-btn">
+                    View All Results
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
+                </a>
+            </div>
+            {% endif %}
         </div>
     </section>
+
+    <!-- ================= VIDEO FEEDBACK SECTION ================= -->
+    <section class="video-feedback-section" id="Video-Feedback">
+        <div class="vf-header">
+            <div class="vf-eyebrow">Student Voice</div>
+            <h2>Hear it from Our <span>Students</span></h2>
+            <p>Watch real feedback from people who transformed their lives with MayaPreneur.</p>
+        </div>
+
+        <div class="vf-grid">
+
+            {% for vr in video_reviews[:4] %}
+            <div class="vf-card"
+                 data-video="{% if vr.video_type == 'local' %}{{ url_for('static', filename=vr.video_src) }}{% else %}{{ vr.video_src }}{% endif %}"
+                 data-type="{{ vr.video_type }}"
+                 data-name="{{ vr.student_name }}"
+                 data-role="{{ vr.student_role or '' }}">
+                <img class="vf-card-thumb"
+                     src="{{ url_for('static', filename=vr.thumbnail) if vr.thumbnail and not vr.thumbnail.startswith('http') else (vr.thumbnail or '') }}"
+                     alt="{{ vr.student_name }}">
+                <div class="vf-card-overlay"></div>
+                <div class="vf-play-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                </div>
+                {% if vr.duration %}<span class="vf-duration">{{ vr.duration }}</span>{% endif %}
+                <div class="vf-card-info">
+                    <strong>{{ vr.student_name }}</strong>
+                    <span>{{ vr.student_role or '' }}</span><br>
+                    <span class="vf-verified">✓ Verified</span>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="section-view-all">
+            <a href="{{ url_for('video_reviews_page') }}" class="view-all-btn">
+                View All Student Stories
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ================= VIDEO MODAL ================= -->
+    <div class="vm-overlay" id="videoModal">
+        <div class="vm-box">
+            <button class="vm-close" id="vmClose">&times;</button>
+            <div class="vm-player" id="vmPlayer"></div>
+            <div class="vm-footer">
+                <strong id="vmName"></strong>
+                <span id="vmRole"></span>
+            </div>
+        </div>
+    </div>
 
     <section class="testimonial-section" id="Success-Stories">
         <div class="container">
@@ -692,100 +1206,26 @@
                 <p>Real Results from Real People</p>
             </div>
             <div class="testimonial-grid">
+                {% for t in testimonials[:3] %}
                 <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Maya Preneur is an amazing platform for those who want to learn drop shipping and E- commerce
-                        course, their guidance is amazing and phenomenal. Moreover I really thank you from the bottom of
-                        my heart because,it is the first platform in kannada that has taught drop shipping and
-                        e-commerce."
-                    </p>
+                    <div class="quote">"</div>
+                    <div class="stars">{{ '★' * t.rating }}{{ '☆' * (5 - t.rating) }}</div>
+                    <p class="review">"{{ t.review }}"</p>
                     <div class="author">
                         <div>
-                            <h4>Praveen Mj</h4>
+                            <h4>{{ t.student_name }}</h4>
                         </div>
                         <span class="badge">✓ Verified Student</span>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I've seen a lot of other e commerce courses. but this app is different. the way mithun sir and
-                        janvi madam explain every class is easy to understand. and especially those who want to learn in
-                        kannada. this is a very good platform. thank you"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Charles Finny</h4>
-                        </div>
-                        <span class="badge">✓ Verified Student</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I am currently undergoing Mayapreneur Dropshipping training. The sessions so far have been good
-                        and informative. I have received valuable knowledge and practical insights. Happy with the
-                        learning experience till now."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Kumar</h4>
-                        </div>
-                        <span class="badge">✓ Verified Student</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Its very good valuable course and cheap and best. its only in maya preneur .. platform .&
-                        special thanks to mitun sir and janvee madam .and everyone very good supported .good knowledge
-                        also. so i leans lots of knowledge. heare. thank you so much mitun sir.....& team."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Kumar Muller</h4>
-                        </div>
-                        <span class="badge">✓ Verified Student</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Really good training. you will get focus and enthusiasm to do business. trainer jahnavi doing
-                        excellent work. and maya preneur organized training session in professional manner. The felt I
-                        joined the best hands to grow myself. thank you to Maya preneur and team."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>bharath kumara</h4>
-                        </div>
-                        <span class="badge">✓ Verified Student</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">“</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Teaching is very good.but when we do practical .problem not solving. mithun teaching excellent.
-                        I feel very difficulty in understanding ."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Avinash kadri Bangera</h4>
-                        </div>
-                        <span class="badge">✓ Verified Student</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        <div class="see-all-wrapper">
-            <a href="{{ url_for('reviews') }}" class="see-all-btn">See All Reviews</a>
+        <div class="section-view-all">
+            <a href="{{ url_for('reviews') }}" class="view-all-btn">
+                View All Reviews
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
+            </a>
         </div>
     </section>
 
@@ -795,7 +1235,7 @@
             <div class="guarantee-eyebrow">Risk-Free Promise</div>
             <h2 class="guarantee-title">100% Money Back <span>Guarantee</span></h2>
             <p class="guarantee-desc">
-                If you don’t find this workshop helpful, I will return <strong>200% of your money</strong>.<br>
+                If you don't find this workshop helpful, I will return <strong>200% of your money</strong>.<br>
                 No questions asked. <b>Promise!</b>
             </p>
             <div class="guarantee-trust-row">
@@ -817,106 +1257,35 @@
                 <h2 class="faq-heading">Frequently Asked <span>Questions</span></h2>
                 <p class="faq-subtext">Everything you need to know before you register.</p>
             </div>
+            {% set half = ((faqs|length + 1) // 2) %}
             <div class="faq-grid">
                 <div class="faq-col">
-                    <div class="faq-item">
+                    {% for f in faqs[:half] %}
+                    <div class="faq-item{% if loop.first %} active{% endif %}">
                         <button class="faq-question">
-                            <span class="faq-q-num">01</span>
-                            Will This Workshop Be Live?
+                            <span class="faq-q-num">{{ '%02d'|format(loop.index) }}</span>
+                            {{ f.question }}
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                             </span>
                         </button>
-                        <div class="faq-answer">
-                            Yes, this is a completely live workshop where you can interact and ask questions in real-time.
-                        </div>
+                        <div class="faq-answer">{{ f.answer }}</div>
                     </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-q-num">02</span>
-                            Any Hidden Terms &amp; Conditions?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            No hidden terms. Everything is transparent, and your satisfaction is guaranteed.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-q-num">03</span>
-                            How Will I Get The Bonuses?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            All bonuses will be shared digitally via email and your private dashboard access.
-                        </div>
-                    </div>
-                    <div class="faq-item active">
-                        <button class="faq-question">
-                            <span class="faq-q-num">04</span>
-                            How Will You Remind Me?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            We will send reminders via WhatsApp, email, and SMS before the workshop starts.
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="faq-col">
+                    {% for f in faqs[half:] %}
                     <div class="faq-item">
                         <button class="faq-question">
-                            <span class="faq-q-num">05</span>
-                            Do I Need To Bring Anything?
+                            <span class="faq-q-num">{{ '%02d'|format(half + loop.index) }}</span>
+                            {{ f.question }}
                             <span class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                             </span>
                         </button>
-                        <div class="faq-answer">
-                            Just a notebook and an open mind! Everything else will be provided.
-                        </div>
+                        <div class="faq-answer">{{ f.answer }}</div>
                     </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-q-num">06</span>
-                            How Will I Get A Refund?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            Simply email our support team within the refund period, and your money will be returned.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-q-num">07</span>
-                            I'm a Complete Beginner. Is This For Me?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            Absolutely! This workshop is designed for beginners with step-by-step guidance.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span class="faq-q-num">08</span>
-                            What Language Is The Workshop In?
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            The workshop is conducted in Kannada &amp; English so everyone can follow along easily.
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -926,7 +1295,7 @@
     <section class="contact-section" id="Contact-Us">
         <div class="container contact-wrap">
             <div class="contact-info">
-                <h2>Have Questions? <span>Let’s Talk</span></h2>
+                <h2>Have Questions? <span>Let's Talk</span></h2>
                 <p>
                     Reach out to us for workshop details, partnership enquiries,
                     or any questions about starting your dropshipping journey.
@@ -965,7 +1334,7 @@
                     </div>
                     <div class="form-group">
                         <input type="text" name="phone" placeholder="Phone Number" maxlength="10"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id=""
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id=""
                             required>
                     </div>
                     <div class="form-group">
@@ -1011,6 +1380,21 @@
                 </div>
             </div>
 
+            <div class="countdown">
+                <div class="time-box">
+                    <h3 id="hours">23</h3>
+                    <span>Hours</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="minutes">48</h3>
+                    <span>Mins</span>
+                </div>
+                <div class="time-box">
+                    <h3 id="seconds">29</h3>
+                    <span>Secs</span>
+                </div>
+            </div>
+
             <a href="{{ url_for('checkout') }}" class="register-btn">
                 Register Now <span>→</span>
             </a>
@@ -1027,77 +1411,9 @@
 
         </div>
     </section> -->
+{% endblock %}
 
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-col brand">
-                <div class="brand-logo">
-                    <img src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="MayaPreneur">
-                    <span>Maya<span>Preneur</span></span>
-                </div>
-                <p>
-                    India's premier dropshipping education platform.
-                    Master the art of building profitable online stores
-                    with zero inventory and minimal investment.
-                </p>
-                <div class="social-icons">
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#Process">Process</a></li>
-                    <li><a href="#Bonuses">Bonuses</a></li>
-                    <li><a href="#Success-Stories">Testimonials</a></li>
-                    <li><a href="#FAQ">FAQ</a></li>
-                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <ul class="contact-list">
-                    <li>
-                        <span>✉</span>
-                        <a href="mailto:mayapreneur64@gmail.com">
-                            mayapreneur64@gmail.com
-                        </a>
-                    </li>
-
-                    <li>
-                        <span>☎</span>
-                        <a href="tel:+918152877026">
-                            +91 81528 77026
-                        </a>
-                    </li>
-
-                    <li>
-                        <span>📍</span>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Maya+Solutions+Outer+Ring+Road+5th+Block+Phase+3+Banashankari+Bengaluru+Karnataka"
-                            target="_blank" rel="noopener">
-                            Maya Solutions, Outer Ring Road, 5th Block, Phase 3, Banashankari, Bengaluru, Karnataka
-                        </a>
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2026 MayaPreneur. All rights reserved.</p>
-            <div class="policy-links">
-                <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
-                <a href="{{ url_for('terms_of_use') }}">Terms of Service</a>
-                <a href="{{ url_for('refund_policy') }}">Refund Policy</a>
-            </div>
-        </div>
-    </footer>
-
+{% block scripts %}
     <script>
         const faqItems = document.querySelectorAll('.faq-item');
 
@@ -1113,26 +1429,16 @@
         });
 
         // ── HERO CAROUSEL ──────────────────────────────────────
-        const BATCH_TAGS = [
-            { text: '🗓 Batch 1 · Every Monday 7 PM',    cls: '',      title: 'Dropshipping <u>Live</u><br><u>Workshop</u>' },
-            { text: '🗓 Batch 2 · Every Wednesday 7 PM', cls: 'blue',  title: 'E-Commerce <u>Live</u><br><u>Workshop</u>' },
-            { text: '🗓 Batch 3 · Every Sunday 6 PM',    cls: 'green', title: 'Online Earning <u>Live</u><br><u>Workshop</u>' },
-        ];
-        const carousel    = document.getElementById('heroCarousel');
-        const batchTag    = document.getElementById('heroBatchTag');
-        const heroTitle   = document.getElementById('heroTitle');
+        const carousel     = document.getElementById('heroCarousel');
         const carouselDots = document.querySelectorAll('.carousel-dot');
-        let currentSlide  = 0;
+        const totalSlides  = carouselDots.length;
+        let currentSlide   = 0;
         let carouselTimer;
 
         function goToSlide(n) {
-            currentSlide = (n + 3) % 3;
+            currentSlide = (n + totalSlides) % totalSlides;
             carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
             carouselDots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
-            const tag = BATCH_TAGS[currentSlide];
-            batchTag.textContent  = tag.text;
-            batchTag.className    = 'hero-batch-tag' + (tag.cls ? ' ' + tag.cls : '');
-            heroTitle.innerHTML   = tag.title;
         }
 
         function restartAutoplay() {
@@ -1197,29 +1503,71 @@
             const h = Math.floor(rem / 3600);  rem %= 3600;
             const m = Math.floor(rem / 60);
             const s = rem % 60;
-            document.getElementById('t-days').textContent  = String(d).padStart(2, '0');
-            document.getElementById('t-hours').textContent = String(h).padStart(2, '0');
-            document.getElementById('t-mins').textContent  = String(m).padStart(2, '0');
-            document.getElementById('t-secs').textContent  = String(s).padStart(2, '0');
+            const dStr = String(d).padStart(2, '0');
+            const hStr = String(h).padStart(2, '0');
+            const mStr = String(m).padStart(2, '0');
+            const sStr = String(s).padStart(2, '0');
+            document.querySelectorAll('.t-days').forEach(el  => el.textContent = dStr);
+            document.querySelectorAll('.t-hours').forEach(el => el.textContent = hStr);
+            document.querySelectorAll('.t-mins').forEach(el  => el.textContent = mStr);
+            document.querySelectorAll('.t-secs').forEach(el  => el.textContent = sStr);
         }
         updateHeroTimer();
         setInterval(updateHeroTimer, 1000);
-        const hamburger = document.getElementById("hamburger");
-        const navMenu = document.getElementById("navMenu");
-        const navClose = document.getElementById("navClose");
+    </script>
 
-        hamburger.addEventListener("click", () => {
-            navMenu.classList.add("active");
-        });
+    <script>
+        // ── VIDEO FEEDBACK MODAL ─────────────────────────────────
+        const vmOverlay = document.getElementById("videoModal");
+        const vmClose   = document.getElementById("vmClose");
+        const vmPlayer  = document.getElementById("vmPlayer");
+        const vmName    = document.getElementById("vmName");
+        const vmRole    = document.getElementById("vmRole");
 
-        navClose.addEventListener("click", () => {
-            navMenu.classList.remove("active");
-        });
+        document.querySelectorAll(".vf-card").forEach(card => {
+            card.addEventListener("click", () => {
+                const src    = card.dataset.video;
+                const type   = card.dataset.type;   // "local" or "youtube"
+                const name   = card.dataset.name;
+                const role   = card.dataset.role;
 
-        document.querySelectorAll(".nav a").forEach(link => {
-            link.addEventListener("click", () => {
-                navMenu.classList.remove("active");
+                vmName.textContent = name;
+                vmRole.textContent = role;
+                vmPlayer.innerHTML = "";
+
+                if (type === "youtube") {
+                    // src should be the YouTube video ID
+                    const iframe = document.createElement("iframe");
+                    iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0`;
+                    iframe.allow = "autoplay; fullscreen";
+                    iframe.allowFullscreen = true;
+                    vmPlayer.appendChild(iframe);
+                } else {
+                    const video = document.createElement("video");
+                    video.src = src;
+                    video.controls = true;
+                    video.autoplay = true;
+                    video.playsInline = true;
+                    vmPlayer.appendChild(video);
+                }
+
+                vmOverlay.classList.add("active");
+                document.body.style.overflow = "hidden";
             });
+        });
+
+        function closeVideoModal() {
+            vmOverlay.classList.remove("active");
+            vmPlayer.innerHTML = "";  // stops playback
+            document.body.style.overflow = "";
+        }
+
+        vmClose.addEventListener("click", closeVideoModal);
+        vmOverlay.addEventListener("click", e => {
+            if (e.target === vmOverlay) closeVideoModal();
+        });
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") closeVideoModal();
         });
     </script>
 
@@ -1243,7 +1591,4 @@
             }
         });
     </script> -->
-
-</body>
-
-</html>
+{% endblock %}

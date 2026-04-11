@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Student Result{% else %}Add Student Result{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Student Result{% else %}Add Student Result{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Student Result{% else %}Add Student Result{% endif %}</h1>
+    <a href="{{ url_for('admin.student_results') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-grid">
+        <div class="form-group full">
+            <label>Upload Image File</label>
+            <input type="file" name="image_file" accept="image/*">
+            {% if row and row.image_path %}
+            <div style="margin-top:8px;">
+                <small style="color:#64748b;">Current:</small><br>
+                <img src="{{ url_for('static', filename=row.image_path) if not row.image_path.startswith('http') else row.image_path }}"
+                     class="img-preview" style="margin-top:6px;" onerror="this.style.display='none'">
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group full">
+            <label>Or paste Image URL / Path</label>
+            <input type="text" name="image_path" value="{{ row.image_path if row else '' }}"
+                   placeholder="images/student/students.jpeg or https://...">
+            <small style="color:#64748b;font-size:11px;">Leave blank if uploading a file above.</small>
+        </div>
+        <div class="form-group full">
+            <label>Alt Text</label>
+            <input type="text" name="alt_text" value="{{ row.alt_text if row else '' }}" placeholder="Student result screenshot">
+        </div>
+
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="category" required>
+                <option value="1" {% if row and row.category==1 %}selected{% endif %}>Dropshipping</option>
+                <option value="2" {% if row and row.category==2 %}selected{% endif %}>E-Commerce</option>
+                <option value="3" {% if row and row.category==3 %}selected{% endif %}>Online Earning</option>
+                <option value="0" {% if not row or row.category==0 %}selected{% endif %}>All (General)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="1" {% if not row or row.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% if row %}Save Changes{% else %}Add Image{% endif %}</button>
+        <a href="{{ url_for('admin.student_results') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+{% endblock %}
