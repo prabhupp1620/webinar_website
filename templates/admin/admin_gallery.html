@@ -2,37 +2,147 @@
 {% block title %}Gallery{% endblock %}
 {% block topbar_title %}Gallery{% endblock %}
 {% block content %}
+<style>
+    .thumb-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.2s;
+    }
+    .thumb-wrap:hover { border-color: #6366f1; }
+    .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb-icon { font-size: 26px; line-height: 1; }
+
+    /* ── Preview Modal ── */
+    #previewModal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.88);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+    #previewModal.open { display: flex; }
+    .preview-box {
+        position: relative;
+        background: #0f172a;
+        border-radius: 16px;
+        max-width: 820px;
+        width: 100%;
+        overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .preview-header-info { display: flex; flex-direction: column; gap: 2px; }
+    .preview-title { font-size: 15px; font-weight: 700; color: #f1f5f9; }
+    .preview-meta  { font-size: 12px; color: #64748b; }
+    .preview-close {
+        background: rgba(255,255,255,0.08);
+        border: none;
+        color: #f1f5f9;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        flex-shrink: 0;
+    }
+    .preview-close:hover { background: rgba(239,68,68,0.3); }
+    .preview-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 360px;
+        max-height: 70vh;
+        overflow: hidden;
+        background: #020617;
+    }
+    .preview-body img {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        display: block;
+    }
+    .preview-body video {
+        max-width: 100%;
+        max-height: 70vh;
+        display: block;
+        outline: none;
+    }
+    .preview-no-media {
+        color: #475569;
+        font-size: 14px;
+        text-align: center;
+        padding: 60px 20px;
+    }
+    .preview-no-media span { font-size: 48px; display: block; margin-bottom: 12px; }
+</style>
+
 <div class="page-header">
     <h1>Gallery</h1>
     <a href="{{ url_for('admin.gallery_add') }}" class="btn btn-primary">+ Add Item</a>
 </div>
+
 <div class="card table-wrap">
     <table>
         <thead>
-            <tr><th>#</th><th>Preview</th><th>Title</th><th>Gallery Type</th><th>Media</th><th>Section</th><th>Status</th><th>Actions</th></tr>
+            <tr>
+                <th>#</th>
+                <th>Preview</th>
+                <th>Title</th>
+                <th>Gallery Type</th>
+                <th>Media</th>
+                <th>Section</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         {% set sm = {0:'All',1:'Dropshipping',2:'E-Commerce',3:'Online Earning'} %}
         {% set sc = {0:'',1:'badge-orange',2:'badge-blue',3:'badge-green'} %}
-        {% set gm = {1:'Success Stories',2:'Live Session',3:'Students'} %}
         {% for r in rows %}
+        {% set thumb_src = (r.thumbnail or r.media_path) %}
+        {% set is_external = thumb_src and thumb_src.startswith('http') %}
+        {% set resolved_thumb = thumb_src if is_external else (url_for('static', filename=thumb_src) if thumb_src else '') %}
+        {% set resolved_media = r.media_path if r.media_path.startswith('http') else (url_for('static', filename=r.media_path) if r.media_path else '') %}
         <tr>
             <td>{{ r.id }}</td>
             <td>
-                {% set thumb = r.thumbnail or r.media_path %}
-                {% if thumb and r.media_type == 'image' %}
-                    <img src="{{ url_for('static', filename=thumb) if not thumb.startswith('http') else thumb }}"
-                         class="img-preview" onerror="this.style.display='none'">
-                {% elif r.media_type == 'video' %}
-                    {% if r.thumbnail %}
-                        <img src="{{ url_for('static', filename=r.thumbnail) if not r.thumbnail.startswith('http') else r.thumbnail }}"
-                             class="img-preview" onerror="this.style.display='none'">
+                <div class="thumb-wrap"
+                     onclick="openPreview({{ r.id }}, '{{ r.media_type }}', '{{ resolved_media }}', '{{ resolved_thumb }}', '{{ r.title|e }}', '{{ ({1:'Success Stories',2:'Live Session',3:'Students'}).get(r.gallery_type,'—') }}')"
+                     title="Click to preview">
+                    {% if resolved_thumb and r.media_type == 'image' %}
+                        <img src="{{ resolved_thumb }}" alt="{{ r.title }}" onerror="this.parentElement.innerHTML='<span class=thumb-icon>🖼</span>'">
+                    {% elif r.media_type == 'video' %}
+                        {% if resolved_thumb %}
+                            <img src="{{ resolved_thumb }}" alt="thumb" onerror="this.parentElement.innerHTML='<span class=thumb-icon>🎬</span>'">
+                        {% else %}
+                            <span class="thumb-icon">🎬</span>
+                        {% endif %}
                     {% else %}
-                        <span style="font-size:22px;">🎬</span>
+                        <span class="thumb-icon">🖼</span>
                     {% endif %}
-                {% else %}
-                    <span style="color:#94a3b8;">—</span>
-                {% endif %}
+                </div>
             </td>
             <td style="font-weight:600;max-width:200px;">{{ r.title or '—' }}</td>
             <td>
@@ -55,6 +165,10 @@
             </span></td>
             <td>
                 <div class="td-actions">
+                    <button class="btn btn-secondary btn-sm"
+                            onclick="openPreview({{ r.id }}, '{{ r.media_type }}', '{{ resolved_media }}', '{{ resolved_thumb }}', '{{ r.title|e }}', '{{ ({1:'Success Stories',2:'Live Session',3:'Students'}).get(r.gallery_type,'—') }}')">
+                        👁 Preview
+                    </button>
                     <a href="{{ url_for('admin.gallery_edit', gid=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
                     <form method="POST" action="{{ url_for('admin.gallery_delete', gid=r.id) }}"
                           onsubmit="return confirm('Delete this item?')">
@@ -71,4 +185,62 @@
         </tbody>
     </table>
 </div>
+
+<!-- Preview Modal -->
+<div id="previewModal" onclick="if(event.target===this)closePreview()">
+    <div class="preview-box">
+        <div class="preview-header">
+            <div class="preview-header-info">
+                <span class="preview-title" id="previewTitle">—</span>
+                <span class="preview-meta"  id="previewMeta">—</span>
+            </div>
+            <button class="preview-close" onclick="closePreview()">×</button>
+        </div>
+        <div class="preview-body" id="previewBody"></div>
+    </div>
+</div>
+
+<script>
+    function openPreview(id, mediaType, mediaSrc, thumbSrc, title, galleryType) {
+        document.getElementById('previewTitle').textContent = title || '(no title)';
+        document.getElementById('previewMeta').textContent  = galleryType + ' · ' + (mediaType === 'video' ? '🎬 Video' : '🖼 Image');
+
+        const body = document.getElementById('previewBody');
+        body.innerHTML = '';
+
+        if (!mediaSrc) {
+            body.innerHTML = '<div class="preview-no-media"><span>📭</span>No media file attached.</div>';
+        } else if (mediaType === 'video') {
+            const vid = document.createElement('video');
+            vid.src      = mediaSrc;
+            vid.controls = true;
+            vid.autoplay = true;
+            vid.poster   = thumbSrc || '';
+            body.appendChild(vid);
+        } else {
+            const img = document.createElement('img');
+            img.src = mediaSrc;
+            img.alt = title;
+            img.onerror = () => {
+                body.innerHTML = '<div class="preview-no-media"><span>🖼</span>Image could not be loaded.</div>';
+            };
+            body.appendChild(img);
+        }
+
+        document.getElementById('previewModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePreview() {
+        document.getElementById('previewModal').classList.remove('open');
+        document.body.style.overflow = '';
+        // Stop video playback
+        const vid = document.querySelector('#previewBody video');
+        if (vid) { vid.pause(); vid.src = ''; }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePreview();
+    });
+</script>
 {% endblock %}

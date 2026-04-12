@@ -32,9 +32,11 @@ SMTP_PASS = os.getenv("SMTP_PASS", "")
 MAIL_TO   = os.getenv("MAIL_TO",   "mayapreneur64@gmail.com")
 
 
-# ── Register admin blueprint ──────────────────────────────────────────────────
+# ── Register blueprints ───────────────────────────────────────────────────────
 from admin import admin_bp
+from gallery_bp import gallery_bp
 app.register_blueprint(admin_bp, url_prefix="/admin")
+app.register_blueprint(gallery_bp)
 
 run_migrations()
 
@@ -117,10 +119,6 @@ def lead():
     send_email(name, email or "—", phone, message)
     return ("", 204)
 
-
-@app.route("/gallery")
-def gallery():
-    return render_template("gallery.html")
 
 
 @app.route("/reviews")
