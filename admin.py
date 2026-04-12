@@ -3,7 +3,9 @@ Admin blueprint — /admin/*
 All routes require login (session['admin_id']).
 """
 import os
+import uuid
 import functools
+from datetime import datetime
 from flask import (
     Blueprint, render_template, redirect, url_for,
     request, session, flash, g
@@ -30,28 +32,56 @@ def login_required(f):
     return decorated
 
 
+def _unique_filename(original, allowed_exts):
+    """Return a unique filename: yyyymmdd_HHMMSS_<uuid4[:8]>.<ext>"""
+    ext = original.rsplit(".", 1)[-1].lower()
+    if ext not in allowed_exts:
+        return None
+    ts    = datetime.now().strftime("%Y%m%d_%H%M%S")
+    uid   = uuid.uuid4().hex[:8]
+    return f"{ts}_{uid}.{ext}"
+
+
 def save_upload(field_name):
-    """Save uploaded image, return relative path or None."""
+    """Save uploaded image with a unique timestamped name, return relative path or None."""
     file = request.files.get(field_name)
-    if file and file.filename:
-        ext = file.filename.rsplit(".", 1)[-1].lower()
-        if ext in ALLOWED_IMG:
-            fname = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, fname))
-            return f"uploads/{fname}"
-    return None
+    if not file or not file.filename:
+        print(f"[save_upload] no file received for field '{field_name}'")
+        return None
+    ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
+    if ext not in ALLOWED_IMG:
+        print(f"[save_upload] rejected extension '.{ext}' for field '{field_name}' (allowed: {ALLOWED_IMG})")
+        return None
+    fname = _unique_filename(file.filename, ALLOWED_IMG)
+    dest  = os.path.join(UPLOAD_FOLDER, fname)
+    try:
+        file.save(dest)
+        print(f"[save_upload] saved '{file.filename}' → '{dest}'")
+        return f"uploads/{fname}"
+    except Exception as e:
+        print(f"[save_upload] ERROR saving file: {e}")
+        return None
 
 
 def save_video(field_name):
-    """Save uploaded video file, return relative path or None."""
+    """Save uploaded video with a unique timestamped name, return relative path or None."""
     file = request.files.get(field_name)
-    if file and file.filename:
-        ext = file.filename.rsplit(".", 1)[-1].lower()
-        if ext in ALLOWED_VID:
-            fname = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, fname))
-            return f"uploads/{fname}"
-    return None
+    if not file or not file.filename:
+        print(f"[save_video] no file received for field '{field_name}'")
+        return None
+    ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
+    if ext not in ALLOWED_VID:
+        print(f"[save_video] rejected extension '.{ext}' for field '{field_name}' (allowed: {ALLOWED_VID})")
+        return None
+    fname = _unique_filename(file.filename, ALLOWED_VID)
+    dest  = os.path.join(UPLOAD_FOLDER, fname)
+    try:
+        file.save(dest)
+        print(f"[save_video] saved '{file.filename}' → '{dest}'")
+        return f"uploads/{fname}"
+    except Exception as e:
+        print(f"[save_video] ERROR saving file: {e}")
+        return None
 
 
 # ── Auth ──────────────────────────────────────────────────────────────────────
@@ -540,17 +570,32 @@ def gallery():
 def gallery_add():
     if request.method == "POST":
         media_type = request.form.get("media_type", "image")
+
+        # ── debug: show exactly what files arrived ────────────────────────────
+        for key, f in request.files.items():
+            print(f"  [gallery_add] files['{key}'] = '{f.filename}' content_type={f.content_type}")
+
         if media_type == "image":
-            media_path = save_upload("media_file") or request.form.get("media_path", "")
+            media_path = save_upload("media_file") or request.form.get("media_path", "").strip()
         else:
-            media_path = save_video("media_file") or request.form.get("media_path", "")
-        thumb = save_upload("thumb_file") or request.form.get("thumbnail", "")
+            media_path = save_video("media_file") or request.form.get("media_path", "").strip()
+
+        thumb = save_upload("thumb_file") or request.form.get("thumbnail", "").strip()
+
+        if not media_path:
+            file = request.files.get("media_file")
+            if file and file.filename:
+                ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else "unknown"
+                flash(f"⚠️ File '.{ext}' is not allowed. Please upload: jpg, jpeg, png, webp, gif.", "error")
+            else:
+                flash("⚠️ No file selected and no path provided.", "error")
+
         execute(
             "INSERT INTO gallery (title, media_type, media_path, thumbnail, section, gallery_type, status) VALUES (%s,%s,%s,%s,%s,%s,%s)",
             (request.form.get("title",""), media_type, media_path, thumb,
              request.form.get("section", 0), request.form.get("gallery_type", 1), request.form.get("status", 1)),
         )
-        flash("Gallery item added.", "success")
+        flash(f"Gallery item added. Media path: '{media_path or '(empty)'}'", "success")
         return redirect(url_for("admin.gallery"))
     return render_template("admin_gallery_form.html", row=None)
 
