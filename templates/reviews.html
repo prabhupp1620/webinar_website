@@ -1,506 +1,323 @@
 {% extends "base_public.html" %}
-{% block title %}All Student Reviews – MayaPreneur{% endblock %}
+{% block title %}Student Reviews – MayaPreneur{% endblock %}
+
+{% block head %}
+<style>
+/* ── PAGE LAYOUT ── */
+.reviews-page {
+    background: #f8faff;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* ── HERO HEADER ── */
+.rv-hero {
+    background: linear-gradient(135deg, #0b1022 0%, #111827 100%);
+    padding: 80px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.rv-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(255,106,0,0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+.rv-hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #ff8a00; margin-bottom: 14px;
+    background: rgba(255,106,0,0.1); border: 1px solid rgba(255,106,0,0.25);
+    padding: 5px 14px; border-radius: 100px;
+}
+.rv-hero h1 {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: clamp(28px, 5vw, 52px); font-weight: 900;
+    color: #f0f0ff; line-height: 1.1; letter-spacing: -0.03em;
+    margin-bottom: 12px;
+}
+.rv-hero h1 span {
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.rv-hero p {
+    font-size: 16px; color: rgba(240,240,255,0.5);
+    max-width: 480px; margin: 0 auto 28px;
+}
+.rv-stats {
+    display: inline-flex; gap: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; overflow: hidden;
+}
+.rv-stat {
+    padding: 14px 28px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.07);
+}
+.rv-stat:last-child { border-right: none; }
+.rv-stat-val {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: 24px; font-weight: 900;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.rv-stat-lbl { font-size: 11px; color: rgba(240,240,255,0.4); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── GRID ── */
+.rv-container { max-width: 1160px; margin: 0 auto; padding: 48px 20px 0; }
+
+.rv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+}
+
+/* ── CARD ── */
+.rv-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: all 0.25s;
+    animation: rv-fade-in 0.4s ease both;
+}
+.rv-card:hover {
+    border-color: rgba(255,106,0,0.3);
+    box-shadow: 0 8px 28px rgba(255,106,0,0.08);
+    transform: translateY(-3px);
+}
+@keyframes rv-fade-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.rv-card-stars { color: #f59e0b; font-size: 14px; letter-spacing: 2px; }
+.rv-card-quote {
+    font-size: 32px; font-weight: 900; line-height: 1;
+    color: #ff8a00; opacity: 0.5;
+}
+.rv-card-review {
+    font-size: 14px; color: #475569; line-height: 1.7;
+    flex: 1;
+}
+.rv-card-author {
+    display: flex; align-items: center; gap: 10px;
+    padding-top: 12px; border-top: 1px solid #f1f5f9;
+}
+.rv-card-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0;
+    font-family: 'Cabinet Grotesk', sans-serif;
+}
+.rv-card-name { font-size: 14px; font-weight: 700; color: #0b1022; }
+.rv-card-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+    color: #059669; background: rgba(5,150,105,0.08);
+    padding: 2px 8px; border-radius: 6px;
+}
+
+/* ── SKELETON ── */
+.rv-skeleton {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px; padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+}
+@keyframes rv-shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+.rv-skel-line {
+    border-radius: 6px; height: 12px;
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 400px 100%;
+    animation: rv-shimmer 1.4s ease-in-out infinite;
+}
+.rv-skel-line.short { width: 40%; }
+.rv-skel-line.medium { width: 70%; }
+
+/* ── LOAD MORE ── */
+.rv-load-more-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 12px; margin-top: 48px;
+}
+.rv-load-more-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 36px; border-radius: 100px;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    color: #fff; font-size: 15px; font-weight: 700;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+}
+.rv-load-more-btn:hover {
+    box-shadow: 0 8px 32px rgba(255,106,0,0.5);
+    transform: translateY(-2px);
+}
+.rv-load-more-btn:disabled {
+    opacity: 0.6; cursor: not-allowed; transform: none;
+}
+.rv-load-more-btn svg.spin {
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.rv-count-text { font-size: 13px; color: #94a3b8; }
+
+@media (max-width: 640px) {
+    .rv-grid { grid-template-columns: 1fr; }
+    .rv-stats { flex-direction: column; }
+    .rv-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .rv-stat:last-child { border-bottom: none; }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-    <section class="testimonial-section">
-        <div class="container">
+<div class="reviews-page">
 
-            <div class="testimonial-header">
-                <h2>All <span>Student</span> Reviews</h2>
-                <p>50+ Real Results from Real Store Owners</p>
+    <!-- Hero -->
+    <div class="rv-hero">
+        <div class="rv-hero-eyebrow">⭐ Verified Reviews</div>
+        <h1>What Our <span>Students</span> Say</h1>
+        <p>Real feedback from real people who transformed their lives with MayaPreneur.</p>
+        <div class="rv-stats">
+            <div class="rv-stat">
+                <div class="rv-stat-val" id="rvTotalCount">—</div>
+                <div class="rv-stat-lbl">Total Reviews</div>
             </div>
-
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I had an excellent experience with this online class! The lessons were well-structured, easy to
-                        follow, and very engaging. The instructor explained every concept clearly, which made learning
-                        much easier and more enjoyable. The study materials and recordings were very helpful for
-                        revision."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Panduranga swamy</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I had a really good experience with the Dropshipping course by Maya Prenuer. The sessions were
-                        simple to follow and very useful. The team was super supportive, always ready to clear doubts
-                        and help whenever we got stuck. They explained everything in an easy way, which made learning
-                        fun and stress-free."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Vijaya Lakshmi</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Muthan sir, in our life we can truly call this 'good,' because everything is available in
-                        Kannada through this e-commerce course. Apart from that, I had enrolled in many online courses
-                        before and lost thousands of rupees—until the payment was made, they would keep calling, but
-                        once the payment was done, they would neither pick calls nor give any response. In this way, I
-                        lost a lot of money. But after joining Mithun sir's class, I received very good coaching, and I
-                        too gained the confidence that"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Usha Lakshmana</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Muthan sir, in our life we can truly call this 'good,' because everything is available in
-                        Kannada through this e-commerce course. Apart from that, I had enrolled in many online courses
-                        before and lost thousands of rupees—until the payment was made, they would keep calling, but
-                        once the payment was done, they would neither pick calls nor give any response. In this way, I
-                        lost a lot of money. But after joining Mithun sir's class, I received very good coaching, and I
-                        too gained the confidence that"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Anitha</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "⭐ ⭐ ⭐ ⭐ ⭐ I'm really impressed with Mithun sir and Team. They explained everything clearly,
-                        from basics to advanced strategies, and always took the time to answer questions. Their support
-                        made the class very effective and motivating. The dropshipping team is fantastic professional,
-                        approachable, and highly experienced. They not only taught us the theory but also shared
-                        practical tips that will help us succeed in real business. Thank you so much sir."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>King Walk</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I bought the dropshipping and e-commerce course through this app and they teach everything from
-                        zero through live classes and recordings. Every penny I paid was completely worth it. The
-                        mentors are extremely patient, supportive and genuinely care about your growth and success.
-                        Their constant encouragement and guidance truly motivates you. I'm confident that this learning
-                        will help me grow and succeed."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Sneha Kumbar</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I really enjoyed learning with Maya Preneur. The course explained dropshipping in a very simple
-                        way, step by step. The trainers were supportive and always cleared my doubts. The sessions were
-                        interesting and practical, not just theory. This program has given me confidence to start
-                        something on my own."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>KUMAR S</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "The online class on Dropshipping & E-Commerce was incredibly insightful and practical. The
-                        concepts were explained in a simple, actionable way. lot of great information. Course was done
-                        at a good pace with comprehensive curriculum. The examples were real and straight to the point.
-                        This course made setting up my first Shopify store super easy, even with zero experience. If you
-                        want to start a dropshipping business in India, this course is the perfect guide."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>kiran kumar</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "A great course for anyone starting in dropshipping. Clear, practical, and straight to the
-                        point. It covers everything from store setup to marketing. Perfect for beginners and those
-                        looking to build a solid foundation in e-commerce. Well-structured and easy to follow—definitely
-                        worth the time."
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Satish Badiger</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Highly recommended, very user friendly . I never ever seen an app courses started in kannada
-                        language this is the app what I was looking for ,whoever wants to learn drop shipping courses in
-                        kanada language without thinking u can join ,it is truly game changer ,I heard new courses will
-                        be comming in the future,Mithun sir class was excellent ,"Your clear explanations in the time of
-                        online course drop shipping has really helped me deepen my understanding of the subject"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Akshay D chingari</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "Maya Preneur App is very helpful and easy to use. Mithun Sir and jaanvi Madam explain
-                        everything clearly and motivate learners. This app is great for beginners who want to learn
-                        business and earning skills. Thank You Very Much 👍"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Ismailsab Nadaf</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        "I would like to say special thanks to Mithun sir & Janvi madam, teaching is excellent and very
-                        supportive, I was searching for this type of amazing platform in kannada, they are explaining
-                        point to point in kannada drop shipping, so that everyone can do the drop shipping easily, after
-                        attending this class I got fully confident to start my drop shipping independantally, i am very
-                        grateful to Mithun sir, it's very great to have Maya Preneur platform for our kannada people.
-                        those who wants to learn"
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Neelakanth D Kalasa</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        The Mithun sir and Janvi mam teach the concepts in a clear and crystal manner. Mithun sir is
-                        always ready to support whenever help is needed. His encouragement motivates us a lot. You are
-                        one of the best teachers in my life. You explain concepts in a very easy way. Thank you so much
-                        for all your support, sir. I wish you all the best for your upcoming projects. I hope I will
-                        continue as your student for future courses.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Gani Yuva</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I'm a student of this course, and it's one of the best educational apps I've used. It teaches
-                        everything about dropshipping and building your own e-commerce website. The content is very
-                        clear and beginner-friendly. The teaching methods are simple, practical, and easy to understand.
-                        Thank you Maya Preneur team.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Hemanth Kumar S</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I had a really good experience with this dropshipping course. It provided clear, step-by-step
-                        guidance to start and manage a successful business. The course covered product research, store
-                        setup, and marketing strategies. The instructor explained everything in a simple and practical
-                        way. I feel confident and highly recommend this course.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Ameer Hamza</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        The mentor Mithun explains concepts very clearly and in an understandable way. Anyone can learn
-                        quickly and implement the ideas. I have a very good opinion about Maya Preneur and recommend it
-                        to others who want to earn and become independent.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Thimmegowda PR</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        This dropshipping training course is well-structured and practical. It covers product research,
-                        supplier selection, store setup, and marketing strategies. The real-life examples make learning
-                        effective. Mithun and Janvi didn't just teach lessons, they taught confidence and discipline.
-                        I'm truly thankful.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Praveen Baligeri</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        It's a great and exceptional platform. The app is designed very well and easy to use. Mithun sir
-                        explains the concepts in a very simple way. I had a great experience attending the classes. It's
-                        the first platform in Kannada that helps everyone understand easily.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Rekha Patil</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        Exceptional experience! The teaching exceeded my expectations. Every detail was explained
-                        clearly in Kannada. I am very happy with my decision to join this course and highly recommend it
-                        to anyone who wants to earn extra income with dedication and focus.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Bhanu Rai</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I had a great experience with this dropshipping course. The step-by-step guidance makes it easy
-                        to understand and start a business. The simple explanations really boosted my confidence. I
-                        recommend this course to anyone interested in dropshipping.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Devara Naveen Kumar</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I am impressed with their professionalism and training format. Janvi madam is patient and calm,
-                        and Mithun sir's teaching is next level. Even as a housewife, I can work from home easily after
-                        this training. Thank you for this wonderful opportunity.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Shubha Ningaraju</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        Good learning app. I suggest people who want to learn and earn should join here. Mithun sir
-                        explains every part clearly in Kannada and solves all doubts easily. Don't miss this
-                        opportunity.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Riyaz U</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        This course exceeded my expectations. The content was clear, engaging, and easy to understand.
-                        The practical advice on scaling and optimizing for profit was very helpful. Overall, an
-                        excellent investment.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Gagan Kumar</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I enrolled in the dropshipping course and the mentors Janavi mam and Mithun sir are very
-                        supportive. They clear doubts before we even ask. Even after course completion, they continue
-                        guiding us.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Pallavi S</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        Mayapreneur is a genuine platform providing valuable e-commerce courses. Mithun sir explains
-                        every concept in a simple way and even provides one-on-one sessions to clear doubts.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Alisha James</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        With a small budget, anyone can become an entrepreneur. I am very grateful for this guidance and
-                        vision at such a young age. Thank you for inspiring us.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Vishwanatha Surveyor</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        Best app for learning dropshipping in Kannada. Simple, clear, and very helpful for beginners.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Gurubasavaraja M U</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        The teaching quality is top-notch. Every lesson ensures understanding and retention. The
-                        instructor is genuinely invested in student success. Worth every penny.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Ajay Kumar</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        Great content for beginners in digital marketing and affiliate business. Live sessions and
-                        community support are excellent. Overall a solid learning platform.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Kusuma T R</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        This course was a game changer. Well-structured, engaging, and flexible. It made learning
-                        effective and enjoyable.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Sudharshan</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        The strategies and insights shared in this course are invaluable. The support from the community
-                        is top-notch. Highly recommended.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Namitha N</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        A very good platform to learn dropshipping. The team is supportive and kind. You can confidently
-                        join and learn.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Gururaj J</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="quote">"</div>
-                    <div class="stars">★★★★★</div>
-                    <p class="review">
-                        I had a very good experience with the Maya Preneur Dropshipping course. The learning method is
-                        simple and easy to follow. The team is very supportive and always ready to help whenever needed.
-                        I feel more confident about starting my own online business after attending this training.
-                    </p>
-                    <div class="author">
-                        <div>
-                            <h4>Chaithra Alva</h4>
-                        </div>
-                    </div>
-                </div>
+            <div class="rv-stat">
+                <div class="rv-stat-val">5.0</div>
+                <div class="rv-stat-lbl">Average Rating</div>
+            </div>
+            <div class="rv-stat">
+                <div class="rv-stat-val">100%</div>
+                <div class="rv-stat-lbl">Recommend Us</div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Grid -->
+    <div class="rv-container">
+        <div class="rv-grid" id="rvGrid">
+            <!-- skeletons shown initially -->
+            {% for i in range(8) %}
+            <div class="rv-skeleton">
+                <div class="rv-skel-line short"></div>
+                <div class="rv-skel-line"></div>
+                <div class="rv-skel-line"></div>
+                <div class="rv-skel-line medium"></div>
+                <div class="rv-skel-line short"></div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Load More -->
+        <div class="rv-load-more-wrap" id="rvLoadMoreWrap" style="display:none;">
+            <button class="rv-load-more-btn" id="rvLoadMoreBtn" onclick="loadMoreReviews()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg>
+                Load More Reviews
+            </button>
+            <span class="rv-count-text" id="rvCountText"></span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+(function () {
+    const grid        = document.getElementById('rvGrid');
+    const loadWrap    = document.getElementById('rvLoadMoreWrap');
+    const loadBtn     = document.getElementById('rvLoadMoreBtn');
+    const countText   = document.getElementById('rvCountText');
+    const totalEl     = document.getElementById('rvTotalCount');
+
+    let page     = 1;
+    const PER    = 8;
+    let total    = 0;
+    let loaded   = 0;
+    let fetching = false;
+
+    function starStr(rating) {
+        return '★'.repeat(rating || 5);
+    }
+
+    function avatarLetter(name) {
+        return (name || '?')[0].toUpperCase();
+    }
+
+    function renderCards(items, replace) {
+        if (replace) grid.innerHTML = '';
+        items.forEach((r, i) => {
+            const card = document.createElement('div');
+            card.className = 'rv-card';
+            card.style.animationDelay = (i * 0.05) + 's';
+            card.innerHTML = `
+                <div class="rv-card-stars">${starStr(r.rating)}</div>
+                <div class="rv-card-quote">"</div>
+                <p class="rv-card-review">${escHtml(r.review)}</p>
+                <div class="rv-card-author">
+                    <div class="rv-card-avatar">${avatarLetter(r.student_name)}</div>
+                    <div>
+                        <div class="rv-card-name">${escHtml(r.student_name)}</div>
+                        <span class="rv-card-badge">✓ Verified Student</span>
+                    </div>
+                </div>`;
+            grid.appendChild(card);
+        });
+    }
+
+    function escHtml(s) {
+        return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function updateCounter() {
+        countText.textContent = `Showing ${loaded} of ${total} reviews`;
+    }
+
+    function setLoading(on) {
+        fetching = on;
+        loadBtn.disabled = on;
+        loadBtn.innerHTML = on
+            ? `<svg class="spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Loading...`
+            : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg> Load More Reviews`;
+    }
+
+    function fetchPage(p, replace) {
+        if (fetching) return;
+        setLoading(true);
+        fetch(`/api/testimonials?page=${p}&per_page=${PER}`)
+            .then(r => r.json())
+            .then(data => {
+                total  = data.total;
+                loaded = p === 1 ? data.items.length : loaded + data.items.length;
+                page   = p;
+
+                if (totalEl) totalEl.textContent = total + '+';
+
+                renderCards(data.items, replace);
+                updateCounter();
+
+                loadWrap.style.display = 'flex';
+                loadBtn.style.display  = data.has_more ? '' : 'none';
+                setLoading(false);
+            })
+            .catch(() => {
+                if (replace) grid.innerHTML = '<p style="color:#64748b;padding:32px;text-align:center;">Could not load reviews. Please refresh.</p>';
+                setLoading(false);
+            });
+    }
+
+    window.loadMoreReviews = function () {
+        fetchPage(page + 1, false);
+    };
+
+    // Initial load
+    fetchPage(1, true);
+})();
+</script>
 {% endblock %}

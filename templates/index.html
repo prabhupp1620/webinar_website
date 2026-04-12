@@ -342,38 +342,115 @@
 .wt-dot { background: #e2e8f0 !important; }
 .wt-dot.active { background: linear-gradient(135deg,#ff8a00,#ff6a00) !important; box-shadow: 0 0 10px rgba(255,106,0,0.4); }
 
-/* ─── BENEFITS SECTION — light gray ───────────────────── */
+/* ─── BENEFITS SECTION — dark background, orange + white ── */
 .dropshipping-benefits {
-  background: #f8faff !important;
-  border-top: 1px solid #e8edf5 !important;
+  background: linear-gradient(160deg, #0b1022 0%, #111827 100%) !important;
+  border-top: none !important;
+  padding: 72px 20px !important;
 }
-.db-container { max-width: 1200px; margin: 0 auto; }
-.db-header { display: flex; align-items: center; gap: 24px; margin-bottom: 48px; }
-.db-count {
+.db-container { max-width: 1100px; margin: 0 auto; }
+
+/* Section heading */
+.db-section-head { text-align: center; margin-bottom: 40px; }
+.db-section-eye {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #ff8a00; margin-bottom: 12px;
+}
+.db-section-eye::before { content: ''; width: 24px; height: 1px; background: #ff8a00; }
+.db-section-eye::after  { content: ''; width: 24px; height: 1px; background: #ff8a00; }
+.db-section-head h2 {
   font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 64px; font-weight: 900; letter-spacing: -0.04em;
+  font-size: clamp(28px, 4vw, 44px); font-weight: 900;
+  color: #f0f0ff; line-height: 1.1; letter-spacing: -0.03em;
+}
+.db-section-head h2 span {
   background: linear-gradient(135deg,#ff8a00,#ff6a00);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  flex-shrink: 0;
 }
-.db-title h2 {
+.db-section-head p { font-size: 15px; color: rgba(240,240,255,0.45); margin-top: 10px; }
+
+/* Tabs */
+.db-tabs {
+  display: flex; gap: 0; justify-content: center;
+  margin-bottom: 40px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px; padding: 5px;
+  width: fit-content; margin-left: auto; margin-right: auto;
+}
+.db-tab {
+  padding: 10px 26px; border-radius: 100px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  color: rgba(240,240,255,0.45);
+  transition: all 0.3s; border: none; background: transparent;
+  font-family: 'DM Sans', sans-serif; white-space: nowrap;
+  position: relative;
+}
+.db-tab.active {
+  background: linear-gradient(135deg, #ff8a00, #ff6a00);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255,106,0,0.4);
+}
+/* Progress bar under active tab */
+.db-tab-progress {
+  position: absolute; bottom: 0; left: 0;
+  height: 3px; border-radius: 2px;
+  background: rgba(255,255,255,0.4);
+  width: 0%; transition: none;
+}
+.db-tab.active .db-tab-progress {
+  animation: tab-progress-fill 5s linear forwards;
+}
+@keyframes tab-progress-fill { from { width: 0%; } to { width: 100%; } }
+
+/* Tab panels */
+.db-panels { position: relative; min-height: 200px; }
+.db-panel {
+  display: none;
+  animation: panel-fade-in 0.45s ease both;
+}
+.db-panel.active { display: block; }
+@keyframes panel-fade-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Benefit cards grid */
+.db-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+.db-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; transition: all 0.25s;
+}
+.db-card:hover {
+  background: rgba(255,106,0,0.07);
+  border-color: rgba(255,106,0,0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255,106,0,0.1);
+}
+.db-card-num {
   font-family: 'Cabinet Grotesk', sans-serif;
-  font-size: 28px; font-weight: 800; color: #0b1022;
+  font-size: 11px; font-weight: 700; color: rgba(255,138,0,0.5);
+  min-width: 22px; padding-top: 2px;
 }
-.db-title h2 span { background: linear-gradient(135deg,#ff8a00,#ff6a00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.db-title p { font-size: 14px; color: #64748b; margin-top: 4px; }
-.db-list { display: flex; flex-direction: column; gap: 2px; }
-.db-item {
-  display: flex; align-items: flex-start; gap: 20px; padding: 20px 24px;
-  background: #fff; border: 1px solid #e2e8f0;
-  border-radius: 14px; transition: all 0.25s; cursor: default;
+.db-card-body h4 { font-size: 15px; font-weight: 700; color: #f0f0ff; margin-bottom: 5px; }
+.db-card-body p  { font-size: 13px; color: rgba(240,240,255,0.5); line-height: 1.6; }
+.db-card-icon {
+  width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px;
+  background: rgba(255,106,0,0.1); border: 1px solid rgba(255,106,0,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
 }
-.db-item:hover { background: #fff7f0; border-color: rgba(255,106,0,0.25); transform: translateX(4px); box-shadow: 0 4px 16px rgba(255,106,0,0.08); }
-.db-left { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
-.db-no { font-family: 'Cabinet Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #cbd5e1; min-width: 24px; }
-.db-icon svg { color: #ff6a00; }
-.db-text h4 { font-size: 15px; font-weight: 700; color: #0b1022; margin-bottom: 4px; }
-.db-text p { font-size: 13px; color: #64748b; line-height: 1.55; }
+.db-empty {
+  text-align: center; padding: 40px;
+  color: rgba(240,240,255,0.3); font-size: 14px;
+}
 
 /* ─── LEARNING PROCESS — dark section ─────────────────── */
 .learning-process {
@@ -544,6 +621,21 @@
 .view-all-btn svg { transition: transform 0.25s; }
 .view-all-btn:hover svg { transform: translateX(4px); }
 
+/* ─── SKELETONS ────────────────────────────────────────── */
+@keyframes skeleton-pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
+.sr-skeleton {
+  width: 100%; aspect-ratio: 4/3; border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0; min-width: 220px;
+}
+.vf-skeleton {
+  aspect-ratio: 9/16; border-radius: 16px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
 /* ─── MOBILE OVERRIDES ─────────────────────────────────── */
 @media(max-width:900px){
   .hero-wrap { grid-template-columns: 1fr; gap: 28px; }
@@ -732,16 +824,20 @@
 
             </div>
 
-            <!-- Nav arrows -->
+            <!-- Nav arrows — only shown when more than 1 webinar -->
+            {% if hero_slides|length > 1 %}
             <button class="carousel-prev" id="carouselPrev">&#8249;</button>
             <button class="carousel-next" id="carouselNext">&#8250;</button>
+            {% endif %}
 
-            <!-- Dot indicators -->
+            <!-- Dot indicators — only when more than 1 -->
+            {% if hero_slides|length > 1 %}
             <div class="carousel-dots">
                 {% for slide in hero_slides %}
                 <button class="carousel-dot {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}"></button>
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
 
     </section>
@@ -887,35 +983,102 @@
     </section> -->
     <!-- About Section End -->
 
-    <section class="dropshipping-benefits">
+    <section class="dropshipping-benefits" id="benefits">
         <div class="db-container">
 
-            <!-- Header -->
-            <div class="db-header">
-                <div class="db-count">{{ benefits|length }}</div>
-                <div class="db-title">
-                    <h2>Major Benefits of <span>Dropshipping</span></h2>
-                    <p>Why thousands are choosing dropshipping as their primary online business model</p>
-                </div>
+            <!-- Heading -->
+            <div class="db-section-head">
+                <div class="db-section-eye">Why It Works</div>
+                <h2>Major <span>Benefits</span></h2>
+                <p>Choose a learning path and discover why thousands are building income with us</p>
             </div>
 
-            <!-- Benefits -->
-            <div class="db-list">
-
-                {% for b in benefits %}
-                <div class="db-item">
-                    <div class="db-left">
-                        <div class="db-no">{{ loop.index }}</div>
-                        {% if b.icon_svg %}<div class="db-icon">{{ b.icon_svg | safe }}</div>{% endif %}
-                    </div>
-                    <div class="db-text">
-                        <h4>{{ b.title }}</h4>
-                        <p>{{ b.description }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-
+            <!-- Tabs -->
+            <div class="db-tabs" role="tablist">
+                <button class="db-tab active" data-tab="1" role="tab">
+                    🛒 Dropshipping
+                    <span class="db-tab-progress"></span>
+                </button>
+                <button class="db-tab" data-tab="2" role="tab">
+                    🏪 E-Commerce
+                    <span class="db-tab-progress"></span>
+                </button>
+                <button class="db-tab" data-tab="3" role="tab">
+                    💰 Online Earning
+                    <span class="db-tab-progress"></span>
+                </button>
             </div>
+
+            <!-- Panels -->
+            <div class="db-panels">
+
+                <!-- Category 1: Dropshipping -->
+                <div class="db-panel active" data-panel="1">
+                    {% if benefits_by_cat[1] %}
+                    <div class="db-grid">
+                        {% for b in benefits_by_cat[1] %}
+                        <div class="db-card">
+                            <div class="db-card-num">{{ '%02d' % loop.index }}</div>
+                            <div class="db-card-icon">
+                                {% if b.icon_svg %}{{ b.icon_svg | safe }}{% else %}⚡{% endif %}
+                            </div>
+                            <div class="db-card-body">
+                                <h4>{{ b.title }}</h4>
+                                <p>{{ b.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="db-empty">No benefits added yet for Dropshipping.</div>
+                    {% endif %}
+                </div>
+
+                <!-- Category 2: E-Commerce -->
+                <div class="db-panel" data-panel="2">
+                    {% if benefits_by_cat[2] %}
+                    <div class="db-grid">
+                        {% for b in benefits_by_cat[2] %}
+                        <div class="db-card">
+                            <div class="db-card-num">{{ '%02d' % loop.index }}</div>
+                            <div class="db-card-icon">
+                                {% if b.icon_svg %}{{ b.icon_svg | safe }}{% else %}🛍{% endif %}
+                            </div>
+                            <div class="db-card-body">
+                                <h4>{{ b.title }}</h4>
+                                <p>{{ b.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="db-empty">No benefits added yet for E-Commerce.</div>
+                    {% endif %}
+                </div>
+
+                <!-- Category 3: Online Earning -->
+                <div class="db-panel" data-panel="3">
+                    {% if benefits_by_cat[3] %}
+                    <div class="db-grid">
+                        {% for b in benefits_by_cat[3] %}
+                        <div class="db-card">
+                            <div class="db-card-num">{{ '%02d' % loop.index }}</div>
+                            <div class="db-card-icon">
+                                {% if b.icon_svg %}{{ b.icon_svg | safe }}{% else %}💸{% endif %}
+                            </div>
+                            <div class="db-card-body">
+                                <h4>{{ b.title }}</h4>
+                                <p>{{ b.description }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="db-empty">No benefits added yet for Online Earning.</div>
+                    {% endif %}
+                </div>
+
+            </div><!-- /db-panels -->
         </div>
     </section>
 
@@ -1125,23 +1288,19 @@
                 <h2>Student <span>Results</span></h2>
                 <p>Real conversations. Real results.</p>
             </div>
-            <div class="image-review-slider">
-                <div class="image-review-track">
-                    {% for img in student_results[:4] %}
-                    <div class="image-review-card">
-                        <img src="{{ url_for('static', filename=img.image_path) if not img.image_path.startswith('http') else img.image_path }}" alt="{{ img.alt_text or '' }}">
-                    </div>
-                    {% endfor %}
-                </div>
+            <!-- Skeleton shown while loading -->
+            <div class="image-review-track" id="studentResultsTrack">
+                <div class="sr-skeleton"></div>
+                <div class="sr-skeleton"></div>
+                <div class="sr-skeleton"></div>
+                <div class="sr-skeleton"></div>
             </div>
-            {% if student_results|length > 4 %}
-            <div class="section-view-all">
+            <div class="section-view-all" id="studentResultsViewAll" style="display:none;">
                 <a href="{{ url_for('gallery') }}" class="view-all-btn">
                     View All Results
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
                 </a>
             </div>
-            {% endif %}
         </div>
     </section>
 
@@ -1153,33 +1312,15 @@
             <p>Watch real feedback from people who transformed their lives with MayaPreneur.</p>
         </div>
 
-        <div class="vf-grid">
-
-            {% for vr in video_reviews[:4] %}
-            <div class="vf-card"
-                 data-video="{% if vr.video_type == 'local' %}{{ url_for('static', filename=vr.video_src) }}{% else %}{{ vr.video_src }}{% endif %}"
-                 data-type="{{ vr.video_type }}"
-                 data-name="{{ vr.student_name }}"
-                 data-role="{{ vr.student_role or '' }}">
-                <img class="vf-card-thumb"
-                     src="{{ url_for('static', filename=vr.thumbnail) if vr.thumbnail and not vr.thumbnail.startswith('http') else (vr.thumbnail or '') }}"
-                     alt="{{ vr.student_name }}">
-                <div class="vf-card-overlay"></div>
-                <div class="vf-play-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
-                </div>
-                {% if vr.duration %}<span class="vf-duration">{{ vr.duration }}</span>{% endif %}
-                <div class="vf-card-info">
-                    <strong>{{ vr.student_name }}</strong>
-                    <span>{{ vr.student_role or '' }}</span><br>
-                    <span class="vf-verified">✓ Verified</span>
-                </div>
-            </div>
-            {% endfor %}
-
+        <div class="vf-grid" id="videoReviewsGrid">
+            <!-- Skeleton placeholders -->
+            <div class="vf-skeleton"></div>
+            <div class="vf-skeleton"></div>
+            <div class="vf-skeleton"></div>
+            <div class="vf-skeleton"></div>
         </div>
 
-        <div class="section-view-all">
+        <div class="section-view-all" id="videoReviewsViewAll" style="display:none;">
             <a href="{{ url_for('video_reviews_page') }}" class="view-all-btn">
                 View All Student Stories
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
@@ -1415,6 +1556,138 @@
 
 {% block scripts %}
     <script>
+        // ── STUDENT RESULTS — load from API ───────────────────
+        (function () {
+            const track   = document.getElementById('studentResultsTrack');
+            const viewAll = document.getElementById('studentResultsViewAll');
+            if (!track) return;
+
+            fetch('/api/student-results')
+                .then(r => r.json())
+                .then(data => {
+                    track.innerHTML = '';
+                    if (!data.results || data.results.length === 0) {
+                        track.innerHTML = '<p style="color:rgba(240,240,255,0.4);padding:20px;">No results yet.</p>';
+                        return;
+                    }
+                    data.results.forEach(img => {
+                        const src = img.image_path.startsWith('http')
+                            ? img.image_path
+                            : '/static/' + img.image_path;
+                        const card = document.createElement('div');
+                        card.className = 'image-review-card';
+                        card.innerHTML = `<img src="${src}" alt="${img.alt_text}" loading="lazy">`;
+                        track.appendChild(card);
+                    });
+                    // Always show View All
+                    if (viewAll) viewAll.style.display = 'flex';
+                })
+                .catch(() => {
+                    track.innerHTML = '<p style="color:rgba(240,240,255,0.3);padding:20px;">Could not load results.</p>';
+                });
+        })();
+
+        // ── VIDEO REVIEWS — load from API ─────────────────────
+        (function () {
+            const grid    = document.getElementById('videoReviewsGrid');
+            const viewAll = document.getElementById('videoReviewsViewAll');
+            if (!grid) return;
+
+            fetch('/api/video-reviews')
+                .then(r => r.json())
+                .then(data => {
+                    grid.innerHTML = '';
+                    if (!data.reviews || data.reviews.length === 0) {
+                        grid.innerHTML = '<p style="color:#64748b;padding:20px;text-align:center;">No video reviews yet.</p>';
+                        return;
+                    }
+                    data.reviews.forEach(vr => {
+                        const videoUrl = vr.video_type === 'local'
+                            ? '/static/' + vr.video_src
+                            : vr.video_src;
+                        const thumbUrl = vr.thumbnail
+                            ? (vr.thumbnail.startsWith('http') ? vr.thumbnail : '/static/' + vr.thumbnail)
+                            : '';
+                        const card = document.createElement('div');
+                        card.className = 'vf-card';
+                        card.dataset.video = videoUrl;
+                        card.dataset.type  = vr.video_type;
+                        card.dataset.name  = vr.student_name;
+                        card.dataset.role  = vr.student_role;
+                        card.innerHTML = `
+                            ${thumbUrl ? `<img class="vf-card-thumb" src="${thumbUrl}" alt="${vr.student_name}" loading="lazy">` : ''}
+                            <div class="vf-card-overlay"></div>
+                            <div class="vf-play-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                            </div>
+                            ${vr.duration ? `<span class="vf-duration">${vr.duration}</span>` : ''}
+                            <div class="vf-card-info">
+                                <strong>${vr.student_name}</strong>
+                                <span>${vr.student_role}</span><br>
+                                <span class="vf-verified">✓ Verified</span>
+                            </div>`;
+                        grid.appendChild(card);
+                    });
+                    // Re-attach click handlers for the video modal
+                    grid.querySelectorAll('.vf-card').forEach(card => {
+                        card.addEventListener('click', () => openVideoModal(
+                            card.dataset.video, card.dataset.type,
+                            card.dataset.name,  card.dataset.role
+                        ));
+                    });
+                    // Always show View All
+                    if (viewAll) viewAll.style.display = 'flex';
+                })
+                .catch(() => {
+                    grid.innerHTML = '<p style="color:#64748b;padding:20px;text-align:center;">Could not load reviews.</p>';
+                });
+        })();
+
+        // ── BENEFITS TABS + AUTO-ROTATE ────────────────────────
+        (function () {
+            const tabs    = document.querySelectorAll('.db-tab');
+            const panels  = document.querySelectorAll('.db-panel');
+            const DELAY   = 5000; // ms per tab
+            let timer     = null;
+            let current   = 0;
+
+            function activateTab(idx) {
+                tabs.forEach((t, i) => {
+                    t.classList.toggle('active', i === idx);
+                    // reset & restart progress animation
+                    const bar = t.querySelector('.db-tab-progress');
+                    if (bar) {
+                        bar.style.animation = 'none';
+                        bar.offsetHeight; // reflow
+                        bar.style.animation = '';
+                    }
+                });
+                panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+                current = idx;
+            }
+
+            function nextTab() {
+                activateTab((current + 1) % tabs.length);
+            }
+
+            function startAuto() {
+                clearInterval(timer);
+                timer = setInterval(nextTab, DELAY);
+            }
+
+            // Manual click — restart timer
+            tabs.forEach((tab, idx) => {
+                tab.addEventListener('click', () => {
+                    activateTab(idx);
+                    startAuto();
+                });
+            });
+
+            activateTab(0);
+            startAuto();
+        })();
+
+        // ── FAQ ─────────────────────────────────────────────────
         const faqItems = document.querySelectorAll('.faq-item');
 
         faqItems.forEach(item => {
@@ -1446,10 +1719,14 @@
             carouselTimer = setInterval(() => goToSlide(currentSlide + 1), 6000);
         }
 
-        document.getElementById('carouselPrev').addEventListener('click', () => { goToSlide(currentSlide - 1); restartAutoplay(); });
-        document.getElementById('carouselNext').addEventListener('click', () => { goToSlide(currentSlide + 1); restartAutoplay(); });
-        carouselDots.forEach(dot => dot.addEventListener('click', () => { goToSlide(+dot.dataset.slide); restartAutoplay(); }));
-        restartAutoplay();
+        if (totalSlides > 1) {
+            const prevBtn = document.getElementById('carouselPrev');
+            const nextBtn = document.getElementById('carouselNext');
+            if (prevBtn) prevBtn.addEventListener('click', () => { goToSlide(currentSlide - 1); restartAutoplay(); });
+            if (nextBtn) nextBtn.addEventListener('click', () => { goToSlide(currentSlide + 1); restartAutoplay(); });
+            carouselDots.forEach(dot => dot.addEventListener('click', () => { goToSlide(+dot.dataset.slide); restartAutoplay(); }));
+            restartAutoplay();
+        }
 
         // ── WEBINAR TYPES CAROUSEL ──────────────────────────────
         const wtCarousel  = document.getElementById('wtCarousel');
@@ -1524,37 +1801,27 @@
         const vmName    = document.getElementById("vmName");
         const vmRole    = document.getElementById("vmRole");
 
-        document.querySelectorAll(".vf-card").forEach(card => {
-            card.addEventListener("click", () => {
-                const src    = card.dataset.video;
-                const type   = card.dataset.type;   // "local" or "youtube"
-                const name   = card.dataset.name;
-                const role   = card.dataset.role;
-
-                vmName.textContent = name;
-                vmRole.textContent = role;
-                vmPlayer.innerHTML = "";
-
-                if (type === "youtube") {
-                    // src should be the YouTube video ID
-                    const iframe = document.createElement("iframe");
-                    iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0`;
-                    iframe.allow = "autoplay; fullscreen";
-                    iframe.allowFullscreen = true;
-                    vmPlayer.appendChild(iframe);
-                } else {
-                    const video = document.createElement("video");
-                    video.src = src;
-                    video.controls = true;
-                    video.autoplay = true;
-                    video.playsInline = true;
-                    vmPlayer.appendChild(video);
-                }
-
-                vmOverlay.classList.add("active");
-                document.body.style.overflow = "hidden";
-            });
-        });
+        function openVideoModal(src, type, name, role) {
+            vmName.textContent = name;
+            vmRole.textContent = role;
+            vmPlayer.innerHTML = "";
+            if (type === "youtube") {
+                const iframe = document.createElement("iframe");
+                iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0`;
+                iframe.allow = "autoplay; fullscreen";
+                iframe.allowFullscreen = true;
+                vmPlayer.appendChild(iframe);
+            } else {
+                const video = document.createElement("video");
+                video.src = src;
+                video.controls = true;
+                video.autoplay = true;
+                video.playsInline = true;
+                vmPlayer.appendChild(video);
+            }
+            vmOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
 
         function closeVideoModal() {
             vmOverlay.classList.remove("active");
