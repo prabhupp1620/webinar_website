@@ -359,12 +359,43 @@
         50%       { transform: scale(1.12); opacity: 1; }
     }
 
-    #loadMoreBtn:hover:not(:disabled) {
-        background: #ff8c1a;
-        color: #fff;
-        box-shadow: 0 6px 20px rgba(255,140,26,0.35);
+    /* ===== SKELETON ===== */
+    .gallery-skeleton {
+        border-radius: 16px;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 400px 100%;
+        animation: gal-shimmer 1.4s ease-in-out infinite;
+        aspect-ratio: 1 / 1;
     }
-    #loadMoreBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+    @keyframes gal-shimmer {
+        0%   { background-position: -400px 0; }
+        100% { background-position:  400px 0; }
+    }
+
+    /* ===== LOAD MORE ===== */
+    .gal-load-more-wrap {
+        display: flex; flex-direction: column; align-items: center;
+        gap: 12px; margin-top: 48px;
+    }
+    .gal-load-more-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 14px 36px; border-radius: 100px;
+        background: linear-gradient(135deg, #ff8a00, #ff6a00);
+        color: #fff; font-size: 15px; font-weight: 700;
+        border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+        transition: all 0.25s;
+        box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    }
+    .gal-load-more-btn:hover {
+        box-shadow: 0 8px 32px rgba(255,106,0,0.5);
+        transform: translateY(-2px);
+    }
+    .gal-load-more-btn:disabled {
+        opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+    .gal-load-more-btn svg.spin { animation: gal-spin 0.8s linear infinite; }
+    @keyframes gal-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .gal-count-text { font-size: 13px; color: #94a3b8; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
@@ -430,16 +461,24 @@
     <!-- Grid -->
     <section class="gallery-section">
         <div class="gallery-grid" id="galleryGrid">
-            <div class="gallery-loading" style="grid-column:1/-1;text-align:center;padding:60px 0;color:#94a3b8;font-size:15px;">
-                Loading gallery…
-            </div>
+            <!-- 8 skeleton placeholders (2 rows × 4 cols) -->
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
         </div>
 
         <!-- Load More -->
-        <div style="text-align:center;margin-top:36px;" id="loadMoreWrap">
-            <button id="loadMoreBtn" onclick="loadMore()" style="display:none;padding:12px 40px;border-radius:50px;border:2px solid #ff8c1a;background:transparent;color:#ff8c1a;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;">
-                Load More
+        <div class="gal-load-more-wrap" id="loadMoreWrap" style="display:none;">
+            <button class="gal-load-more-btn" id="loadMoreBtn" onclick="loadMore()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg>
+                Load More Photos
             </button>
+            <span class="gal-count-text" id="galCountText"></span>
         </div>
     </section>
 
@@ -447,7 +486,7 @@
     <div class="gallery-cta">
         <h2>Ready to Write Your Success Story?</h2>
         <p>Join hundreds of students already earning online with MayaPreneur.</p>
-        <a href="{{ url_for('checkout') }}">Join the Workshop →</a>
+        <a href="{{ url_for('onboarding') }}">Join the Workshop →</a>
     </div>
 
     <!-- Lightbox -->
@@ -463,14 +502,17 @@
 <script>
     const LIMIT       = 8;
     const grid        = document.getElementById('galleryGrid');
+    const loadMoreWrap = document.getElementById('loadMoreWrap');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const countText   = document.getElementById('galCountText');
     const filterBtns  = document.querySelectorAll('.gf-btn');
     const lightbox    = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
 
-    let allItems    = [];   // all items loaded so far (for lightbox)
+    let allItems    = [];
     let currentType = 'all';
     let currentOffset = 0;
+    let currentTotal  = 0;
     let isLoading   = false;
 
     // ── Build image URL ────────────────────────────────────────────────────────
@@ -526,26 +568,42 @@
         return resp.json();  // { items, has_more, total }
     }
 
+    function updateCount() {
+        countText.textContent = `Showing ${allItems.length} of ${currentTotal} photos`;
+    }
+
+    function setLoadingBtn(on) {
+        loadMoreBtn.disabled = on;
+        loadMoreBtn.innerHTML = on
+            ? `<svg class="spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Loading...`
+            : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg> Load More Photos`;
+    }
+
     // ── Initial load for a tab ─────────────────────────────────────────────────
     async function loadGallery(type) {
         currentType   = type;
         currentOffset = 0;
+        currentTotal  = 0;
         allItems      = [];
-        grid.innerHTML = `
-            <div class="gallery-empty" style="opacity:0.6;">
-                <div class="gallery-empty-icon no-data" style="animation:pulse 1.2s ease-in-out infinite;">⏳</div>
-                <h3>Loading Gallery</h3>
-                <p>Fetching the latest photos for you…</p>
-            </div>`;
-        loadMoreBtn.style.display = 'none';
+        // Show skeletons
+        grid.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+            const s = document.createElement('div');
+            s.className = 'gallery-skeleton';
+            grid.appendChild(s);
+        }
+        loadMoreWrap.style.display = 'none';
 
         try {
             const data = await fetchPage(type, 0);
+            currentTotal  = data.total;
             grid.innerHTML = '';
             if (!data.items.length) { showEmpty(); return; }
             appendItems(data.items);
             currentOffset = data.items.length;
-            loadMoreBtn.style.display = data.has_more ? 'inline-block' : 'none';
+            loadMoreWrap.style.display = 'flex';
+            loadMoreBtn.style.display  = data.has_more ? '' : 'none';
+            updateCount();
         } catch (e) {
             console.error('Gallery load error:', e);
             grid.innerHTML = `
@@ -562,19 +620,18 @@
     async function loadMore() {
         if (isLoading) return;
         isLoading = true;
-        loadMoreBtn.textContent  = 'Loading…';
-        loadMoreBtn.disabled     = true;
+        setLoadingBtn(true);
 
         try {
             const data = await fetchPage(currentType, currentOffset);
             appendItems(data.items);
             currentOffset += data.items.length;
-            loadMoreBtn.style.display = data.has_more ? 'inline-block' : 'none';
+            loadMoreBtn.style.display = data.has_more ? '' : 'none';
+            updateCount();
         } catch (e) {
             console.error('Load more error:', e);
         } finally {
-            loadMoreBtn.textContent = 'Load More';
-            loadMoreBtn.disabled    = false;
+            setLoadingBtn(false);
             isLoading = false;
         }
     }

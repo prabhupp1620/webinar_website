@@ -850,8 +850,8 @@
         </div>
 
         <div class="wd-hero-ctas">
-            <a href="{{ url_for('checkout') }}" class="wd-btn-primary">
-                Register Now @ {{ w.price }} →
+            <a href="{{ url_for('onboarding', webinar_id=w.id or '', webinar_name=w.title, webinar_slug=w.slug) }}" class="wd-btn-primary">
+                Register Now — Free →
             </a>
             <a href="#curriculum" class="wd-btn-secondary wd-smooth-scroll">
                 Learn More ↓
@@ -979,11 +979,11 @@
     <div class="wd-cta-strip">
         <h2>Ready to Join?</h2>
         <p>Seats are limited — secure your spot before they fill up.</p>
-        <span class="wd-cta-price">{{ w.price }}</span>
-        <a href="{{ url_for('checkout') }}" class="wd-cta-btn">
+        <span class="wd-cta-price" style="background:linear-gradient(135deg,#ff8a00,#ff6a00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">FREE</span>
+        <a href="{{ url_for('onboarding', webinar_id=w.id or '', webinar_name=w.title, webinar_slug=w.slug) }}" class="wd-cta-btn">
             Register Now &amp; Secure My Seat →
         </a>
-        <p class="wd-cta-note">200% money-back guarantee · No questions asked</p>
+        <p class="wd-cta-note">100% Free · No payment required</p>
     </div>
 {% endblock %}
 
