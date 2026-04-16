@@ -51,14 +51,46 @@ nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:500;
 .nav-ham{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:10px 12px;margin-right:4px}
 .nav-ham span{display:block;width:18px;height:1.5px;background:var(--text);border-radius:2px;transition:all 0.3s}
 
-/* MOBILE NAV DRAWER */
-.mobile-nav-drawer{display:none;position:fixed;inset:0;z-index:490;background:rgba(6,6,15,0.96);
-  backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.mobile-nav-drawer.open{display:flex}
-.mobile-nav-drawer a{font-family:var(--fh);font-size:28px;font-weight:700;color:var(--text);
-  text-decoration:none;padding:12px 32px;border-radius:var(--r2);transition:all 0.2s}
-.mobile-nav-drawer a:hover{background:rgba(255,255,255,0.06)}
-.mobile-nav-close{position:absolute;top:24px;right:24px;width:40px;height:40px;
+/* MOBILE TOP BAR — hidden on desktop */
+.mobile-topbar{
+  display:none;position:fixed;top:0;left:0;right:0;z-index:500;
+  height:60px;padding:0 16px;
+  background:rgba(11,16,34,0.97);border-bottom:1px solid rgba(255,106,0,0.15);
+  backdrop-filter:blur(14px);
+  align-items:center;justify-content:space-between;
+}
+.mobile-topbar-logo{font-family:var(--fh);font-size:18px;font-weight:800;color:#f0f0ff;
+  text-decoration:none;display:flex;align-items:center;gap:8px}
+.mobile-topbar-logo-ring{width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#ff8a00,#ff6a00);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
+.mobile-topbar-ham{display:flex;flex-direction:column;gap:5px;cursor:pointer;
+  padding:8px;background:none;border:none}
+.mobile-topbar-ham span{display:block;width:22px;height:2px;background:#f0f0ff;border-radius:2px;transition:all 0.3s}
+
+/* MOBILE NAV BACKDROP */
+.mobile-nav-backdrop{display:none;position:fixed;inset:0;z-index:489;background:rgba(0,0,0,0.55);backdrop-filter:blur(3px)}
+.mobile-nav-backdrop.open{display:block}
+
+/* MOBILE NAV SIDE DRAWER */
+.mobile-nav-drawer{
+  display:flex;flex-direction:column;
+  position:fixed;top:0;right:-100%;
+  width:280px;height:100vh;
+  z-index:490;
+  background:#0b1022;
+  border-left:1px solid rgba(255,106,0,0.15);
+  padding:80px 24px 32px;
+  gap:6px;
+  box-shadow:-12px 0 40px rgba(0,0,0,0.6);
+  transition:right 0.35s cubic-bezier(0.4,0,0.2,1);
+  overflow-y:auto;
+}
+.mobile-nav-drawer.open{right:0}
+.mobile-nav-drawer a{font-family:var(--fh);font-size:16px;font-weight:600;color:rgba(240,240,255,0.75);
+  text-decoration:none;padding:12px 16px;border-radius:10px;transition:all 0.2s}
+.mobile-nav-drawer a:hover{background:rgba(255,106,0,0.1);color:#ff8a00}
+.mobile-nav-close{position:absolute;top:20px;right:20px;width:38px;height:38px;
   border-radius:50%;background:rgba(255,255,255,0.07);border:none;color:var(--text);
   font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
@@ -477,11 +509,13 @@ footer{background:var(--bg2);padding:64px 24px 32px;border-top:1px solid var(--b
 
 /* ── MOBILE ── */
 @media(max-width:900px){
-  nav{top:12px;padding:0 6px}
+  /* hide pill nav entirely, show mobile top bar instead */
+  nav{display:none!important}
+  .mobile-topbar{display:flex!important}
   .nav-links{display:none}
   .nav-ham{display:flex}
   section{padding:64px 20px}
-  .hero{padding:100px 20px 60px}
+  .hero{padding:120px 20px 60px}
   .hero-stats{flex-direction:column;width:100%;max-width:400px}
   .hero-stat{border-right:none;border-bottom:1px solid var(--border);padding:16px 24px}
   .hero-stat:last-child{border-bottom:none}
@@ -525,23 +559,36 @@ nav{background:rgba(11,16,34,0.9)!important;border-color:rgba(255,106,0,0.15)!im
 .nav-links a:hover{color:#f0f0ff!important;background:rgba(255,255,255,0.06)!important}
 .btn-glass{background:rgba(255,255,255,0.08)!important;color:#f0f0ff!important;border-color:rgba(255,255,255,0.15)!important}
 .nav-ham span{background:#f0f0ff!important}
-.mobile-nav-drawer{background:rgba(6,6,15,0.97)!important}
-.mobile-nav-drawer a{color:#f0f0ff!important}
 .mobile-nav-close{background:rgba(255,255,255,0.07)!important;color:#f0f0ff!important}
 
-/* ── HERO — stays dark ── */
-.hero{background:#06060f!important}
-.orb-1{background:radial-gradient(circle,rgba(255,106,0,0.14) 0%,transparent 70%)!important}
-.orb-2{background:radial-gradient(circle,rgba(255,138,0,0.1) 0%,transparent 70%)!important}
-.orb-3{background:radial-gradient(circle,rgba(255,106,0,0.08) 0%,transparent 70%)!important}
-.hero-badge{background:rgba(255,106,0,0.12)!important;border-color:rgba(255,106,0,0.3)!important;color:#ff8a00!important}
+/* ── HERO — white + orange gradient ── */
+.hero{
+  background: linear-gradient(150deg, #fff 0%, #fff7ed 40%, #ffede0 70%, #ffe0c3 100%) !important;
+  position: relative !important;
+}
+/* diagonal orange slash overlay */
+.hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background: linear-gradient(135deg, transparent 55%, rgba(255,106,0,0.06) 100%);
+  z-index: 0 !important;
+}
+/* subtle top-right orange glow */
+.orb-1{background:radial-gradient(circle,rgba(255,138,0,0.18) 0%,transparent 70%)!important;top:-120px!important;left:-60px!important}
+.orb-2{background:radial-gradient(circle,rgba(255,106,0,0.22) 0%,transparent 70%)!important;top:0!important;right:-80px!important}
+.orb-3{background:radial-gradient(circle,rgba(255,180,80,0.12) 0%,transparent 70%)!important;bottom:0!important;left:30%!important}
+/* recolour text for light bg */
+.hero h1{color:#0b1022!important}
+.hero-sub{color:#475569!important}
+.hero-badge{background:rgba(255,106,0,0.1)!important;border-color:rgba(255,106,0,0.3)!important;color:#ff6a00!important}
 .badge-pulse{background:#ff6a00!important;box-shadow:0 0 8px rgba(255,106,0,0.8)!important}
 @keyframes badge-blink{0%,100%{opacity:1;box-shadow:0 0 8px rgba(255,106,0,0.8)}50%{opacity:0.4;box-shadow:none}}
-.hero h1,.hero-sub,.hs-label{color:inherit}
+.hero-stats{background:rgba(255,255,255,0.7)!important;border-color:rgba(255,106,0,0.15)!important;backdrop-filter:blur(12px)!important;box-shadow:0 4px 24px rgba(255,106,0,0.08)!important}
+.hero-stat{border-color:rgba(255,106,0,0.12)!important}
 .hs-val{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
-.hero-stats{background:rgba(255,255,255,0.03)!important;border-color:rgba(255,255,255,0.07)!important}
-.hero-stat{border-color:rgba(255,255,255,0.07)!important}
+.hs-label{color:#64748b!important}
 .dash-nav.on{background:rgba(255,106,0,0.15)!important;color:#ff8a00!important;border-color:rgba(255,106,0,0.2)!important}
+/* keep dashboard dark card readable */
+.dash-wrap{box-shadow:0 32px 80px rgba(0,0,0,0.15),0 0 0 1px rgba(255,255,255,0.5)!important}
 
 /* ── BTN-GRAD — orange everywhere ── */
 .btn-grad{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;box-shadow:0 4px 20px rgba(255,106,0,0.4)!important}
@@ -579,25 +626,30 @@ nav{background:rgba(11,16,34,0.9)!important;border-color:rgba(255,106,0,0.15)!im
 .bento-card.preneur .bc-desc{color:#64748b!important}
 
 /* ── MODULES ── */
-.modules-section{background:#f8faff!important}
-.module-block{background:#fff!important;border-color:#e2e8f0!important}
-.module-block:hover{border-color:rgba(255,106,0,0.25)!important;box-shadow:0 24px 60px rgba(0,0,0,0.06)!important}
-.mb-num{color:#ff6a00!important}
-.mb-title{color:#0b1022!important}
-.mb-tagline{color:#64748b!important}
-.mb-desc{color:#64748b!important}
-.mb-list li{color:#475569!important}
-.mb-list li::before{color:#ff6a00!important}
-.mb-outcome{background:rgba(255,106,0,0.06)!important;border-color:rgba(255,106,0,0.18)!important}
-.mb-out-label{color:#ff6a00!important}
-.mb-out-text{color:#0b1022!important}
-.mb-cta{background:rgba(255,106,0,0.08)!important;border-color:rgba(255,106,0,0.25)!important;color:#ff6a00!important}
-.mb-cta:hover{background:rgba(255,106,0,0.18)!important;border-color:rgba(255,106,0,0.5)!important;color:#fff!important}
-.mb-cta.amber{background:rgba(245,158,11,0.1)!important;border-color:rgba(245,158,11,0.25)!important;color:#d97706!important}
-.mb-right{background:#f8faff!important;border-color:#e2e8f0!important}
-.mb-right::before{background:none!important}
-.mb-right-label{color:#94a3b8!important}
-.mb-bignum-label{color:#94a3b8!important}
+.modules-section{background:linear-gradient(160deg,#0b1022 0%,#111827 100%)!important}
+.modules-section .sec-eye{color:#ff8a00!important}
+.modules-section .sec-h{color:#f0f0ff!important}
+.modules-section .sec-h em{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.modules-section .sec-sub{color:rgba(240,240,255,0.5)!important}
+.module-block{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.08)!important}
+.module-block:hover{border-color:rgba(255,106,0,0.3)!important;box-shadow:0 24px 60px rgba(0,0,0,0.4)!important}
+.mb-num{color:#ff8a00!important}
+.mb-title{color:#f0f0ff!important}
+.mb-tagline{color:rgba(240,240,255,0.5)!important;font-style:italic}
+.mb-desc{color:rgba(240,240,255,0.55)!important}
+.mb-list li{color:rgba(240,240,255,0.75)!important}
+.mb-list li::before{color:#ff8a00!important}
+.mb-outcome{background:rgba(255,106,0,0.08)!important;border-color:rgba(255,106,0,0.2)!important}
+.mb-out-label{color:#ff8a00!important}
+.mb-out-text{color:#f0f0ff!important}
+.mb-cta{background:rgba(255,106,0,0.1)!important;border-color:rgba(255,106,0,0.3)!important;color:#ff8a00!important}
+.mb-cta:hover{background:rgba(255,106,0,0.22)!important;border-color:rgba(255,106,0,0.6)!important;color:#fff!important}
+.mb-cta.amber{background:rgba(245,158,11,0.1)!important;border-color:rgba(245,158,11,0.25)!important;color:#fbbf24!important}
+.mb-right{background:rgba(255,255,255,0.03)!important;border-color:rgba(255,255,255,0.07)!important}
+.mb-right-label{color:rgba(240,240,255,0.35)!important}
+.mb-bignum-label{color:rgba(240,240,255,0.35)!important}
+.mb-bignum{color:#f0f0ff!important}
+.mb-chips .chip,.mb-chips span{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.1)!important;color:rgba(240,240,255,0.6)!important}
 .chip{background:#f1f5f9!important;color:#64748b!important;border-color:#e2e8f0!important}
 .chip.on{background:rgba(255,106,0,0.1)!important;color:#ff6a00!important;border-color:rgba(255,106,0,0.3)!important}
 
@@ -619,9 +671,12 @@ nav{background:rgba(11,16,34,0.9)!important;border-color:rgba(255,106,0,0.15)!im
 .wc-desc{color:#64748b!important}
 .wc-accent{color:#ff6a00!important}
 
-/* ── AI SECTION ── */
-.ai-section{background:#fff!important}
-/* ai-inner stays dark — it's a feature showcase box */
+/* ── AI SECTION — dark ── */
+.ai-section{background:linear-gradient(160deg,#0b1022 0%,#111827 100%)!important}
+.ai-section .sec-eye{color:#ff8a00!important}
+.ai-section .sec-h{color:#f0f0ff!important}
+.ai-section .sec-h em{background:linear-gradient(135deg,#ff8a00,#ff6a00)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.ai-section .sec-sub{color:rgba(240,240,255,0.5)!important}
 
 /* ── LEAD SECTION ── */
 .lead-section{background:#f8faff!important}
@@ -695,21 +750,27 @@ footer{background:#0b1022!important;border-color:rgba(255,255,255,0.08)!importan
       <form class="modal-fields" id="mLeadForm" onsubmit="submitModal(event)">
         <div class="mf-field"><label>Your Name *</label><input type="text" name="name" placeholder="e.g. Rahul Sharma" required></div>
         <div class="mf-field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required></div>
-        <div class="mf-field"><label>Email Address</label><input type="email" name="email" placeholder="you@company.com"></div>
+        <div class="mf-field"><label>Email Address *</label><input type="email" name="email" placeholder="you@company.com" required></div>
         <div class="mf-field"><label>I'm interested in</label>
-          <select name="interest">
+          <select name="interest" id="mInterestSel">
             <option value="">Select a service...</option>
-            <option>Learning &amp; Training (Maya Preneur)</option>
-            <option>Growth Marketing (MayaVerse)</option>
-            <option>E-Commerce Scaling (Nextrends)</option>
-            <option>Branding &amp; Corporate (Digiverse)</option>
-            <option>Technology &amp; Dev</option>
-            <option>Automation &amp; CRM</option>
-            <option>Strategy &amp; Consulting</option>
-            <option>Full Ecosystem</option>
+            <optgroup label="── Join a Workshop ──">
+              <option value="workshop_dropshipping">Join Workshop — Dropshipping</option>
+              <option value="workshop_ecommerce">Join Workshop — E-Commerce</option>
+              <option value="workshop_earning">Join Workshop — Online Earning</option>
+            </optgroup>
+            <optgroup label="── Business Services ──">
+              <option value="Growth Marketing (MayaVerse)">Growth Marketing (MayaVerse)</option>
+              <option value="E-Commerce Scaling (Nextrends)">E-Commerce Scaling (Nextrends)</option>
+              <option value="Branding &amp; Corporate (Digiverse)">Branding &amp; Corporate (Digiverse)</option>
+              <option value="Technology &amp; Dev">Technology &amp; Dev</option>
+              <option value="Automation &amp; CRM">Automation &amp; CRM</option>
+              <option value="Strategy &amp; Consulting">Strategy &amp; Consulting</option>
+              <option value="Full Ecosystem">Full Ecosystem</option>
+            </optgroup>
           </select>
         </div>
-        <button type="submit" class="modal-submit">Get My Free Strategy Call →</button>
+        <button type="submit" class="modal-submit" id="mLeadSubmitBtn">Get My Free Strategy Call →</button>
       </form>
       <p class="modal-note">✓ No commitment &nbsp;·&nbsp; ✓ Free 90-day growth audit &nbsp;·&nbsp; ✓ Reply within 24 hrs</p>
     </div>
@@ -722,6 +783,7 @@ footer{background:#0b1022!important;border-color:rgba(255,255,255,0.08)!importan
 </div>
 
 <!-- ── MOBILE NAV DRAWER ── -->
+<div class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="closeMobileNav()"></div>
 <div class="mobile-nav-drawer" id="mobileNav">
   <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
   <a href="#services" onclick="closeMobileNav()">Services</a>
@@ -730,6 +792,16 @@ footer{background:#0b1022!important;border-color:rgba(255,255,255,0.08)!importan
   <a href="#why" onclick="closeMobileNav()">Why Us</a>
   <a href="{{ url_for('maya_preneur') }}">Webinars ↗</a>
   <button onclick="closeMobileNav();openModal('Strategy Call')" class="btn btn-grad" style="margin-top:16px;border-radius:100px">Book Strategy Call →</button>
+</div>
+
+<!-- ── MOBILE TOP BAR ── -->
+<div class="mobile-topbar" id="mobileTopbar">
+  <a href="{{ url_for('index') }}" class="mobile-topbar-logo">
+    <span class="mobile-topbar-logo-ring">M</span>MAYA OS
+  </a>
+  <button class="mobile-topbar-ham" onclick="openMobileNav()" aria-label="Open Menu">
+    <span></span><span></span><span></span>
+  </button>
 </div>
 
 <!-- ── NAV ── -->
@@ -1240,7 +1312,7 @@ footer{background:#0b1022!important;border-color:rgba(255,255,255,0.08)!importan
     <div class="ai-grid">
       <div>
         <div class="sec-eye" style="color:#818cf8">AI &amp; Automation</div>
-        <h2 class="sec-h" style="color:var(--text)">Your business, running <em>while you sleep.</em></h2>
+        <h2 class="sec-h">Your business, running <em>while you sleep.</em></h2>
         <p class="sec-sub" style="color:rgba(240,240,255,0.45)">MAYA OS isn't just powered by AI — it's built around it. Every system we build includes automation that works around the clock.</p>
         <ul class="ai-feats">
           <li class="ai-feat"><div class="af-icon">🎯</div><div><div class="af-title">AI Lead Scoring</div><div class="af-desc">Every incoming lead is scored automatically — high-intent leads are routed to sales instantly, others go into nurture sequences.</div></div></li>
@@ -1410,9 +1482,49 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 async function submitModal(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
+  const form = e.target;
+  const btn  = form.querySelector('button[type="submit"]');
+  const name  = form.querySelector('input[name="name"]').value.trim();
+  const phone = form.querySelector('input[name="phone"]').value.trim();
+  const email = form.querySelector('input[name="email"]').value.trim();
+  const interest = form.querySelector('select[name="interest"]').value;
+
+  // basic validation
+  if (!name || !phone || phone.length < 10 || !email || !email.includes('@')) {
+    if (!name)                 form.querySelector('input[name="name"]').style.borderColor  = '#ef4444';
+    if (!phone||phone.length<10) form.querySelector('input[name="phone"]').style.borderColor = '#ef4444';
+    if (!email||!email.includes('@')) form.querySelector('input[name="email"]').style.borderColor = '#ef4444';
+    return;
+  }
+
   btn.textContent = 'Sending...'; btn.disabled = true;
-  try { await fetch('/lead', { method: 'POST', body: new FormData(e.target) }); } catch(err) {}
+
+  // workshop options → enquiry API; services → lead API
+  const isWorkshop = interest.startsWith('workshop_');
+  const workshopNameMap = {
+    'workshop_dropshipping': 'Dropshipping Mastery Workshop',
+    'workshop_ecommerce':    'E-Commerce Business Workshop',
+    'workshop_earning':      'Online Earning Workshop',
+  };
+
+  try {
+    if (isWorkshop) {
+      await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name:    name,
+          email:        email,
+          phone:        phone,
+          webinar_name: workshopNameMap[interest] || interest,
+          source:       'homepage_modal',
+        })
+      });
+    } else {
+      await fetch('/lead', { method: 'POST', body: new FormData(form) });
+    }
+  } catch(err) {}
+
   document.getElementById('modalForm').style.display = 'none';
   document.getElementById('modalSuccess').style.display = 'block';
   setTimeout(closeModal, 4000);
@@ -1437,8 +1549,17 @@ if (!sessionStorage.getItem('leadShown')) {
 }
 
 // ── MOBILE NAV ─────────────────────────────────────────────────
-function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); document.body.style.overflow = ''; }
+function openMobileNav() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.getElementById('mobileNavBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('mobileNavBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
 
 // ── SCROLL REVEAL ──────────────────────────────────────────────
 const revealObs = new IntersectionObserver((entries) => {

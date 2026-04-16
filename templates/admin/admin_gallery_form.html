@@ -58,8 +58,9 @@
     <div class="form-grid">
 
         <div class="form-group full">
-            <label id="uploadLabel">Upload File</label>
+            <label id="uploadLabel">Upload File <small style="color:#64748b;font-weight:400;">(jpg, jpeg, png, webp, gif only)</small></label>
             <input type="file" name="media_file" id="mediaFile">
+            <div id="mediaFileError" style="display:none;margin-top:6px;color:#ef4444;font-size:13px;font-weight:600;"></div>
             {% if row and row.media_path %}
             <div style="margin-top:8px;">
                 <small style="color:#64748b;">Current:</small><br>
@@ -129,14 +130,58 @@
     var uploadLbl  = document.getElementById('uploadLabel');
     var thumbSec   = document.getElementById('thumbSection');
     var thumbGrid  = document.getElementById('thumbGrid');
+    var fileError  = document.getElementById('mediaFileError');
+
+    var ALLOWED_IMG = ['jpg','jpeg','png','webp','gif'];
+    var ALLOWED_VID = ['mp4','mov','avi','webm','mkv'];
 
     function toggle() {
         var isVideo = sel.value === 'video';
-        uploadLbl.textContent  = isVideo ? 'Upload Video File (mp4 / mov / webm)' : 'Upload Image File';
-        fileInput.accept       = isVideo ? 'video/*' : 'image/*';
-        thumbSec.style.display = isVideo ? '' : 'none';
-        thumbGrid.style.display= isVideo ? '' : 'none';
+        uploadLbl.childNodes[0].textContent = isVideo
+            ? 'Upload Video File '
+            : 'Upload Image File ';
+        fileInput.accept        = isVideo ? 'video/*' : 'image/jpeg,image/png,image/webp,image/gif';
+        thumbSec.style.display  = isVideo ? '' : 'none';
+        thumbGrid.style.display = isVideo ? '' : 'none';
+        clearError();
     }
+
+    function clearError() {
+        fileError.style.display = 'none';
+        fileError.textContent   = '';
+        fileInput.style.borderColor = '';
+    }
+
+    function validateFile(file) {
+        if (!file) return true;
+        var ext  = file.name.split('.').pop().toLowerCase();
+        var isVideo = sel.value === 'video';
+        var allowed = isVideo ? ALLOWED_VID : ALLOWED_IMG;
+        if (!allowed.includes(ext)) {
+            var msg = isVideo
+                ? '❌ ".' + ext + '" is not allowed. Please upload: ' + ALLOWED_VID.join(', ')
+                : '❌ ".' + ext + '" is not allowed. Please upload: ' + ALLOWED_IMG.join(', ');
+            fileError.textContent   = msg;
+            fileError.style.display = 'block';
+            fileInput.style.borderColor = '#ef4444';
+            fileInput.value = '';
+            return false;
+        }
+        clearError();
+        return true;
+    }
+
+    fileInput.addEventListener('change', function () {
+        validateFile(this.files[0]);
+    });
+
+    // Block form submit if invalid file chosen
+    fileInput.closest('form').addEventListener('submit', function (e) {
+        if (!validateFile(fileInput.files[0])) {
+            e.preventDefault();
+            fileError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
 
     sel.addEventListener('change', toggle);
     toggle();

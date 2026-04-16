@@ -297,6 +297,106 @@
     .lightbox-prev { left: 16px; }
     .lightbox-next { right: 16px; }
 
+    /* ===== EMPTY / ERROR STATE ===== */
+    .gallery-empty {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .gallery-empty-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .gallery-empty-icon.no-data  { background: rgba(255,140,26,0.1); }
+    .gallery-empty-icon.error    { background: rgba(239,68,68,0.1); }
+
+    .gallery-empty h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+
+    .gallery-empty p {
+        font-size: 14px;
+        color: #64748b;
+        max-width: 320px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .gallery-empty-retry {
+        padding: 9px 24px;
+        border-radius: 50px;
+        border: 1.5px solid #ff8c1a;
+        background: transparent;
+        color: #ff8c1a;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .gallery-empty-retry:hover {
+        background: #ff8c1a;
+        color: #fff;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.6; }
+        50%       { transform: scale(1.12); opacity: 1; }
+    }
+
+    /* ===== SKELETON ===== */
+    .gallery-skeleton {
+        border-radius: 16px;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 400px 100%;
+        animation: gal-shimmer 1.4s ease-in-out infinite;
+        aspect-ratio: 1 / 1;
+    }
+    @keyframes gal-shimmer {
+        0%   { background-position: -400px 0; }
+        100% { background-position:  400px 0; }
+    }
+
+    /* ===== LOAD MORE ===== */
+    .gal-load-more-wrap {
+        display: flex; flex-direction: column; align-items: center;
+        gap: 12px; margin-top: 48px;
+    }
+    .gal-load-more-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 14px 36px; border-radius: 100px;
+        background: linear-gradient(135deg, #ff8a00, #ff6a00);
+        color: #fff; font-size: 15px; font-weight: 700;
+        border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+        transition: all 0.25s;
+        box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    }
+    .gal-load-more-btn:hover {
+        box-shadow: 0 8px 32px rgba(255,106,0,0.5);
+        transform: translateY(-2px);
+    }
+    .gal-load-more-btn:disabled {
+        opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+    .gal-load-more-btn svg.spin { animation: gal-spin 0.8s linear infinite; }
+    @keyframes gal-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .gal-count-text { font-size: 13px; color: #94a3b8; }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
         .gallery-grid {
@@ -351,7 +451,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="gallery-filters">
+    <div class="gallery-filters" id="galleryFilters">
         <button class="gf-btn active" data-filter="all">All Photos</button>
         <button class="gf-btn" data-filter="session">Live Sessions</button>
         <button class="gf-btn" data-filter="student">Students</button>
@@ -361,127 +461,24 @@
     <!-- Grid -->
     <section class="gallery-section">
         <div class="gallery-grid" id="galleryGrid">
+            <!-- 8 skeleton placeholders (2 rows × 4 cols) -->
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+            <div class="gallery-skeleton"></div>
+        </div>
 
-            <div class="gallery-item large" data-category="session" data-index="0">
-                <img src="{{ url_for('static', filename='images/student/students.jpeg') }}" alt="Live Workshop Session">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Live Workshop Session</strong>
-                        <span>Dropshipping Masterclass</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="student" data-index="1">
-                <img src="{{ url_for('static', filename='images/student/students1.jpeg') }}" alt="Student Learning">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Student Learning</strong>
-                        <span>Hands-on Training</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="student" data-index="2">
-                <img src="{{ url_for('static', filename='images/student/students2.jpeg') }}" alt="Group Session">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Group Session</strong>
-                        <span>Community Learning</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="success" data-index="3">
-                <img src="{{ url_for('static', filename='images/student/students3.jpeg') }}" alt="Success Story">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Success Moment</strong>
-                        <span>First Sale Celebration</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="success" data-index="4">
-                <img src="{{ url_for('static', filename='images/student/students4.jpeg') }}" alt="Student Achievement">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Student Achievement</strong>
-                        <span>₹50K+ Monthly Revenue</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item wide" data-category="session" data-index="5">
-                <img src="{{ url_for('static', filename='images/student/students5.jpeg') }}" alt="Workshop Session">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Workshop Session</strong>
-                        <span>E-Commerce Training</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="student" data-index="6">
-                <img src="{{ url_for('static', filename='images/student/students6.jpeg') }}" alt="Student Interaction">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Q&amp;A Session</strong>
-                        <span>Live Interaction</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="student" data-index="7">
-                <img src="{{ url_for('static', filename='images/student/students7.jpeg') }}" alt="Training">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Practical Training</strong>
-                        <span>Step-by-step Guide</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="success" data-index="8">
-                <img src="{{ url_for('static', filename='images/student/students8.jpeg') }}" alt="Success">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Earnings Screenshot</strong>
-                        <span>Real Results</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="student" data-index="9">
-                <img src="{{ url_for('static', filename='images/student/students9.jpeg') }}" alt="Community">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Community Meetup</strong>
-                        <span>MayaPreneur Family</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item wide" data-category="session" data-index="10">
-                <img src="{{ url_for('static', filename='images/student/students10.jpeg') }}" alt="Online Earning Workshop">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Online Earning Workshop</strong>
-                        <span>Multiple Income Streams</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="success" data-index="11">
-                <img src="{{ url_for('static', filename='images/student/students11.jpeg') }}" alt="Top Performer">
-                <div class="gallery-overlay">
-                    <div class="gallery-overlay-text">
-                        <strong>Top Performer</strong>
-                        <span>Batch 3 Graduate</span>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Load More -->
+        <div class="gal-load-more-wrap" id="loadMoreWrap" style="display:none;">
+            <button class="gal-load-more-btn" id="loadMoreBtn" onclick="loadMore()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg>
+                Load More Photos
+            </button>
+            <span class="gal-count-text" id="galCountText"></span>
         </div>
     </section>
 
@@ -489,7 +486,7 @@
     <div class="gallery-cta">
         <h2>Ready to Write Your Success Story?</h2>
         <p>Join hundreds of students already earning online with MayaPreneur.</p>
-        <a href="{{ url_for('checkout') }}">Join the Workshop →</a>
+        <a href="{{ url_for('onboarding') }}">Join the Workshop →</a>
     </div>
 
     <!-- Lightbox -->
@@ -503,71 +500,187 @@
 
 {% block scripts %}
 <script>
-    // Filter tabs
-    const filterBtns = document.querySelectorAll('.gf-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    const LIMIT       = 8;
+    const grid        = document.getElementById('galleryGrid');
+    const loadMoreWrap = document.getElementById('loadMoreWrap');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const countText   = document.getElementById('galCountText');
+    const filterBtns  = document.querySelectorAll('.gf-btn');
+    const lightbox    = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
 
+    let allItems    = [];
+    let currentType = 'all';
+    let currentOffset = 0;
+    let currentTotal  = 0;
+    let isLoading   = false;
+
+    // ── Build image URL ────────────────────────────────────────────────────────
+    function imgSrc(url) {
+        if (!url) return '';
+        if (url.startsWith('http') || url.startsWith('/')) return url;
+        return '/static/' + url;
+    }
+
+    // ── Append items to grid ───────────────────────────────────────────────────
+    function appendItems(items) {
+        items.forEach((item) => {
+            const globalIdx = allItems.length;
+            allItems.push(item);
+
+            const cls = item.layout === 'large' ? 'gallery-item large'
+                      : item.layout === 'wide'  ? 'gallery-item wide'
+                      : 'gallery-item';
+            const div = document.createElement('div');
+            div.className = cls;
+            div.dataset.category = item.type;
+            div.dataset.index    = globalIdx;
+            div.innerHTML = `
+                <img src="${imgSrc(item.image_url)}" alt="${item.title}" loading="lazy">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">
+                        <strong>${item.title}</strong>
+                        <span>${item.subtitle}</span>
+                    </div>
+                </div>`;
+            div.addEventListener('click', () => openLightbox(globalIdx));
+            grid.appendChild(div);
+        });
+    }
+
+    // ── Show empty state ───────────────────────────────────────────────────────
+    function showEmpty() {
+        const label = currentType === 'all' ? 'this gallery' : `the "${currentType}" tab`;
+        grid.innerHTML = `
+            <div class="gallery-empty">
+                <div class="gallery-empty-icon no-data">📷</div>
+                <h3>No Photos Yet</h3>
+                <p>There are no images in ${label} at the moment. Check back soon!</p>
+            </div>`;
+    }
+
+    // ── Fetch one page from API ────────────────────────────────────────────────
+    async function fetchPage(type, offset) {
+        const params = new URLSearchParams({ limit: LIMIT, offset });
+        if (type !== 'all') params.set('type', type);
+        const resp = await fetch(`/api/gallery?${params}`);
+        if (!resp.ok) throw new Error(`Server error ${resp.status}`);
+        return resp.json();  // { items, has_more, total }
+    }
+
+    function updateCount() {
+        countText.textContent = `Showing ${allItems.length} of ${currentTotal} photos`;
+    }
+
+    function setLoadingBtn(on) {
+        loadMoreBtn.disabled = on;
+        loadMoreBtn.innerHTML = on
+            ? `<svg class="spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Loading...`
+            : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z" clip-rule="evenodd"/></svg> Load More Photos`;
+    }
+
+    // ── Initial load for a tab ─────────────────────────────────────────────────
+    async function loadGallery(type) {
+        currentType   = type;
+        currentOffset = 0;
+        currentTotal  = 0;
+        allItems      = [];
+        // Show skeletons
+        grid.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+            const s = document.createElement('div');
+            s.className = 'gallery-skeleton';
+            grid.appendChild(s);
+        }
+        loadMoreWrap.style.display = 'none';
+
+        try {
+            const data = await fetchPage(type, 0);
+            currentTotal  = data.total;
+            grid.innerHTML = '';
+            if (!data.items.length) { showEmpty(); return; }
+            appendItems(data.items);
+            currentOffset = data.items.length;
+            loadMoreWrap.style.display = 'flex';
+            loadMoreBtn.style.display  = data.has_more ? '' : 'none';
+            updateCount();
+        } catch (e) {
+            console.error('Gallery load error:', e);
+            grid.innerHTML = `
+                <div class="gallery-empty">
+                    <div class="gallery-empty-icon error">⚠️</div>
+                    <h3>Something Went Wrong</h3>
+                    <p>We couldn't load the gallery. Please try again.</p>
+                    <button class="gallery-empty-retry" onclick="loadGallery('${type}')">Try Again</button>
+                </div>`;
+        }
+    }
+
+    // ── Load More ──────────────────────────────────────────────────────────────
+    async function loadMore() {
+        if (isLoading) return;
+        isLoading = true;
+        setLoadingBtn(true);
+
+        try {
+            const data = await fetchPage(currentType, currentOffset);
+            appendItems(data.items);
+            currentOffset += data.items.length;
+            loadMoreBtn.style.display = data.has_more ? '' : 'none';
+            updateCount();
+        } catch (e) {
+            console.error('Load more error:', e);
+        } finally {
+            setLoadingBtn(false);
+            isLoading = false;
+        }
+    }
+
+    // ── Filter tabs ────────────────────────────────────────────────────────────
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const filter = btn.dataset.filter;
-            galleryItems.forEach(item => {
-                if (filter === 'all' || item.dataset.category === filter) {
-                    item.style.display = '';
-                    item.style.opacity = '0';
-                    setTimeout(() => { item.style.opacity = '1'; item.style.transition = 'opacity 0.4s'; }, 10);
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+            loadGallery(btn.dataset.filter);
         });
     });
 
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxClose = document.getElementById('lightboxClose');
-    const lightboxPrev = document.getElementById('lightboxPrev');
-    const lightboxNext = document.getElementById('lightboxNext');
-    let currentIndex = 0;
-    const visibleItems = () => [...galleryItems].filter(i => i.style.display !== 'none');
-
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            currentIndex = parseInt(item.dataset.index);
-            lightboxImg.src = item.querySelector('img').src;
-            lightboxImg.alt = item.querySelector('img').alt;
-            lightbox.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    // ── Lightbox ───────────────────────────────────────────────────────────────
+    function openLightbox(idx) {
+        lightboxImg.src = imgSrc(allItems[idx].image_url);
+        lightboxImg.alt = allItems[idx].title;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        lightbox.dataset.current = idx;
+    }
 
     function closeLightbox() {
         lightbox.classList.remove('open');
         document.body.style.overflow = '';
     }
 
-    lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
-    lightboxNext.addEventListener('click', () => navigateLightbox(1));
-
     function navigateLightbox(dir) {
-        const items = visibleItems();
-        const idx = items.findIndex(i => parseInt(i.dataset.index) === currentIndex);
-        const next = (idx + dir + items.length) % items.length;
-        currentIndex = parseInt(items[next].dataset.index);
-        lightboxImg.src = items[next].querySelector('img').src;
-        lightboxImg.alt = items[next].querySelector('img').alt;
+        const visible = [...grid.querySelectorAll('.gallery-item')];
+        const curr    = visible.findIndex(el => parseInt(el.dataset.index) === parseInt(lightbox.dataset.current));
+        const next    = (curr + dir + visible.length) % visible.length;
+        const nextIdx = parseInt(visible[next].dataset.index);
+        lightbox.dataset.current = nextIdx;
+        lightboxImg.src = imgSrc(allItems[nextIdx].image_url);
+        lightboxImg.alt = allItems[nextIdx].title;
     }
 
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox(-1));
+    document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox(1));
     document.addEventListener('keydown', e => {
         if (!lightbox.classList.contains('open')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  navigateLightbox(-1);
         if (e.key === 'ArrowRight') navigateLightbox(1);
     });
+
+    // ── Initial load ───────────────────────────────────────────────────────────
+    loadGallery('all');
 </script>
 {% endblock %}

@@ -169,7 +169,8 @@ a.see-all-btn:hover {
   overflow: hidden;
 }
 
-.hero-wrap {
+/* hero-wrap outside carousel (detail pages / maya_os) */
+.hero-wrap:not(.hero-carousel-outer .hero-wrap) {
   gap: 36px !important;
   align-items: flex-start !important;
 }
@@ -978,7 +979,8 @@ button[type="submit"]:hover {
 
   /* --- HERO --- */
   .hero                { padding: 28px 0 32px !important; }
-  .hero-wrap           { flex-direction: column !important; gap: 20px !important; align-items: stretch !important; }
+  /* stack hero on non-carousel pages (detail pages) */
+  .hero-wrap:not(.hero-carousel-outer .hero-wrap) { flex-direction: column !important; gap: 20px !important; align-items: stretch !important; }
   .hero-content        { text-align: center; }
   .hero-content h1     { font-size: 20px !important; line-height: 1.35 !important; }
   .hero-content h1 span { font-size: 12px !important; margin-bottom: 6px; }

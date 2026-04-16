@@ -1,0 +1,412 @@
+{% extends "base_public.html" %}
+{% block title %}Join the Workshop – MayaPreneur{% endblock %}
+
+{% block head %}
+<style>
+/* ── PAGE ── */
+.ob-page {
+    background: #f8faff;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* ── HERO ── */
+.ob-hero {
+    background: linear-gradient(135deg, #0b1022 0%, #111827 100%);
+    padding: 72px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.ob-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(255,106,0,0.14) 0%, transparent 68%);
+    pointer-events: none;
+}
+.ob-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #ff8a00; background: rgba(255,106,0,0.1); border: 1px solid rgba(255,106,0,0.25);
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 18px;
+}
+.ob-hero h1 {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: clamp(28px, 5vw, 50px); font-weight: 900;
+    color: #f0f0ff; line-height: 1.1; letter-spacing: -0.03em;
+    margin-bottom: 14px;
+}
+.ob-hero h1 span {
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ob-hero p {
+    font-size: 16px; color: rgba(240,240,255,0.5);
+    max-width: 480px; margin: 0 auto 0;
+    line-height: 1.7;
+}
+
+/* webinar badge shown when coming from webinar detail */
+.ob-webinar-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 20px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 20px; border-radius: 12px;
+    font-size: 14px; color: rgba(240,240,255,0.8);
+}
+.ob-webinar-badge strong { color: #fff; }
+
+/* ── TRUST STRIP ── */
+.ob-trust {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 24px;
+    padding: 24px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e8edf5;
+}
+.ob-trust-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; color: #475569;
+}
+.ob-trust-item span { font-size: 16px; }
+
+/* ── FORM CARD ── */
+.ob-container {
+    max-width: 620px; margin: 48px auto 0; padding: 0 20px;
+}
+.ob-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 40px 40px 36px;
+    box-shadow: 0 4px 32px rgba(11,16,34,0.06);
+}
+.ob-card-title {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: 22px; font-weight: 800; color: #0b1022;
+    margin-bottom: 6px;
+}
+.ob-card-subtitle {
+    font-size: 14px; color: #64748b; margin-bottom: 28px;
+}
+.ob-free-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    color: #fff; font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 100px; margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* ── FORM FIELDS ── */
+.ob-field { margin-bottom: 20px; }
+.ob-label {
+    display: block; font-size: 13px; font-weight: 600; color: #374151;
+    margin-bottom: 7px;
+}
+.ob-label .required { color: #ef4444; margin-left: 2px; }
+.ob-input {
+    width: 100%; padding: 13px 16px; border-radius: 12px;
+    border: 1.5px solid #e2e8f0; background: #f8faff;
+    font-size: 15px; color: #0b1022; font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+.ob-input:focus {
+    border-color: #ff8a00;
+    box-shadow: 0 0 0 3px rgba(255,138,0,0.12);
+    background: #fff;
+}
+.ob-input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+.ob-error-msg {
+    display: none; font-size: 12px; color: #ef4444;
+    margin-top: 5px; font-weight: 500;
+}
+.ob-error-msg.show { display: block; }
+
+.ob-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── SUBMIT ── */
+.ob-submit {
+    width: 100%; padding: 16px; border-radius: 100px;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    color: #fff; font-size: 16px; font-weight: 700;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 20px rgba(255,106,0,0.35);
+    transition: all 0.25s; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.ob-submit:hover { box-shadow: 0 8px 32px rgba(255,106,0,0.5); transform: translateY(-2px); }
+.ob-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+.ob-submit svg.spin { animation: ob-spin 0.8s linear infinite; }
+@keyframes ob-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.ob-note {
+    text-align: center; font-size: 12px; color: #94a3b8;
+    margin-top: 14px;
+}
+
+/* ── SUCCESS STATE ── */
+.ob-success {
+    display: none;
+    flex-direction: column; align-items: center;
+    text-align: center; padding: 20px 0 10px;
+}
+.ob-success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin-bottom: 20px;
+    box-shadow: 0 8px 28px rgba(255,106,0,0.35);
+}
+.ob-success h3 {
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: 24px; font-weight: 900; color: #0b1022; margin-bottom: 10px;
+}
+.ob-success p { font-size: 15px; color: #64748b; max-width: 340px; line-height: 1.6; }
+.ob-success-home {
+    margin-top: 24px; padding: 12px 32px; border-radius: 100px;
+    background: linear-gradient(135deg, #ff8a00, #ff6a00);
+    color: #fff; font-size: 14px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 4px 16px rgba(255,106,0,0.3);
+}
+
+/* ── WHAT YOU GET ── */
+.ob-perks {
+    max-width: 620px; margin: 28px auto 0; padding: 0 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.ob-perk {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+    padding: 16px 18px; display: flex; align-items: flex-start; gap: 12px;
+}
+.ob-perk-icon {
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(255,106,0,0.08);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.ob-perk-text strong { font-size: 13px; font-weight: 700; color: #0b1022; display: block; }
+.ob-perk-text span { font-size: 12px; color: #64748b; }
+
+@media (max-width: 540px) {
+    .ob-card { padding: 28px 20px 24px; }
+    .ob-row { grid-template-columns: 1fr; }
+    .ob-perks { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ob-page">
+
+    <!-- Hero -->
+    <div class="ob-hero">
+        <div class="ob-eyebrow">🎓 Free Registration</div>
+        <h1>Join the <span>Workshop</span></h1>
+        <p>Register now for free and start your dropshipping journey with MayaPreneur.</p>
+        {% if webinar_name %}
+        <div class="ob-webinar-badge">
+            Registering for: <strong>{{ webinar_name }}</strong>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Trust strip -->
+    <div class="ob-trust">
+        <div class="ob-trust-item"><span>✅</span> 100% Free to Join</div>
+        <div class="ob-trust-item"><span>🔒</span> Your data is safe</div>
+        <div class="ob-trust-item"><span>📱</span> WhatsApp updates</div>
+        <div class="ob-trust-item"><span>🎓</span> Expert-led sessions</div>
+    </div>
+
+    <!-- Form -->
+    <div class="ob-container">
+        <div class="ob-card">
+            <div class="ob-form-wrap" id="obFormWrap">
+                <div class="ob-card-title">
+                    Register for Free
+                    <span class="ob-free-badge">FREE</span>
+                </div>
+                <p class="ob-card-subtitle">Fill in your details — we'll send you the session link on WhatsApp &amp; email.</p>
+
+                <form id="obForm" novalidate>
+                    <!-- hidden webinar fields -->
+                    <input type="hidden" id="obWebinarId"   value="{{ webinar_id }}">
+                    <input type="hidden" id="obWebinarName" value="{{ webinar_name }}">
+                    <input type="hidden" id="obWebinarSlug" value="{{ webinar_slug }}">
+
+                    <div class="ob-field">
+                        <label class="ob-label" for="obName">Full Name <span class="required">*</span></label>
+                        <input class="ob-input" type="text" id="obName" placeholder="e.g. Ravi Kumar" autocomplete="name">
+                        <div class="ob-error-msg" id="obNameErr">Please enter your full name</div>
+                    </div>
+
+                    <div class="ob-row">
+                        <div class="ob-field">
+                            <label class="ob-label" for="obEmail">Email <span class="required">*</span></label>
+                            <input class="ob-input" type="email" id="obEmail" placeholder="you@example.com" autocomplete="email">
+                            <div class="ob-error-msg" id="obEmailErr">Enter a valid email address</div>
+                        </div>
+                        <div class="ob-field">
+                            <label class="ob-label" for="obPhone">Phone <span class="required">*</span></label>
+                            <input class="ob-input" type="tel" id="obPhone" placeholder="10-digit mobile number" autocomplete="tel" maxlength="10">
+                            <div class="ob-error-msg" id="obPhoneErr">Enter a valid 10-digit phone number</div>
+                        </div>
+                    </div>
+
+                    <div class="ob-field">
+                        <label class="ob-label" for="obCity">City</label>
+                        <input class="ob-input" type="text" id="obCity" placeholder="e.g. Bengaluru">
+                    </div>
+
+                    <button type="submit" class="ob-submit" id="obSubmitBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z"/></svg>
+                        Register for Free
+                    </button>
+                    <p class="ob-note">🔒 No spam. No payment required. Just workshop access.</p>
+                </form>
+            </div>
+
+            <!-- Success state -->
+            <div class="ob-success" id="obSuccess">
+                <div class="ob-success-icon">🎉</div>
+                <h3>You're Registered!</h3>
+                <p>We'll send the workshop details to your email and WhatsApp shortly. See you at the session!</p>
+                <a href="{{ url_for('maya_preneur') }}" class="ob-success-home">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Perks -->
+    <div class="ob-perks">
+        <div class="ob-perk">
+            <div class="ob-perk-icon">📦</div>
+            <div class="ob-perk-text">
+                <strong>Zero Inventory</strong>
+                <span>Sell without holding any stock</span>
+            </div>
+        </div>
+        <div class="ob-perk">
+            <div class="ob-perk-icon">💰</div>
+            <div class="ob-perk-text">
+                <strong>₹0 Startup Cost</strong>
+                <span>Start earning with minimal investment</span>
+            </div>
+        </div>
+        <div class="ob-perk">
+            <div class="ob-perk-icon">🗣️</div>
+            <div class="ob-perk-text">
+                <strong>Taught in Kannada</strong>
+                <span>Learn in your native language</span>
+            </div>
+        </div>
+        <div class="ob-perk">
+            <div class="ob-perk-icon">🏆</div>
+            <div class="ob-perk-text">
+                <strong>500+ Trained</strong>
+                <span>Join a community of earners</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+(function () {
+    const form      = document.getElementById('obForm');
+    const submitBtn = document.getElementById('obSubmitBtn');
+    const formWrap  = document.getElementById('obFormWrap');
+    const success   = document.getElementById('obSuccess');
+
+    const nameEl  = document.getElementById('obName');
+    const emailEl = document.getElementById('obEmail');
+    const phoneEl = document.getElementById('obPhone');
+    const cityEl  = document.getElementById('obCity');
+
+    function showErr(inputEl, errId, show) {
+        inputEl.classList.toggle('error', show);
+        document.getElementById(errId).classList.toggle('show', show);
+    }
+
+    function validatePhone(v) {
+        return /^[6-9]\d{9}$/.test(v.replace(/\s|-/g, ''));
+    }
+
+    function validate() {
+        let ok = true;
+        if (!nameEl.value.trim()) { showErr(nameEl, 'obNameErr', true);  ok = false; } else { showErr(nameEl, 'obNameErr', false); }
+        if (!emailEl.value.trim() || !emailEl.value.includes('@')) { showErr(emailEl, 'obEmailErr', true);  ok = false; } else { showErr(emailEl, 'obEmailErr', false); }
+        if (!validatePhone(phoneEl.value.trim())) { showErr(phoneEl, 'obPhoneErr', true);  ok = false; } else { showErr(phoneEl, 'obPhoneErr', false); }
+        return ok;
+    }
+
+    // Live clear errors on input
+    [nameEl, emailEl, phoneEl].forEach(el => {
+        el.addEventListener('input', () => {
+            el.classList.remove('error');
+            const errId = el.id.replace('ob', 'ob') + 'Err';
+            const map = { obName: 'obNameErr', obEmail: 'obEmailErr', obPhone: 'obPhoneErr' };
+            if (map[el.id]) document.getElementById(map[el.id]).classList.remove('show');
+        });
+    });
+
+    // Only allow digits in phone
+    phoneEl.addEventListener('input', () => {
+        phoneEl.value = phoneEl.value.replace(/\D/g, '').slice(0, 10);
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<svg class="spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Registering...`;
+
+        const webinarId   = document.getElementById('obWebinarId').value;
+        const webinarName = document.getElementById('obWebinarName').value;
+        const webinarSlug = document.getElementById('obWebinarSlug').value;
+
+        const payload = {
+            full_name:    nameEl.value.trim(),
+            email:        emailEl.value.trim(),
+            phone:        phoneEl.value.trim(),
+            city:         cityEl.value.trim(),
+            webinar_id:   webinarId   || null,
+            webinar_name: webinarName || null,
+            webinar_slug: webinarSlug || null,
+            source:       webinarId ? 'webinar_detail' : 'homepage',
+        };
+
+        try {
+            const resp = await fetch('/api/enquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await resp.json();
+
+            if (data.success) {
+                formWrap.style.display = 'none';
+                success.style.display  = 'flex';
+            } else {
+                // server-side validation errors
+                if (data.errors) {
+                    if (data.errors.full_name) showErr(nameEl,  'obNameErr',  true);
+                    if (data.errors.email)     showErr(emailEl, 'obEmailErr', true);
+                    if (data.errors.phone)     showErr(phoneEl, 'obPhoneErr', true);
+                }
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z"/></svg> Register for Free`;
+            }
+        } catch (err) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z"/></svg> Register for Free`;
+            alert('Something went wrong. Please try again.');
+        }
+    });
+})();
+</script>
+{% endblock %}

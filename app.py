@@ -32,9 +32,11 @@ SMTP_PASS = os.getenv("SMTP_PASS", "")
 MAIL_TO   = os.getenv("MAIL_TO",   "mayapreneur64@gmail.com")
 
 
-# ── Register admin blueprint ──────────────────────────────────────────────────
+# ── Register blueprints ───────────────────────────────────────────────────────
 from admin import admin_bp
+from gallery_bp import gallery_bp
 app.register_blueprint(admin_bp, url_prefix="/admin")
+app.register_blueprint(gallery_bp)
 
 run_migrations()
 
@@ -160,12 +162,28 @@ def api_student_results():
 
 @app.route("/api/video-reviews")
 def api_video_reviews():
-    """Return latest 4 active video reviews as JSON."""
-    rows = query("SELECT * FROM video_reviews WHERE status=1 ORDER BY sort_order, id DESC LIMIT 4")
-    total = query("SELECT COUNT(*) as cnt FROM video_reviews WHERE status=1", one=True)["cnt"]
-    reviews = []
+    """Return paginated video reviews. ?page=1&per_page=8&category=all|1|2|3"""
+    page     = max(1, int(request.args.get("page", 1)))
+    per_page = max(1, int(request.args.get("per_page", 8)))
+    category = request.args.get("category", "all").strip()
+    offset   = (page - 1) * per_page
+
+    # category filter: 1=dropshipping, 2=ecommerce, 3=earning
+    if category and category != "all":
+        try:
+            cat_id = int(category)
+            total = query("SELECT COUNT(*) as cnt FROM video_reviews WHERE status=1 AND category=%s", (cat_id,), one=True)["cnt"]
+            rows  = query("SELECT * FROM video_reviews WHERE status=1 AND category=%s ORDER BY sort_order, id LIMIT %s OFFSET %s", (cat_id, per_page, offset))
+        except (ValueError, TypeError):
+            total = 0
+            rows  = []
+    else:
+        total = query("SELECT COUNT(*) as cnt FROM video_reviews WHERE status=1", one=True)["cnt"]
+        rows  = query("SELECT * FROM video_reviews WHERE status=1 ORDER BY sort_order, id LIMIT %s OFFSET %s", (per_page, offset))
+
+    items = []
     for r in rows:
-        reviews.append({
+        items.append({
             "id":           r["id"],
             "student_name": r["student_name"],
             "student_role": r["student_role"] or "",
@@ -173,8 +191,15 @@ def api_video_reviews():
             "video_src":    r["video_src"],
             "thumbnail":    r["thumbnail"] or "",
             "duration":     r["duration"] or "",
+            "category":     r["category"] or 1,
         })
-    return jsonify({"total": total, "reviews": reviews})
+    return jsonify({
+        "total":    total,
+        "page":     page,
+        "per_page": per_page,
+        "has_more": (offset + per_page) < total,
+        "items":    items,
+    })
 
 
 @app.route("/api/benefits")
@@ -238,10 +263,6 @@ def lead():
     return ("", 204)
 
 
-@app.route("/gallery")
-def gallery():
-    return render_template("gallery.html")
-
 
 @app.route("/reviews")
 def reviews():
@@ -250,7 +271,51 @@ def reviews():
 
 @app.route("/checkout")
 def checkout():
-    return render_template("checkout.html")
+    return redirect(url_for("onboarding"))
+
+@app.route("/onboarding")
+def onboarding():
+    webinar_id   = request.args.get("webinar_id", "")
+    webinar_name = request.args.get("webinar_name", "")
+    webinar_slug = request.args.get("webinar_slug", "")
+    return render_template("onboarding.html",
+        webinar_id=webinar_id,
+        webinar_name=webinar_name,
+        webinar_slug=webinar_slug,
+    )
+
+@app.route("/api/enquiry", methods=["POST"])
+def api_enquiry():
+    data = request.get_json(silent=True) or {}
+    full_name    = (data.get("full_name") or "").strip()
+    email        = (data.get("email") or "").strip()
+    phone        = (data.get("phone") or "").strip()
+    city         = (data.get("city") or "").strip()
+    webinar_id   = data.get("webinar_id") or None
+    webinar_name = (data.get("webinar_name") or "").strip() or None
+    webinar_slug = (data.get("webinar_slug") or "").strip() or None
+    source       = (data.get("source") or "homepage").strip()
+
+    errors = {}
+    if not full_name:
+        errors["full_name"] = "Name is required"
+    if not email or "@" not in email:
+        errors["email"] = "Valid email is required"
+    if not phone or len(phone.replace(" ", "").replace("-", "")) < 10:
+        errors["phone"] = "Valid 10-digit phone number is required"
+    if errors:
+        return jsonify({"success": False, "errors": errors}), 422
+
+    try:
+        wid = int(webinar_id) if webinar_id else None
+    except (ValueError, TypeError):
+        wid = None
+
+    execute(
+        "INSERT INTO enquiries (full_name, email, phone, city, webinar_id, webinar_name, webinar_slug, source) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+        (full_name, email, phone, city or None, wid, webinar_name, webinar_slug, source)
+    )
+    return jsonify({"success": True, "message": "Registration successful!"})
 
 
 @app.route("/thank-you")
@@ -395,6 +460,7 @@ def webinar_detail(slug):
         fees = row.get("webinar_fees") or 49
         desc = (row.get("webinar_discription") or "").strip()
         webinar = {
+            "id":          row["webinar_id"],
             "slug":        slug,
             "color":       cc["color"],
             "accent":      cc["accent"],
@@ -423,7 +489,7 @@ def webinar_detail(slug):
     # ── 2. Hardcoded fallback (backward compat for old slugs) ───────────────────
     webinars = {
         "dropshipping-mastery": {
-            "slug": "dropshipping-mastery",
+            "id": None, "slug": "dropshipping-mastery",
             "color": "orange",
             "accent": "#ff8c1a",
             "glow": "rgba(255,140,26,0.18)",
@@ -470,7 +536,7 @@ def webinar_detail(slug):
             ],
         },
         "ecommerce-business": {
-            "slug": "ecommerce-business",
+            "id": None, "slug": "ecommerce-business",
             "color": "blue",
             "accent": "#3b82f6",
             "glow": "rgba(59,130,246,0.18)",
@@ -517,7 +583,7 @@ def webinar_detail(slug):
             ],
         },
         "online-earning": {
-            "slug": "online-earning",
+            "id": None, "slug": "online-earning",
             "color": "green",
             "accent": "#22c55e",
             "glow": "rgba(34,197,94,0.18)",
