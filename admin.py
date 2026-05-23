@@ -556,6 +556,159 @@ def faq_delete(fid):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+# WEBINAR TOPICS (Detail Page)
+# ══════════════════════════════════════════════════════════════════════════════
+@admin_bp.route("/webinar-topics")
+@login_required
+def webinar_topics():
+    rows = query("SELECT * FROM webinar_topics ORDER BY category, sort_order, id")
+    return render_template("webinar_topics.html", rows=rows)
+
+
+@admin_bp.route("/webinar-topics/add", methods=["GET", "POST"])
+@login_required
+def webinar_topic_add():
+    if request.method == "POST":
+        execute(
+            "INSERT INTO webinar_topics (icon, title, description, category, sort_order, status) VALUES (%s,%s,%s,%s,%s,%s)",
+            (request.form.get("icon", ""), request.form["title"],
+             request.form.get("description", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1)),
+        )
+        flash("Topic added.", "success")
+        return redirect(url_for("admin.webinar_topics"))
+    return render_template("webinar_topic_form.html", row=None)
+
+
+@admin_bp.route("/webinar-topics/edit/<int:tid>", methods=["GET", "POST"])
+@login_required
+def webinar_topic_edit(tid):
+    row = query("SELECT * FROM webinar_topics WHERE id=%s", (tid,), one=True)
+    if not row:
+        flash("Not found.", "error"); return redirect(url_for("admin.webinar_topics"))
+    if request.method == "POST":
+        execute(
+            "UPDATE webinar_topics SET icon=%s, title=%s, description=%s, category=%s, sort_order=%s, status=%s WHERE id=%s",
+            (request.form.get("icon", ""), request.form["title"],
+             request.form.get("description", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1), tid),
+        )
+        flash("Topic updated.", "success")
+        return redirect(url_for("admin.webinar_topics"))
+    return render_template("webinar_topic_form.html", row=row)
+
+
+@admin_bp.route("/webinar-topics/delete/<int:tid>", methods=["POST"])
+@login_required
+def webinar_topic_delete(tid):
+    execute("DELETE FROM webinar_topics WHERE id=%s", (tid,))
+    flash("Deleted.", "success")
+    return redirect(url_for("admin.webinar_topics"))
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# WEBINAR CURRICULUM
+# ══════════════════════════════════════════════════════════════════════════════
+@admin_bp.route("/webinar-curriculum")
+@login_required
+def webinar_curriculum():
+    rows = query("SELECT * FROM webinar_curriculum ORDER BY category, sort_order, step_number")
+    return render_template("webinar_curriculum.html", rows=rows)
+
+
+@admin_bp.route("/webinar-curriculum/add", methods=["GET", "POST"])
+@login_required
+def webinar_curriculum_add():
+    if request.method == "POST":
+        execute(
+            "INSERT INTO webinar_curriculum (step_number, title, points, category, sort_order, status) VALUES (%s,%s,%s,%s,%s,%s)",
+            (request.form.get("step_number", 1), request.form["title"],
+             request.form.get("points", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1)),
+        )
+        flash("Curriculum step added.", "success")
+        return redirect(url_for("admin.webinar_curriculum"))
+    return render_template("webinar_curriculum_form.html", row=None)
+
+
+@admin_bp.route("/webinar-curriculum/edit/<int:cid>", methods=["GET", "POST"])
+@login_required
+def webinar_curriculum_edit(cid):
+    row = query("SELECT * FROM webinar_curriculum WHERE id=%s", (cid,), one=True)
+    if not row:
+        flash("Not found.", "error"); return redirect(url_for("admin.webinar_curriculum"))
+    if request.method == "POST":
+        execute(
+            "UPDATE webinar_curriculum SET step_number=%s, title=%s, points=%s, category=%s, sort_order=%s, status=%s WHERE id=%s",
+            (request.form.get("step_number", 1), request.form["title"],
+             request.form.get("points", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1), cid),
+        )
+        flash("Curriculum step updated.", "success")
+        return redirect(url_for("admin.webinar_curriculum"))
+    return render_template("webinar_curriculum_form.html", row=row)
+
+
+@admin_bp.route("/webinar-curriculum/delete/<int:cid>", methods=["POST"])
+@login_required
+def webinar_curriculum_delete(cid):
+    execute("DELETE FROM webinar_curriculum WHERE id=%s", (cid,))
+    flash("Deleted.", "success")
+    return redirect(url_for("admin.webinar_curriculum"))
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# WEBINAR WHO IS IT FOR
+# ══════════════════════════════════════════════════════════════════════════════
+@admin_bp.route("/webinar-who-for")
+@login_required
+def webinar_who_for():
+    rows = query("SELECT * FROM webinar_who_for ORDER BY category, sort_order, id")
+    return render_template("webinar_who_for.html", rows=rows)
+
+
+@admin_bp.route("/webinar-who-for/add", methods=["GET", "POST"])
+@login_required
+def webinar_who_for_add():
+    if request.method == "POST":
+        execute(
+            "INSERT INTO webinar_who_for (icon, label, description, category, sort_order, status) VALUES (%s,%s,%s,%s,%s,%s)",
+            (request.form.get("icon", ""), request.form["label"],
+             request.form.get("description", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1)),
+        )
+        flash("Entry added.", "success")
+        return redirect(url_for("admin.webinar_who_for"))
+    return render_template("webinar_who_for_form.html", row=None)
+
+
+@admin_bp.route("/webinar-who-for/edit/<int:wid>", methods=["GET", "POST"])
+@login_required
+def webinar_who_for_edit(wid):
+    row = query("SELECT * FROM webinar_who_for WHERE id=%s", (wid,), one=True)
+    if not row:
+        flash("Not found.", "error"); return redirect(url_for("admin.webinar_who_for"))
+    if request.method == "POST":
+        execute(
+            "UPDATE webinar_who_for SET icon=%s, label=%s, description=%s, category=%s, sort_order=%s, status=%s WHERE id=%s",
+            (request.form.get("icon", ""), request.form["label"],
+             request.form.get("description", ""), request.form.get("category", 1),
+             request.form.get("sort_order", 0), request.form.get("status", 1), wid),
+        )
+        flash("Entry updated.", "success")
+        return redirect(url_for("admin.webinar_who_for"))
+    return render_template("webinar_who_for_form.html", row=row)
+
+
+@admin_bp.route("/webinar-who-for/delete/<int:wid>", methods=["POST"])
+@login_required
+def webinar_who_for_delete(wid):
+    execute("DELETE FROM webinar_who_for WHERE id=%s", (wid,))
+    flash("Deleted.", "success")
+    return redirect(url_for("admin.webinar_who_for"))
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 # GALLERY
 # ══════════════════════════════════════════════════════════════════════════════
 @admin_bp.route("/gallery")

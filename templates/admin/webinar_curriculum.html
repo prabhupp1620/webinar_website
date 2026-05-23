@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Curriculum{% endblock %}
+{% block topbar_title %}Curriculum{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Curriculum</h1>
+    <a href="{{ url_for('admin.webinar_curriculum_add') }}" class="btn btn-primary">+ Add Step</a>
+</div>
+<div class="card table-wrap">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Step</th><th>Title</th><th>Category</th><th>Points Preview</th><th>Order</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td style="font-weight:700;color:#ff8c1a;">{{ '%02d'|format(r.step_number) }}</td>
+            <td style="font-weight:600;max-width:200px;">{{ r.title }}</td>
+            <td>{% set cm={1:'Dropshipping',2:'E-Commerce',3:'Online Earning'} %}
+                {% set cc={1:'badge-orange',2:'badge-blue',3:'badge-green'} %}
+                <span class="badge {{ cc.get(r.category,'') }}">{{ cm.get(r.category, r.category) }}</span>
+            </td>
+            <td style="color:#64748b;max-width:280px;font-size:12px;">
+                {% if r.points %}
+                    {{ r.points[:80] }}{% if r.points|length > 80 %}…{% endif %}
+                {% endif %}
+            </td>
+            <td>{{ r.sort_order }}</td>
+            <td><span class="badge {% if r.status %}badge-active{% else %}badge-inactive{% endif %}">
+                {% if r.status %}Active{% else %}Inactive{% endif %}
+            </span></td>
+            <td>
+                <div class="td-actions">
+                    <a href="{{ url_for('admin.webinar_curriculum_edit', cid=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('admin.webinar_curriculum_delete', cid=r.id) }}"
+                          onsubmit="return confirm('Delete this curriculum step?')">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center;color:#64748b;padding:32px;">No curriculum steps yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

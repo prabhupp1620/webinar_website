@@ -20,6 +20,49 @@
     <meta name="twitter:image" content="{{ w.image }}">
 {% endblock %}
 
+{% block header %}
+    <header class="header">
+        <div class="container header-wrap" style="justify-content:space-between;">
+            <div class="logo" style="cursor:default;">
+                <img src="{{ url_for('static', filename='images/maya-logo.jpeg') }}" alt="MayaPreneur">
+                <span class="brand-text">Maya<span>Preneur</span></span>
+            </div>
+            <a href="{{ url_for('onboarding', webinar_id=w.id or '', webinar_name=w.title, webinar_slug=w.slug) }}" class="btn btn-orange desktop-cta" style="display:inline-flex;">
+                Join Free →
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block footer %}
+    <footer class="site-footer">
+        <div class="footer-container" style="grid-template-columns: 1fr 1fr;">
+            <div class="footer-col brand">
+                <div class="brand-logo">
+                    <img src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="MayaPreneur">
+                    <span>Maya<span>Preneur</span></span>
+                </div>
+                <p>India's premier dropshipping education platform. Master the art of building profitable online stores with zero inventory and minimal investment.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-list">
+                    <li><span>✉</span><a href="mailto:mayapreneur64@gmail.com">mayapreneur64@gmail.com</a></li>
+                    <li><span>☎</span><a href="tel:+918152877026">+91 81528 77026</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MayaPreneur. All rights reserved.</p>
+            <div class="policy-links">
+                <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+                <a href="{{ url_for('terms_of_use') }}">Terms of Service</a>
+                <a href="{{ url_for('refund_policy') }}">Refund Policy</a>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
 {% block head %}
     <style>
         /* ========================================================
@@ -117,14 +160,38 @@
         }
 
         .wd-price-badge {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             background: rgba(255,255,255,0.08);
             border: 2px solid;
             padding: 8px 24px;
             border-radius: 12px;
             line-height: 1;
+        }
+        .wd-price-original {
+            font-size: 20px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+        .wd-price-free {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff8a00, #ff6a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .wd-price-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            background: #16a34a;
+            padding: 3px 8px;
+            border-radius: 20px;
+            -webkit-text-fill-color: #fff;
         }
 
         .wd-rating {
@@ -778,6 +845,303 @@
                 padding: 52px 16px;
             }
         }
+
+        /* ---------- WORKSHOP GALLERY ---------- */
+        .wd-gallery-section {
+            background: #fff;
+            padding: 64px 20px;
+        }
+        .wd-gallery-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .wd-gallery-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .wd-gallery-header .wd-section-label { margin-bottom: 10px; }
+        .wd-gallery-header h2 {
+            font-size: 32px; font-weight: 800; color: #0b1022;
+            margin-bottom: 10px; line-height: 1.2;
+        }
+        .wd-gallery-header h2 span {
+            background: linear-gradient(135deg,#ff8a00,#ff6a00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .wd-gallery-header p { font-size: 15px; color: #64748b; }
+        .wd-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .wd-gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            background: #f8faff;
+            border: 1px solid #e8edf5;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .wd-gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+        .wd-gallery-item.large { grid-column: span 2; }
+        .wd-gallery-item img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            min-height: 200px; max-height: 360px;
+        }
+        .wd-gallery-item.large img { max-height: 400px; }
+        /* lightbox */
+        .wd-lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.92); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .wd-lightbox.open { display: flex; }
+        .wd-lightbox img {
+            max-width: 92vw; max-height: 88vh;
+            border-radius: 12px; object-fit: contain;
+        }
+        .wd-lightbox-close {
+            position: absolute; top: 20px; right: 24px;
+            font-size: 36px; color: #fff; cursor: pointer;
+            background: none; border: none; line-height: 1;
+            opacity: 0.8;
+        }
+        .wd-lightbox-close:hover { opacity: 1; }
+        @media (max-width: 767px) {
+            .wd-gallery-section { padding: 40px 16px; }
+            .wd-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .wd-gallery-item.large { grid-column: span 2; }
+            .wd-gallery-header h2 { font-size: 22px; }
+            .wd-gallery-item img { min-height: 140px; max-height: 220px; }
+        }
+        @media (max-width: 480px) {
+            .wd-gallery-grid { grid-template-columns: 1fr; }
+            .wd-gallery-item.large { grid-column: span 1; }
+        }
+
+        /* ---------- CAROUSEL ---------- */
+        .wd-carousel-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .wd-carousel-outer {
+            overflow: hidden;
+            flex: 1;
+        }
+        .wd-carousel-track {
+            display: flex;
+            gap: 16px;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+            will-change: transform;
+        }
+        .wd-carousel-btn {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            z-index: 2;
+        }
+        .wd-carousel-btn:hover {
+            background: rgba(255,140,26,0.25);
+            border-color: #ff8c1a;
+        }
+        .wd-carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        /* dark btn variant for light sections */
+        .video-feedback-section .wd-carousel-btn {
+            border-color: rgba(11,16,34,0.2);
+            background: rgba(11,16,34,0.06);
+            color: #0b1022;
+        }
+        .video-feedback-section .wd-carousel-btn:hover {
+            background: rgba(255,140,26,0.12);
+            border-color: #ff8c1a;
+            color: #ff8c1a;
+        }
+        /* card widths inside tracks */
+        #studentResultsTrack .image-review-card {
+            min-width: 260px !important;
+            width: 260px !important;
+            height: 280px !important;
+            flex-shrink: 0;
+        }
+        #videoReviewsGrid .vf-card {
+            min-width: 220px;
+            width: 220px;
+            flex-shrink: 0;
+        }
+        #testimonialsGrid .testimonial-card {
+            min-width: 300px;
+            width: 300px;
+            flex-shrink: 0;
+        }
+        /* Force carousel tracks to stay flex — overrides enhancements.css grid rules */
+        #studentResultsTrack,
+        #videoReviewsGrid,
+        #testimonialsGrid {
+            display: flex !important;
+            grid-template-columns: unset !important;
+        }
+
+        @media (max-width: 767px) {
+            /* Section padding reduction */
+            .image-review-section,
+            .video-feedback-section,
+            .testimonial-section {
+                padding-top: 36px !important;
+                padding-bottom: 36px !important;
+            }
+            .image-review-header,
+            .testimonial-header { margin-bottom: 24px !important; }
+            .vf-header           { margin-bottom: 24px !important; }
+
+            /* Section heading font sizes */
+            .image-review-header h2,
+            .testimonial-header h2,
+            .vf-header h2 {
+                font-size: 20px !important;
+            }
+            .image-review-header p,
+            .testimonial-header p,
+            .vf-header p {
+                font-size: 13px !important;
+            }
+
+            /* Smaller arrow buttons */
+            .wd-carousel-btn {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 20px !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Card widths set by JS via --card-w variable */
+            #studentResultsTrack .image-review-card {
+                min-width: var(--card-w, 240px) !important;
+                width: var(--card-w, 240px) !important;
+                height: 220px !important;
+            }
+            #videoReviewsGrid .vf-card {
+                min-width: var(--card-w, 200px) !important;
+                width: var(--card-w, 200px) !important;
+                max-height: 300px !important;
+            }
+            #testimonialsGrid .testimonial-card {
+                min-width: var(--card-w, 260px) !important;
+                width: var(--card-w, 260px) !important;
+            }
+            /* Tighten container padding on mobile for carousels */
+            .image-review-section .container,
+            .testimonial-section .container {
+                width: 100% !important;
+                padding: 0 12px !important;
+            }
+
+            /* Testimonial card content font sizes */
+            #testimonialsGrid .testimonial-card { padding: 20px 16px !important; }
+            #testimonialsGrid .quote            { font-size: 28px !important; line-height: 1 !important; }
+            #testimonialsGrid .stars            { font-size: 13px !important; margin: 6px 0 !important; }
+            #testimonialsGrid .review           { font-size: 13px !important; line-height: 1.6 !important; margin-bottom: 12px !important; }
+            #testimonialsGrid .author h4        { font-size: 13px !important; }
+            #testimonialsGrid .badge            { font-size: 11px !important; }
+
+            /* Video card info font sizes */
+            #videoReviewsGrid .vf-card-info strong { font-size: 12px !important; }
+            #videoReviewsGrid .vf-card-info span   { font-size: 11px !important; }
+        }
+
+        /* ---------- STUDENT RESULTS — dark background override ---------- */
+        .image-review-section {
+            background: linear-gradient(180deg, #0b1022 0%, #111827 100%) !important;
+            border-top: none !important;
+        }
+        .image-review-header h2 { color: #f0f0ff !important; }
+        .image-review-header h2 span {
+            background: linear-gradient(135deg,#ff8a00,#ff6a00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .image-review-header p { color: rgba(240,240,255,0.45) !important; }
+        .image-review-card {
+            border-radius: 16px !important; overflow: hidden !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            background: rgba(255,255,255,0.02) !important;
+        }
+        /* override scrolling track → static grid */
+        .image-review-section .image-review-track {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 16px !important;
+            width: 100% !important;
+            animation: none !important;
+            transform: none !important;
+            padding: 0 20px !important;
+            box-sizing: border-box !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+        }
+        .image-review-section .image-review-card {
+            width: 100% !important;
+            height: 260px !important;
+            margin: 0 !important;
+        }
+        .image-review-section .image-review-card img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        @media (max-width: 768px) {
+            .image-review-section .image-review-track {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            .image-review-section .image-review-card { height: 200px !important; }
+        }
+
+        /* ---------- SECTION EMPTY STATE ---------- */
+        .wd-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 52px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .wd-empty-icon {
+            font-size: 52px;
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+        .wd-empty-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .wd-empty-sub {
+            font-size: 15px;
+            color: rgba(255,255,255,0.5);
+            max-width: 340px;
+        }
+        /* video-feedback has light bg — needs dark text */
+        .video-feedback-section .wd-empty-title { color: #0b1022 !important; }
+        .video-feedback-section .wd-empty-sub   { color: #64748b !important; }
     </style>
 {% endblock %}
 
@@ -841,7 +1205,9 @@
 
         <div class="wd-hero-meta">
             <div class="wd-price-badge" style="border-color: {{ w.accent }};">
-                {{ w.price }}
+                <span class="wd-price-original">{{ w.price }}</span>
+                <span class="wd-price-free">FREE</span>
+                <span class="wd-price-tag">100% OFF</span>
             </div>
             <div class="wd-rating">
                 ★★★★★ 4.9
@@ -851,7 +1217,7 @@
 
         <div class="wd-hero-ctas">
             <a href="{{ url_for('onboarding', webinar_id=w.id or '', webinar_name=w.title, webinar_slug=w.slug) }}" class="wd-btn-primary">
-                Register Now — Free →
+                Register for Free →
             </a>
             <a href="#curriculum" class="wd-btn-secondary wd-smooth-scroll">
                 Learn More ↓
@@ -879,11 +1245,65 @@
             </div>
             <div class="wd-stat-card">
                 <div class="wd-stat-icon">🏷️</div>
-                <strong class="wd-stat-value">{{ w.price }}</strong>
+                <strong class="wd-stat-value" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;">
+                    <span style="font-size:13px;color:#94a3b8;text-decoration:line-through;font-weight:600;">{{ w.price }}</span>
+                    <span style="color:#ff6a00;">FREE</span>
+                </strong>
                 <span class="wd-stat-label">Registration Fee</span>
             </div>
         </div>
     </div>
+
+    <!-- ===== WORKSHOP GALLERY (Dropshipping only) ===== -->
+    {% if w.category == 1 %}
+    <section class="wd-gallery-section">
+        <div class="wd-gallery-inner">
+            <div class="wd-gallery-header">
+                <div class="wd-section-label">Workshop Preview</div>
+                <h2>Inside the <span>Workshop</span></h2>
+                <p>A glimpse of everything you'll experience — from live training to real results</p>
+            </div>
+            <div class="wd-gallery-grid">
+                <div class="wd-gallery-item large" data-src="https://mayapreneurs.online/cdn/shop/files/Copy_of_Maya_Preneur_74.png?v=1779096135">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/Copy_of_Maya_Preneur_74.png?v=1779096135" alt="Workshop Highlight 1" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/ChatGPT_Image_Jan_17_2026_06_27_23_PM.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/ChatGPT_Image_Jan_17_2026_06_27_23_PM.png?v=1776756469" alt="Workshop Highlight 2" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/Major_Benifits_of_Dropshipping.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/Major_Benifits_of_Dropshipping.png?v=1776756469" alt="Major Benefits of Dropshipping" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/2.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/2.png?v=1776756469" alt="Workshop Highlight 3" loading="lazy">
+                </div>
+                <div class="wd-gallery-item large" data-src="https://mayapreneurs.online/cdn/shop/files/3.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/3.png?v=1776756469" alt="Workshop Highlight 4" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/Dropshipping.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/Dropshipping.png?v=1776756469" alt="Dropshipping" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/4_74eda076-3c97-4266-9b61-80e117c63e4e.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/4_74eda076-3c97-4266-9b61-80e117c63e4e.png?v=1776756469" alt="Workshop Highlight 5" loading="lazy">
+                </div>
+                <div class="wd-gallery-item large" data-src="https://mayapreneurs.online/cdn/shop/files/ChatGPT_Image_Apr_6_2026_06_41_31_AM_1.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/ChatGPT_Image_Apr_6_2026_06_41_31_AM_1.png?v=1776756469" alt="Workshop Highlight 6" loading="lazy">
+                </div>
+                <div class="wd-gallery-item" data-src="https://mayapreneurs.online/cdn/shop/files/OF_RECOGNITION.png?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/OF_RECOGNITION.png?v=1776756469" alt="Recognition" loading="lazy">
+                </div>
+                <div class="wd-gallery-item large" data-src="https://mayapreneurs.online/cdn/shop/files/DALL_E2024-09-1908.55.31-Amoderndropshippingconceptimageshowingamobilephonewithashoppingappinterface_featuringavarietyofproductslikeclothing_electronics.webp?v=1776756469">
+                    <img src="https://mayapreneurs.online/cdn/shop/files/DALL_E2024-09-1908.55.31-Amoderndropshippingconceptimageshowingamobilephonewithashoppingappinterface_featuringavarietyofproductslikeclothing_electronics.webp?v=1776756469" alt="Dropshipping Concept" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="wd-lightbox" id="wdLightbox" role="dialog" aria-modal="true">
+        <button class="wd-lightbox-close" id="wdLightboxClose" aria-label="Close">✕</button>
+        <img src="" alt="Gallery image" id="wdLightboxImg">
+    </div>
+    {% endif %}
 
     <!-- ===== WHAT YOU'LL LEARN ===== -->
     <section class="wd-section wd-section-alt">
@@ -975,6 +1395,91 @@
         </div>
     </section>
 
+    <!-- ===== STUDENT RESULTS ===== -->
+    <section class="image-review-section" id="Student-Reviews">
+        <div class="container">
+            <div class="image-review-header">
+                <h2>Student <span>Results</span></h2>
+                <p>Real conversations. Real results.</p>
+            </div>
+            <div class="wd-carousel-wrap">
+                <button class="wd-carousel-btn wd-carousel-prev" id="srPrev">&#8249;</button>
+                <div class="wd-carousel-outer">
+                    <div class="wd-carousel-track" id="studentResultsTrack">
+                        <div class="sr-skeleton" style="min-width:260px;height:280px;border-radius:16px;"></div>
+                        <div class="sr-skeleton" style="min-width:260px;height:280px;border-radius:16px;"></div>
+                        <div class="sr-skeleton" style="min-width:260px;height:280px;border-radius:16px;"></div>
+                        <div class="sr-skeleton" style="min-width:260px;height:280px;border-radius:16px;"></div>
+                    </div>
+                </div>
+                <button class="wd-carousel-btn wd-carousel-next" id="srNext">&#8250;</button>
+            </div>
+            <!-- <div class="section-view-all">
+                <a href="{{ url_for('gallery.gallery') }}" class="view-all-btn">View All Results</a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- ===== VIDEO FEEDBACK ===== -->
+    <section class="video-feedback-section" id="Video-Feedback">
+        <div class="vf-header">
+            <div class="vf-eyebrow">Student Voice</div>
+            <h2>Hear it from Our <span>Students</span></h2>
+            <p>Watch real feedback from people who transformed their lives with MayaPreneur.</p>
+        </div>
+        <div class="wd-carousel-wrap" style="max-width:1200px;margin:0 auto;">
+            <button class="wd-carousel-btn wd-carousel-prev" id="vrPrev">&#8249;</button>
+            <div class="wd-carousel-outer">
+                <div class="wd-carousel-track" id="videoReviewsGrid">
+                    <div class="vf-skeleton" style="min-width:220px;"></div>
+                    <div class="vf-skeleton" style="min-width:220px;"></div>
+                    <div class="vf-skeleton" style="min-width:220px;"></div>
+                    <div class="vf-skeleton" style="min-width:220px;"></div>
+                </div>
+            </div>
+            <button class="wd-carousel-btn wd-carousel-next" id="vrNext">&#8250;</button>
+        </div>
+        <!-- <div class="section-view-all">
+            <a href="{{ url_for('video_reviews_page') }}" class="view-all-btn">View All Student Stories</a>
+        </div> -->
+    </section>
+
+    <!-- ===== VIDEO MODAL ===== -->
+    <div class="vm-overlay" id="videoModal">
+        <div class="vm-box">
+            <button class="vm-close" id="vmClose">&times;</button>
+            <div class="vm-player" id="vmPlayer"></div>
+            <div class="vm-footer">
+                <strong id="vmName"></strong>
+                <span id="vmRole"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonial-section" id="Success-Stories">
+        <div class="container">
+            <div class="testimonial-header">
+                <h2>What Our <span>Students</span> Say...</h2>
+                <p>Real Results from Real People</p>
+            </div>
+            <div class="wd-carousel-wrap">
+                <button class="wd-carousel-btn wd-carousel-prev" id="tmPrev">&#8249;</button>
+                <div class="wd-carousel-outer">
+                    <div class="wd-carousel-track" id="testimonialsGrid">
+                        <div class="sr-skeleton" style="min-width:300px;height:220px;border-radius:22px;"></div>
+                        <div class="sr-skeleton" style="min-width:300px;height:220px;border-radius:22px;"></div>
+                        <div class="sr-skeleton" style="min-width:300px;height:220px;border-radius:22px;"></div>
+                    </div>
+                </div>
+                <button class="wd-carousel-btn wd-carousel-next" id="tmNext">&#8250;</button>
+            </div>
+            <!-- <div class="section-view-all">
+                <a href="{{ url_for('reviews') }}" class="view-all-btn">View All Reviews</a>
+            </div> -->
+        </div>
+    </section>
+
     <!-- ===== CTA STRIP ===== -->
     <div class="wd-cta-strip">
         <h2>Ready to Join?</h2>
@@ -989,6 +1494,199 @@
 
 {% block scripts %}
     <script>
+        const WD_CATEGORY = {{ w.category }};
+
+        // ---- Carousel helper ----
+        function initCarousel(trackId, prevId, nextId, visibleCount) {
+            const track = document.getElementById(trackId);
+            const prev  = document.getElementById(prevId);
+            const next  = document.getElementById(nextId);
+            if (!track || !prev || !next) return;
+            const outer = track.parentElement;
+            let idx = 0;
+
+            function isMobile() { return window.innerWidth <= 767; }
+            function getVisible() { return isMobile() ? 1 : visibleCount; }
+
+            function setMobileCardWidths() {
+                if (!isMobile()) return;
+                const outerW = outer.clientWidth;
+                track.style.setProperty('--card-w', outerW + 'px');
+                Array.from(track.children).forEach(card => {
+                    card.style.minWidth = outerW + 'px';
+                    card.style.width    = outerW + 'px';
+                });
+            }
+
+            function getCardWidth() {
+                const card = track.children[0];
+                if (!card) return 0;
+                return card.getBoundingClientRect().width + 16;
+            }
+
+            function update() {
+                setMobileCardWidths();
+                const total = track.children.length;
+                const vis   = getVisible();
+                track.style.transform = `translateX(-${idx * getCardWidth()}px)`;
+                prev.disabled = idx === 0;
+                next.disabled = idx >= total - vis;
+            }
+
+            prev.addEventListener('click', () => { if (idx > 0) { idx--; update(); } });
+            next.addEventListener('click', () => {
+                const total = track.children.length;
+                if (idx < total - getVisible()) { idx++; update(); }
+            });
+            window.addEventListener('resize', () => { idx = 0; update(); });
+            update();
+        }
+
+        // ---- Student Results ----
+        (function () {
+            const track = document.getElementById('studentResultsTrack');
+            if (!track) return;
+
+            function showEmptyResults() {
+                track.innerHTML = `
+                    <div class="wd-empty-state" style="width:100%;min-width:300px;">
+                        <div class="wd-empty-icon">🏆</div>
+                        <div class="wd-empty-title">Success Stories Coming Soon</div>
+                        <div class="wd-empty-sub">We're collecting real results from our students. Check back after the workshop!</div>
+                    </div>`;
+                document.getElementById('srPrev').style.display = 'none';
+                document.getElementById('srNext').style.display = 'none';
+            }
+
+            fetch('/api/student-results?per_page=100&category=' + WD_CATEGORY)
+                .then(r => r.json())
+                .then(data => {
+                    track.innerHTML = '';
+                    const valid = (data.results || []).filter(img => img.image_path && img.image_path.trim() !== '');
+                    if (valid.length === 0) { showEmptyResults(); return; }
+                    valid.forEach(img => {
+                        const src = img.image_path.startsWith('http') ? img.image_path : '/static/' + img.image_path;
+                        const card = document.createElement('div');
+                        card.className = 'image-review-card';
+                        card.innerHTML = `<img src="${src}" alt="${img.alt_text || 'Student Result'}" loading="lazy">`;
+                        track.appendChild(card);
+                    });
+                    initCarousel('studentResultsTrack', 'srPrev', 'srNext', 4);
+                })
+                .catch(() => showEmptyResults());
+        })();
+
+        // ---- Video Reviews ----
+        (function () {
+            const grid = document.getElementById('videoReviewsGrid');
+            if (!grid) return;
+
+            function showEmptyVideos() {
+                grid.innerHTML = `
+                    <div class="wd-empty-state" style="width:100%;min-width:300px;">
+                        <div class="wd-empty-icon">🎬</div>
+                        <div class="wd-empty-title">Student Videos Coming Soon</div>
+                        <div class="wd-empty-sub">Our students' video stories will be added here. Join the workshop to be part of them!</div>
+                    </div>`;
+                document.getElementById('vrPrev').style.display = 'none';
+                document.getElementById('vrNext').style.display = 'none';
+            }
+
+            fetch('/api/video-reviews?category=' + WD_CATEGORY + '&per_page=100')
+                .then(r => r.json())
+                .then(data => {
+                    grid.innerHTML = '';
+                    if (!data.reviews || data.reviews.length === 0) { showEmptyVideos(); return; }
+                    data.reviews.forEach(vr => {
+                        const videoUrl = vr.video_type === 'local' ? '/static/' + vr.video_src : vr.video_src;
+                        const thumbUrl = vr.thumbnail ? (vr.thumbnail.startsWith('http') ? vr.thumbnail : '/static/' + vr.thumbnail) : '';
+                        const card = document.createElement('div');
+                        card.className = 'vf-card';
+                        card.dataset.video = videoUrl;
+                        card.dataset.type  = vr.video_type;
+                        card.dataset.name  = vr.student_name;
+                        card.dataset.role  = vr.student_role;
+                        card.innerHTML = `
+                            ${thumbUrl ? `<img class="vf-card-thumb" src="${thumbUrl}" alt="${vr.student_name}" loading="lazy">` : ''}
+                            <div class="vf-card-overlay"></div>
+                            <div class="vf-play-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd"/></svg>
+                            </div>
+                            ${vr.duration ? `<span class="vf-duration">${vr.duration}</span>` : ''}
+                            <div class="vf-card-info">
+                                <strong>${vr.student_name}</strong>
+                                <span>${vr.student_role}</span><br>
+                                <span class="vf-verified">✓ Verified</span>
+                            </div>`;
+                        card.addEventListener('click', () => openVideoModal(card.dataset.video, card.dataset.type, card.dataset.name, card.dataset.role));
+                        grid.appendChild(card);
+                    });
+                    initCarousel('videoReviewsGrid', 'vrPrev', 'vrNext', 4);
+                })
+                .catch(() => showEmptyVideos());
+        })();
+
+        // ---- Video Modal ----
+        function openVideoModal(src, type, name, role) {
+            const modal  = document.getElementById('videoModal');
+            const player = document.getElementById('vmPlayer');
+            document.getElementById('vmName').textContent = name || '';
+            document.getElementById('vmRole').textContent = role || '';
+            if (type === 'youtube') {
+                player.innerHTML = `<iframe src="https://www.youtube.com/embed/${src}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border-radius:8px;"></iframe>`;
+            } else {
+                player.innerHTML = `<video src="${src}" controls autoplay style="width:100%;height:100%;border-radius:8px;"></video>`;
+            }
+            modal.style.display = 'flex';
+        }
+        document.getElementById('vmClose').addEventListener('click', () => {
+            document.getElementById('videoModal').style.display = 'none';
+            document.getElementById('vmPlayer').innerHTML = '';
+        });
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) { this.style.display = 'none'; document.getElementById('vmPlayer').innerHTML = ''; }
+        });
+
+        // ---- Testimonials ----
+        (function () {
+            const grid = document.getElementById('testimonialsGrid');
+            if (!grid) return;
+
+            function showEmptyTestimonials() {
+                grid.innerHTML = `
+                    <div class="wd-empty-state" style="width:100%;min-width:300px;">
+                        <div class="wd-empty-icon">💬</div>
+                        <div class="wd-empty-title">Reviews Coming Soon</div>
+                        <div class="wd-empty-sub">Be one of the first to attend and share your experience!</div>
+                    </div>`;
+                document.getElementById('tmPrev').style.display = 'none';
+                document.getElementById('tmNext').style.display = 'none';
+            }
+
+            fetch('/api/testimonials?category=' + WD_CATEGORY + '&per_page=100')
+                .then(r => r.json())
+                .then(data => {
+                    grid.innerHTML = '';
+                    if (!data.testimonials || data.testimonials.length === 0) { showEmptyTestimonials(); return; }
+                    data.testimonials.forEach(t => {
+                        const stars = '★'.repeat(t.rating) + '☆'.repeat(5 - t.rating);
+                        const card = document.createElement('div');
+                        card.className = 'testimonial-card';
+                        card.innerHTML = `
+                            <div class="quote">"</div>
+                            <div class="stars">${stars}</div>
+                            <p class="review">"${t.review}"</p>
+                            <div class="author">
+                                <div><h4>${t.student_name}</h4></div>
+                                <span class="badge">✓ Verified Student</span>
+                            </div>`;
+                        grid.appendChild(card);
+                    });
+                    initCarousel('testimonialsGrid', 'tmPrev', 'tmNext', 3);
+                })
+                .catch(() => showEmptyTestimonials());
+        })();
+
         // ---- FAQ accordion ----
         document.querySelectorAll(".wd-faq-trigger").forEach(trigger => {
             trigger.addEventListener("click", () => {
@@ -1022,5 +1720,35 @@
                 }
             });
         });
+
+        // ---------- GALLERY LIGHTBOX ----------
+        (function () {
+            const lightbox = document.getElementById('wdLightbox');
+            if (!lightbox) return;
+            const lbImg = document.getElementById('wdLightboxImg');
+            const lbClose = document.getElementById('wdLightboxClose');
+
+            document.querySelectorAll('.wd-gallery-item').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    lbImg.src = item.dataset.src || item.querySelector('img').src;
+                    lightbox.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+                lbImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            lbClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        })();
     </script>
 {% endblock %}
