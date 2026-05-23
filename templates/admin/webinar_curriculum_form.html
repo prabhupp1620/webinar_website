@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{% if row %}Edit Curriculum Step{% else %}Add Curriculum Step{% endif %}{% endblock %}
+{% block topbar_title %}{% if row %}Edit Curriculum Step{% else %}Add Curriculum Step{% endif %}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% if row %}Edit Curriculum Step{% else %}Add Curriculum Step{% endif %}</h1>
+    <a href="{{ url_for('admin.webinar_curriculum') }}" class="btn btn-secondary">← Back</a>
+</div>
+<div class="card"><div class="card-body">
+<form method="POST">
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Step Number *</label>
+            <input type="number" name="step_number" value="{{ row.step_number if row else 1 }}" min="1" required>
+        </div>
+        <div class="form-group">
+            <label>Title *</label>
+            <input type="text" name="title" value="{{ row.title if row else '' }}" required
+                   placeholder="e.g. Introduction to Dropshipping">
+        </div>
+        <div class="form-group full">
+            <label>Bullet Points</label>
+            <textarea name="points" rows="6" placeholder="One bullet point per line…">{{ row.points if row else '' }}</textarea>
+            <small style="color:#64748b;font-size:11px;margin-top:4px;">Enter one bullet point per line. Each line becomes a separate list item on the page.</small>
+        </div>
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="category" required>
+                <option value="1" {% if row and row.category==1 %}selected{% endif %}>Dropshipping</option>
+                <option value="2" {% if row and row.category==2 %}selected{% endif %}>E-Commerce</option>
+                <option value="3" {% if row and row.category==3 %}selected{% endif %}>Online Earning</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Sort Order</label>
+            <input type="number" name="sort_order" value="{{ row.sort_order if row else 0 }}" min="0">
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="1" {% if not row or row.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if row and not row.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% if row %}Save Changes{% else %}Add Step{% endif %}</button>
+        <a href="{{ url_for('admin.webinar_curriculum') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div></div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Topics (Detail Page){% endblock %}
+{% block topbar_title %}Topics (Detail Page){% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>Topics (Detail Page)</h1>
+    <a href="{{ url_for('admin.webinar_topic_add') }}" class="btn btn-primary">+ Add Topic</a>
+</div>
+<div class="card table-wrap">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Icon</th><th>Title</th><th>Category</th><th>Description</th><th>Order</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.id }}</td>
+            <td style="font-size:20px;">{{ r.icon }}</td>
+            <td style="font-weight:600;max-width:200px;">{{ r.title }}</td>
+            <td>{% set cm={1:'Dropshipping',2:'E-Commerce',3:'Online Earning'} %}
+                {% set cc={1:'badge-orange',2:'badge-blue',3:'badge-green'} %}
+                <span class="badge {{ cc.get(r.category,'') }}">{{ cm.get(r.category, r.category) }}</span>
+            </td>
+            <td style="color:#64748b;max-width:300px;font-size:12px;">{{ r.description[:100] if r.description else '' }}{% if r.description and r.description|length > 100 %}…{% endif %}</td>
+            <td>{{ r.sort_order }}</td>
+            <td><span class="badge {% if r.status %}badge-active{% else %}badge-inactive{% endif %}">
+                {% if r.status %}Active{% else %}Inactive{% endif %}
+            </span></td>
+            <td>
+                <div class="td-actions">
+                    <a href="{{ url_for('admin.webinar_topic_edit', tid=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form method="POST" action="{{ url_for('admin.webinar_topic_delete', tid=r.id) }}"
+                          onsubmit="return confirm('Delete this topic?')">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center;color:#64748b;padding:32px;">No topics yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -118,15 +118,22 @@ def maya_preneur():
 
 @app.route("/api/testimonials")
 def api_testimonials():
-    """Return paginated testimonials. ?page=1&per_page=8"""
+    """Return paginated testimonials. ?page=1&per_page=8&category=1|2|3"""
     page     = max(1, int(request.args.get("page", 1)))
     per_page = max(1, int(request.args.get("per_page", 8)))
     offset   = (page - 1) * per_page
-    total    = query("SELECT COUNT(*) as cnt FROM testimonials WHERE status=1", one=True)["cnt"]
-    rows     = query(
-        "SELECT * FROM testimonials WHERE status=1 ORDER BY sort_order, id LIMIT %s OFFSET %s",
-        (per_page, offset)
-    )
+    category = request.args.get("category", "").strip()
+    if category and category != "all":
+        try:
+            cat_id = int(category)
+            total = query("SELECT COUNT(*) as cnt FROM testimonials WHERE status=1 AND category=%s", (cat_id,), one=True)["cnt"]
+            rows  = query("SELECT * FROM testimonials WHERE status=1 AND category=%s ORDER BY sort_order, id LIMIT %s OFFSET %s", (cat_id, per_page, offset))
+        except (ValueError, TypeError):
+            total = 0
+            rows  = []
+    else:
+        total = query("SELECT COUNT(*) as cnt FROM testimonials WHERE status=1", one=True)["cnt"]
+        rows  = query("SELECT * FROM testimonials WHERE status=1 ORDER BY sort_order, id LIMIT %s OFFSET %s", (per_page, offset))
     items = []
     for r in rows:
         items.append({
@@ -136,19 +143,30 @@ def api_testimonials():
             "rating":       r["rating"] or 5,
         })
     return jsonify({
-        "total":    total,
-        "page":     page,
-        "per_page": per_page,
-        "has_more": (offset + per_page) < total,
-        "items":    items,
+        "total":        total,
+        "page":         page,
+        "per_page":     per_page,
+        "has_more":     (offset + per_page) < total,
+        "items":        items,
+        "testimonials": items,
     })
 
 
 @app.route("/api/student-results")
 def api_student_results():
-    """Return latest 4 active student results as JSON."""
-    rows = query("SELECT * FROM student_results WHERE status=1 ORDER BY sort_order, id DESC LIMIT 4")
-    total = query("SELECT COUNT(*) as cnt FROM student_results WHERE status=1", one=True)["cnt"]
+    """Return latest 4 active student results. ?per_page=4&category=1|2|3"""
+    per_page = max(1, int(request.args.get("per_page", 4)))
+    category = request.args.get("category", "").strip()
+    if category and category != "all":
+        try:
+            cat_id = int(category)
+            rows  = query("SELECT * FROM student_results WHERE status=1 AND category=%s ORDER BY sort_order, id DESC LIMIT %s", (cat_id, per_page))
+            total = query("SELECT COUNT(*) as cnt FROM student_results WHERE status=1 AND category=%s", (cat_id,), one=True)["cnt"]
+        except (ValueError, TypeError):
+            rows, total = [], 0
+    else:
+        rows  = query("SELECT * FROM student_results WHERE status=1 ORDER BY sort_order, id DESC LIMIT %s", (per_page,))
+        total = query("SELECT COUNT(*) as cnt FROM student_results WHERE status=1", one=True)["cnt"]
     results = []
     for r in rows:
         results.append({
@@ -459,6 +477,51 @@ def webinar_detail(slug):
         cc  = _CAT.get(cat, _CAT[1])
         fees = row.get("webinar_fees") or 49
         desc = (row.get("webinar_discription") or "").strip()
+
+        # ── Load dynamic sections from DB, fall back to _CAT defaults ──────────
+        # Topics
+        _db_topics = query(
+            "SELECT * FROM webinar_topics WHERE status=1 AND category=%s ORDER BY sort_order, id", (cat,)
+        )
+        if _db_topics:
+            topics_list = [{"icon": t["icon"], "title": t["title"], "desc": t["description"]} for t in _db_topics]
+        else:
+            topics_list = cc["topics"]
+
+        # Curriculum
+        _db_curriculum = query(
+            "SELECT * FROM webinar_curriculum WHERE status=1 AND category=%s ORDER BY sort_order, step_number", (cat,)
+        )
+        if _db_curriculum:
+            curriculum_list = [
+                {
+                    "step":   str(c["step_number"]).zfill(2),
+                    "title":  c["title"],
+                    "points": [p.strip() for p in (c["points"] or "").split("\n") if p.strip()],
+                }
+                for c in _db_curriculum
+            ]
+        else:
+            curriculum_list = cc["curriculum"]
+
+        # Who For
+        _db_who_for = query(
+            "SELECT * FROM webinar_who_for WHERE status=1 AND category=%s ORDER BY sort_order, id", (cat,)
+        )
+        if _db_who_for:
+            who_for_list = [{"icon": w["icon"], "label": w["label"], "desc": w["description"]} for w in _db_who_for]
+        else:
+            who_for_list = cc["who_for"]
+
+        # FAQs
+        _db_faqs = query(
+            "SELECT * FROM faqs WHERE status=1 AND category=%s ORDER BY sort_order, id", (cat,)
+        )
+        if _db_faqs:
+            faqs_list = [{"q": f["question"], "a": f["answer"]} for f in _db_faqs]
+        else:
+            faqs_list = cc["faqs"]
+
         webinar = {
             "id":          row["webinar_id"],
             "slug":        slug,
@@ -479,10 +542,11 @@ def webinar_detail(slug):
             "image":       cc["image"],
             "meta_title":  f"{row['webinar_name']} – MayaPreneur",
             "meta_desc":   desc or f"Join the {row['webinar_name']} live workshop on {row.get('webinar_platform','Zoom')}. Register now.",
-            "topics":      cc["topics"],
-            "who_for":     cc["who_for"],
-            "curriculum":  cc["curriculum"],
-            "faqs":        cc["faqs"],
+            "topics":      topics_list,
+            "who_for":     who_for_list,
+            "curriculum":  curriculum_list,
+            "faqs":        faqs_list,
+            "category":    cat,
         }
         return render_template("webinar-detail.html", w=webinar)
 
